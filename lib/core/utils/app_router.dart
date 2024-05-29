@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:vonture_grad/features/login/presentation/views/login_view.dart';
 import 'package:vonture_grad/features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
@@ -9,6 +10,10 @@ abstract class AppRouter {
       GoRoute(
         path: '/',
         builder: (context, state) => const SplashView(),
+      ),
+      GoRoute(
+        path: kLogin,
+        builder: (context, state) => const LoginView(),
       ),
     ],
   );
