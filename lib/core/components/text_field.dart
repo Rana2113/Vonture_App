@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vonture_grad/core/colors.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 
 class AppTextField extends StatelessWidget {
   const AppTextField({
