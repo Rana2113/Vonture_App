@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vonture_grad/features/home/presentation/views/home_view.dart';
 import 'package:vonture_grad/features/login/presentation/views/login_view.dart';
-import 'package:vonture_grad/features/signup/presentation/views/sign_up.dart';
+import 'package:vonture_grad/features/signup/presentation/views/signup_view.dart';
 import 'package:vonture_grad/features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {

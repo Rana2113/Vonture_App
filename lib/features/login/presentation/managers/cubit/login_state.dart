@@ -16,4 +16,7 @@ final class LoginFailure extends LoginState {
   LoginFailure(this.errorM);
 }
 
-final class PasswordVisibility extends LoginState {}
+final class ChangePasswordVisibility extends LoginState {
+  final bool isPasswordVisible;
+  ChangePasswordVisibility(this.isPasswordVisible);
+}
