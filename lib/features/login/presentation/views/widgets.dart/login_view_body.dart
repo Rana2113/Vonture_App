@@ -10,7 +10,7 @@ import 'package:vonture_grad/core/utils/service_locator.dart';
 import 'package:vonture_grad/features/login/data/login_repo_implementation.dart';
 import 'package:vonture_grad/features/login/presentation/managers/cubit/login_cubit.dart';
 import 'package:vonture_grad/features/login/presentation/views/widgets.dart/login_button.dart';
-import 'package:vonture_grad/features/signup/presentation/views/sign_up.dart';
+import 'package:vonture_grad/features/signup/presentation/views/signup_view.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});
@@ -59,6 +59,18 @@ class LoginViewBody extends StatelessWidget {
                         }
                         return null;
                       },
+                      isPassword: LoginCubit.get(context).isPasswordVisible,
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            LoginCubit.get(context).changePasswordVisibility();
+                          },
+                          icon: Icon(
+                            state is ChangePasswordVisibility &&
+                                    state.isPasswordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.black,
+                          )),
                       type: TextInputType.visiblePassword,
                     ),
                     verticalSpacing(44),
@@ -95,11 +107,12 @@ class LoginViewBody extends StatelessWidget {
                       child: SizedBox(
                         height: 70.h,
                         child: const Text(
-                          'Don\'t have an \n account?',
+                          'Don\'t have an\naccount?',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
+                            height: 1.10,
                           ),
                           maxLines: 2,
                         ),

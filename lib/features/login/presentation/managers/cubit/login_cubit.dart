@@ -7,6 +7,7 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.loginRepo) : super(LoginInitial());
   final LoginRepo loginRepo;
+  bool isPasswordVisible = true;
   static LoginCubit get(context) => BlocProvider.of(context);
 
   Future<void> login(String email, String password) async {
@@ -15,5 +16,10 @@ class LoginCubit extends Cubit<LoginState> {
     result.fold((failure) => emit(LoginFailure(failure.errorMessages)), (user) {
       emit(LoginSuccess(user));
     });
+  }
+
+  void changePasswordVisibility() {
+    isPasswordVisible = !isPasswordVisible;
+    emit(ChangePasswordVisibility(isPasswordVisible));
   }
 }

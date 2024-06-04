@@ -6,17 +6,17 @@ class AppTextField extends StatelessWidget {
   const AppTextField({
     super.key,
     required this.hinttext,
-    this.isObscureText = false,
     this.suffixIcon,
     this.controller,
     required this.validator,
     this.onFieldSubmitted,
     required this.type,
+    this.isPassword = false,
   });
   final String hinttext;
   final TextInputType type;
-  final bool isObscureText;
   final Widget? suffixIcon;
+  final bool isPassword;
   final TextEditingController? controller;
   final Function validator;
   final void Function(String)? onFieldSubmitted;
@@ -52,7 +52,7 @@ class AppTextField extends StatelessWidget {
           fillColor: const Color(0xffF5F2F0),
           // fillColor: const Color.fromARGB(255, 249, 239, 233),
         ),
-        obscureText: isObscureText,
+        obscureText: isPassword,
       ),
     );
   }
