@@ -4,6 +4,9 @@ import 'package:vonture_grad/core/utils/api_service.dart';
 import 'package:vonture_grad/features/login/data/login_repo.dart';
 import 'package:vonture_grad/features/login/data/login_repo_implementation.dart';
 import 'package:vonture_grad/features/login/presentation/managers/cubit/login_cubit.dart';
+import 'package:vonture_grad/features/signup/data/sign_up_repo.dart';
+import 'package:vonture_grad/features/signup/data/sign_up_repo_implementation.dart';
+import 'package:vonture_grad/features/signup/presentation/managers/cubit/sign_up_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -16,4 +19,9 @@ void setup() {
             apiService: getIt<ApiService>(),
           ));
   getIt.registerFactory(() => LoginCubit(getIt<LoginRepo>()));
+  getIt.registerLazySingleton<SignUpRepoImplementation>(
+      () => SignUpRepoImplementation(
+            apiService: getIt<ApiService>(),
+          ));
+  getIt.registerFactory(() => SignUpCubit(getIt<SignUpRepo>()));
 }

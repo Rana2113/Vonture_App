@@ -4,6 +4,7 @@ import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/error/failures.dart';
 import 'package:vonture_grad/core/models/user_model.dart';
 import 'package:vonture_grad/core/utils/api_service.dart';
+import 'package:vonture_grad/core/utils/end_points.dart';
 import 'package:vonture_grad/features/login/data/login_repo.dart';
 
 class LoginRepoImplementation implements LoginRepo {
@@ -15,7 +16,7 @@ class LoginRepoImplementation implements LoginRepo {
       String email, String password) async {
     try {
       final response = await apiService.post(
-        endPoint: '/auth/login',
+        endPoint: EndPoints.login,
         data: {
           "email": email,
           "password": password,

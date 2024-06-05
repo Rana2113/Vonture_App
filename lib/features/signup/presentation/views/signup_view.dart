@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:vonture_grad/features/signup/presentation/views/widgets.dart/sign_up_body.dart';
 
 class SignUpView extends StatelessWidget {
@@ -6,6 +6,8 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SignUpViewBody();
+    return const Scaffold(
+      body: SignUpViewBody(),
+    );
   }
 }
