@@ -11,11 +11,13 @@ class ApiService {
     String? jwt,
     required dynamic data,
   }) async {
+    print("ApiService: post called request: to $_baseUrl$endPoint");
     _dio.options.headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $jwt',
     };
     var response = await _dio.post('$_baseUrl$endPoint', data: data);
+    print("ApiService:  response received : ${response}");
 
     return response.data;
   }

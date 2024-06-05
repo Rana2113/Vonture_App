@@ -33,7 +33,7 @@ class LoginViewBody extends StatelessWidget {
                   children: [
                     const CustomAppBar(text: 'Sign In'),
                     verticalSpacing(10),
-                    const CustomImage(image: 'assets/signin.png'),
+                    const CustomImage(image: 'assets/Login.png'),
                     verticalSpacing(44),
                     AppTextField(
                       hinttext: 'Email',

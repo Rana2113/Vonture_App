@@ -4,20 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/utils/app_router.dart';
-import 'package:vonture_grad/features/login/presentation/managers/cubit/login_cubit.dart';
+import 'package:vonture_grad/features/signup/presentation/managers/cubit/sign_up_cubit.dart';
 
-class LoginButton extends StatelessWidget {
-  const LoginButton({super.key, required this.onPressed});
+class SignUpButton extends StatelessWidget {
+  const SignUpButton({super.key, required this.onPressed});
   final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
+    return BlocConsumer<SignUpCubit, SignUpState>(
       listener: (context, state) {
-        if (state is LoginSuccess) {
+        if (state is SignUpSuccess) {
           context.go(AppRouter.kHome);
-          // GoRouter.of(context).pushReplacement(AppRouter.kHome);
-        } else if (state is LoginFailure) {
+        } else if (state is SignUpFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
@@ -27,7 +26,7 @@ class LoginButton extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is LoginLoading) {
+        if (state is SignUpLoading) {
           return const Center(
             child: CircularProgressIndicator(
               backgroundColor: kButtonColor,

@@ -12,6 +12,8 @@ class AppTextField extends StatelessWidget {
     this.onFieldSubmitted,
     required this.type,
     this.isPassword = false,
+    this.firstDate,
+    this.lastDate,
   });
   final String hinttext;
   final TextInputType type;
@@ -20,6 +22,8 @@ class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final Function validator;
   final void Function(String)? onFieldSubmitted;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
   @override
   Widget build(BuildContext context) {
     return Padding(
