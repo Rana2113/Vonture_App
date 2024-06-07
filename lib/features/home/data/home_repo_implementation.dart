@@ -47,18 +47,30 @@ class HomeRepoImplementation implements HomeRepo {
         endPoint: "${EndPoints.searchOpportunity}$query",
         jwt: token,
       );
+
+      if (response == null || response["opportunities"] == null) {
+        return Left(ServerFailure("No opportunities found"));
+      }
+
       final List<OpportunityModel> opportunities = [];
-      for (var opportunity in response["applications"]) {
+      for (var opportunity in response["opportunities"]) {
         opportunities.add(OpportunityModel.fromJson(opportunity));
       }
+
       return Right(opportunities);
     } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final responseData = e.response?.data;
+      print("statuscode: $statusCode - response: $responseData");
+
+      print("search: API call failed - Error: $e"); // Debug log
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
+      print("search: API call failed - Error: $e"); // Debug log
+
       return Left(ServerFailure(e.toString()));
     }
   }
-
   // @override
   // Future<Either<Failure, List<OpportunityModel>>> searchOpportunity({String query}) {
   //   // TODO: implement searchOpportunity
