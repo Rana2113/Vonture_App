@@ -85,21 +85,6 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:vonture_grad/features/signup/presentation/managers/cubit/sign_up_cubit.dart';

@@ -73,48 +73,38 @@ class _DateState extends State<Date> {
   }
 }
 
- 
+//   return Padding(
+//     padding: EdgeInsets.symmetric(horizontal: 16.w),
+//     child: DOBInputField(
+//       firstDate: DateTime(1900),
+//       lastDate: DateTime(2006),
+//       dateFormatType: DateFormatType.YYYYMMDD,
+//       showCursor: true,
+//       cursorColor: const Color(0xff96734F),
+//       inputDecoration: InputDecoration(
+//         suffixIcon: const Icon(Icons.calendar_today_outlined),
+//         border: buildOutlineInputBorder(
+//           kBorderColor2,
+//         ),
+//         focusedBorder: buildOutlineInputBorder(
+//           kFocusBorder,
+//         ),
+//         errorBorder: buildOutlineInputBorder(kErrorBorder),
+//         focusedErrorBorder: buildOutlineInputBorder(kErrorBorder),
+//         contentPadding: const EdgeInsets.all(12),
+//         filled: true,
+//         fillColor: const Color(0xffF5F2F0),
+//         // fillColor: const Color.fromARGB(255, 249, 239, 233),
+//       ),
+//     ),
+//   );
+// }
 
-
-
-
-
-
-
-
-
- //   return Padding(
-  //     padding: EdgeInsets.symmetric(horizontal: 16.w),
-  //     child: DOBInputField(
-  //       firstDate: DateTime(1900),
-  //       lastDate: DateTime(2006),
-  //       dateFormatType: DateFormatType.YYYYMMDD,
-  //       showCursor: true,
-  //       cursorColor: const Color(0xff96734F),
-  //       inputDecoration: InputDecoration(
-  //         suffixIcon: const Icon(Icons.calendar_today_outlined),
-  //         border: buildOutlineInputBorder(
-  //           kBorderColor2,
-  //         ),
-  //         focusedBorder: buildOutlineInputBorder(
-  //           kFocusBorder,
-  //         ),
-  //         errorBorder: buildOutlineInputBorder(kErrorBorder),
-  //         focusedErrorBorder: buildOutlineInputBorder(kErrorBorder),
-  //         contentPadding: const EdgeInsets.all(12),
-  //         filled: true,
-  //         fillColor: const Color(0xffF5F2F0),
-  //         // fillColor: const Color.fromARGB(255, 249, 239, 233),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // OutlineInputBorder buildOutlineInputBorder(Color colorborder) {
-  //   return OutlineInputBorder(
-  //       borderSide: BorderSide(
-  //         color: colorborder,
-  //         width: 1.2.w,
-  //       ),
-  //       borderRadius: BorderRadius.circular(16));
-  // }
+// OutlineInputBorder buildOutlineInputBorder(Color colorborder) {
+//   return OutlineInputBorder(
+//       borderSide: BorderSide(
+//         color: colorborder,
+//         width: 1.2.w,
+//       ),
+//       borderRadius: BorderRadius.circular(16));
+// }

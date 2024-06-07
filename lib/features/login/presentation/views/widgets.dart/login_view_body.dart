@@ -31,7 +31,7 @@ class LoginViewBody extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const CustomAppBar(text: 'Sign In'),
+                    const CustomAppBar(text: 'Login'),
                     verticalSpacing(10),
                     const CustomImage(image: 'assets/Login.png'),
                     verticalSpacing(44),

@@ -26,6 +26,7 @@ class ApiService {
     required String endPoint,
     String? jwt,
   }) async {
+    print("ApiService: post called request: to $_baseUrl$endPoint");
     _dio.options.headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $jwt',
@@ -33,6 +34,24 @@ class ApiService {
     var response = await _dio.get(
       '$_baseUrl$endPoint',
     );
+    print("ApiService:  response received : ${response}");
+
     return response.data;
   }
+
+  // Future<List<dynamic>> searchOpportunities(
+  //     {required String endPoint, String? jwt, required String query}) async {
+  //   print("ApiServicesearch: post called request: to $_baseUrl$endPoint");
+
+  //   _dio.options.headers = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization: ': 'Bearer $jwt',
+  //   };
+  //   var response = await _dio.get(
+  //     '$_baseUrl$endPoint',
+  //     queryParameters: {'search': query},
+  //   );
+  //   print("ApiService:  response received : ${response}");
+  //   return response.data;
+  // }
 }
