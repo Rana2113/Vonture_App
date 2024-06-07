@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 
 class Opportunity extends StatelessWidget {
   const Opportunity(
@@ -29,7 +30,7 @@ class Opportunity extends StatelessWidget {
             maxHeight: 340.h, // Set your desired maximum height here
           ),
           child: Card(
-            color: const Color(0xffFAF0E6),
+            color: kCardColor,
             elevation: 4.0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
@@ -55,7 +56,9 @@ class Opportunity extends StatelessWidget {
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
                       // height: 0.90,
-                      color: Color.fromARGB(255, 198, 134, 99),
+                      color:
+                          // kTextColor,
+                          const Color.fromARGB(255, 198, 134, 99),
                     ),
                   ),
                   verticalSpacing(10),
@@ -75,22 +78,22 @@ class Opportunity extends StatelessWidget {
                     children: [
                       Text('Available From  ',
                           style: TextStyle(
-                              color: const Color(0xffD79977),
+                              color: kTextColor2,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500)),
                       Text('2024-07-01',
                           style: TextStyle(
-                              color: const Color.fromARGB(255, 198, 134, 99),
+                              color: kTextColor3,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600)),
                       Text(' To ',
                           style: TextStyle(
-                              color: const Color(0xffD79977),
+                              color: kTextColor2,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500)),
                       Text('2024-07-15',
                           style: TextStyle(
-                              color: const Color.fromARGB(255, 198, 134, 99),
+                              color: kTextColor3,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600)),
                     ],

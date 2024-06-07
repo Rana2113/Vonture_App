@@ -5,11 +5,11 @@ import 'package:vonture_grad/core/error/failures.dart';
 import 'package:vonture_grad/core/models/opportunity_model/opportunity_model.dart';
 import 'package:vonture_grad/core/utils/api_service.dart';
 import 'package:vonture_grad/core/utils/end_points.dart';
-import 'package:vonture_grad/features/home/data/home_repo.dart';
+import 'package:vonture_grad/features/opportunity/data/opportunity_repo.dart';
 
-class HomeRepoImplementation implements HomeRepo {
+class OpportunityRepoImplementation implements OpportunityRepo {
   final ApiService apiService;
-  HomeRepoImplementation({required this.apiService});
+  OpportunityRepoImplementation({required this.apiService});
 
   @override
   Future<Either<Failure, List<OpportunityModel>>> getallopportunity() async {
@@ -30,10 +30,10 @@ class HomeRepoImplementation implements HomeRepo {
       final responseData = e.response?.data;
       print("statuscode: $statusCode - response: $responseData ");
 
-      print("Home: API call failed - Error: $e"); // Debug log
+      print("Home: API call failed - Error: $e");
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
-      print("Home: API call failed - Error: $e"); // Debug log
+      print("Home: API call failed - Error: $e");
 
       return Left(ServerFailure(e.toString()));
     }
@@ -48,7 +48,7 @@ class HomeRepoImplementation implements HomeRepo {
         jwt: token,
       );
 
-      if (response == null || response["opportunities"] == null) {
+      if (response["opportunities"] == null) {
         return Left(ServerFailure("No opportunities found"));
       }
 
@@ -63,17 +63,12 @@ class HomeRepoImplementation implements HomeRepo {
       final responseData = e.response?.data;
       print("statuscode: $statusCode - response: $responseData");
 
-      print("search: API call failed - Error: $e"); // Debug log
+      print("search: API call failed - Error: $e");
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
-      print("search: API call failed - Error: $e"); // Debug log
+      print("search: API call failed - Error: $e");
 
       return Left(ServerFailure(e.toString()));
     }
   }
-  // @override
-  // Future<Either<Failure, List<OpportunityModel>>> searchOpportunity({String query}) {
-  //   // TODO: implement searchOpportunity
-  //   throw UnimplementedError();
-  // }
 }

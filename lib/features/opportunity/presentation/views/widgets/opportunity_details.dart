@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vonture_grad/features/home/presentation/views/widgets/opportunity.dart';
+import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity.dart';
 
 class OpportunityDetails extends StatelessWidget {
   const OpportunityDetails({super.key});

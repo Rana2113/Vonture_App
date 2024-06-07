@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({
+class OpportunityAppBar extends StatelessWidget {
+  const OpportunityAppBar({
     super.key,
   });
 

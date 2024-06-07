@@ -1,13 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:vonture_grad/features/home/presentation/views/widgets/home_view_body.dart';
+// import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+// class HomeView extends StatelessWidget {
+//   const HomeView({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: HomeViewBody(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Vonture'),
+//         ),
+//         body: const Center(
+//           child: Text('Home View'),
+//         ));
+//   }
+// }
