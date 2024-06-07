@@ -15,7 +15,7 @@ class SearchOpportunity extends StatelessWidget {
       child: TextFormField(
         onFieldSubmitted: (value) {
           BlocProvider.of<HomeCubit>(context).searchOpportunity(
-            value,
+            query: value,
           );
         },
         controller: searchController,
