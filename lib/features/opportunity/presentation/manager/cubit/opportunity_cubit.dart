@@ -27,18 +27,18 @@ class OpportunityCubit extends Cubit<OpportunityState> {
   }
 
   Future<void> searchOpportunity(String query) async {
-    emit(OpportunitySearchLoading());
+    emit(HomeSearchLoading());
     print("HomeCubit: Search called");
 
     final response = await homeRepoImplementation.searchOpportunity(query);
-    print("HomeCubit: Search result: $response");
+    print("HomesearchCubit: Search result: $response");
 
     response.fold(
       (failure) => emit(OpportunitySearchError(message: failure.toString())),
       (opportunities) {
         print("HomeCubit: Search successful - User: $opportunities");
 
-        emit(OpportunitySearchSuccess(opportunities: opportunities));
+        emit(HomeSearchsucess(opportunities: opportunities));
       },
     );
   }

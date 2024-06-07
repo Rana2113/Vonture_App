@@ -39,7 +39,6 @@ class OpportunityRepoImplementation implements OpportunityRepo {
     }
   }
 
-  @override
   Future<Either<Failure, List<OpportunityModel>>> searchOpportunity(
       String query) async {
     try {
@@ -48,7 +47,11 @@ class OpportunityRepoImplementation implements OpportunityRepo {
         jwt: token,
       );
 
+<<<<<<< HEAD:lib/features/opportunity/data/opportunity_repo_implementation.dart
       if (response["opportunities"] == null) {
+=======
+      if (response == null || response["opportunities"] == null) {
+>>>>>>> master:lib/features/home/data/home_repo_implementation.dart
         return Left(ServerFailure("No opportunities found"));
       }
 
@@ -63,12 +66,28 @@ class OpportunityRepoImplementation implements OpportunityRepo {
       final responseData = e.response?.data;
       print("statuscode: $statusCode - response: $responseData");
 
+<<<<<<< HEAD:lib/features/opportunity/data/opportunity_repo_implementation.dart
       print("search: API call failed - Error: $e");
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       print("search: API call failed - Error: $e");
+=======
+      print("search: API call failed - Error: $e"); // Debug log
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      print("search: API call failed - Error: $e"); // Debug log
+>>>>>>> master:lib/features/home/data/home_repo_implementation.dart
 
       return Left(ServerFailure(e.toString()));
     }
   }
 }
+<<<<<<< HEAD:lib/features/opportunity/data/opportunity_repo_implementation.dart
+=======
+  // @override
+  // Future<Either<Failure, List<OpportunityModel>>> searchOpportunity({String query}) {
+  //   // TODO: implement searchOpportunity
+  //   throw UnimplementedError();
+  // }
+
+>>>>>>> master:lib/features/home/data/home_repo_implementation.dart
