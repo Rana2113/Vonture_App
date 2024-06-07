@@ -6,4 +6,6 @@ const kTextColor = Color(0xff877563);
 const kBorderColor2 = Color(0xffE8DBD1);
 const kFocusBorder = Color(0xff96734F);
 const kErrorBorder = Color(0xff5B340D);
-const kfillColor = Color(0xffFBF2EC);
+const kFillColor = Color(0xffFBF2EC);
+const kLogoColor = Color(0xffD79977);
+const kCardColor = Color(0xffFAF0E6);
