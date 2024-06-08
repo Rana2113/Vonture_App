@@ -5,7 +5,7 @@ import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/opportunity_cubit.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_appbar.dart';
-import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_details.dart';
+import 'package:vonture_grad/features/opportunity/presentation/views/opportunity_details_view.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/search_opportunity.dart';
 
 class OpportunityViewBody extends StatelessWidget {
