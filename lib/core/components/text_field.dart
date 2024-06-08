@@ -35,27 +35,28 @@ class AppTextField extends StatelessWidget {
         controller: controller,
         onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
-          suffixIcon: suffixIcon,
-
-          hintText: hinttext,
-          hintStyle: TextStyle(
-              color: const Color(0xff96734F),
-              fontSize: 14.sp,
-              height: 0.09,
-              fontWeight: FontWeight.w400),
-          border: buildOutlineInputBorder(
-            kBorderColor2,
-          ),
-          focusedBorder: buildOutlineInputBorder(
-            kFocusBorder,
-          ),
-          errorBorder: buildOutlineInputBorder(kErrorBorder),
-          focusedErrorBorder: buildOutlineInputBorder(kErrorBorder),
-          contentPadding: const EdgeInsets.all(12),
-          filled: true,
-          fillColor: const Color(0xffF5F2F0),
-          // fillColor: const Color.fromARGB(255, 249, 239, 233),
-        ),
+            suffixIcon: suffixIcon,
+            hintText: hinttext,
+            hintStyle: TextStyle(
+                color: kLogoColor,
+                // const Color(0xff96734F),
+                fontSize: 14.sp,
+                height: 0.09,
+                fontWeight: FontWeight.w400),
+            border: buildOutlineInputBorder(
+              kBorderColor2,
+            ),
+            focusedBorder: buildOutlineInputBorder(
+              kFocusBorder,
+            ),
+            errorBorder: buildOutlineInputBorder(kErrorBorder),
+            focusedErrorBorder: buildOutlineInputBorder(kErrorBorder),
+            contentPadding: const EdgeInsets.all(12),
+            filled: true,
+            fillColor: kCardColor
+            //const Color(0xffF5F2F0),
+            // fillColor: const Color.fromARGB(255, 249, 239, 233),
+            ),
         obscureText: isPassword,
       ),
     );
