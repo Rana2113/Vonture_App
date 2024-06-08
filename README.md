@@ -1,6 +1,6 @@
 # Vonture
 
-Travel With Purpose 🛫🇪🇬
+### Travel With Purpose 🛫🇪🇬
 
 ## 🌍 Getting Started
 
