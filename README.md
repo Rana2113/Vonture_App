@@ -1,6 +1,6 @@
 # Vonture
 
-A new Flutter project.
+Travel With Purpose 🛫🇪🇬
 
 ## 🌍 Getting Started
 
