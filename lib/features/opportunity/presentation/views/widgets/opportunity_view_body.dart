@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/opportunity_cubit.dart';
-import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity.dart';
+import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunityCard.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_appbar.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/opportunity_details_view.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/search_opportunity.dart';
@@ -31,12 +31,14 @@ class OpportunityViewBody extends StatelessWidget {
             shrinkWrap: true,
             itemCount: state.opportunityList.length,
             itemBuilder: (context, index) {
-              return Opportunity(
+              return OpportunityCard(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const OpportunityDetails()),
+                        builder: (context) => OpportunityDetails(
+                              opportunityId: state.opportunityList[index].id!,
+                            )),
                   );
                 },
                 image: 'assets/shelter.jpg',
@@ -64,12 +66,14 @@ class OpportunityViewBody extends StatelessWidget {
               shrinkWrap: true,
               itemCount: state.opportunities.length,
               itemBuilder: (context, index) {
-                return Opportunity(
+                return OpportunityCard(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const OpportunityDetails()),
+                          builder: (context) => OpportunityDetails(
+                                opportunityId: state.opportunities[index].id!,
+                              )),
                     );
                   },
                   image: 'assets/shelter.jpg',

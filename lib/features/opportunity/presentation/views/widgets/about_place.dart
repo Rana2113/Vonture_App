@@ -3,7 +3,8 @@ import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/customloc.dart';
 
 class AboutPlace extends StatelessWidget {
-  const AboutPlace({super.key});
+  const AboutPlace({super.key, required this.country});
+  final String country;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +20,10 @@ class AboutPlace extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        const CustomListTile(
-          icon: Icons.location_pin,
-          title: 'City',
-          subTitle: 'San Francisco, California, United States, San Francisco',
-        ),
-        const CustomListTile(
+        CustomListTile(
           icon: Icons.language,
           title: 'Country',
-          subTitle: 'United States',
+          subTitle: country,
         ),
         ClipRRect(
           borderRadius: BorderRadius.circular(12),

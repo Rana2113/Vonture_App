@@ -41,6 +41,12 @@ class SignUpRepoImplementation implements SignUpRepo {
       token = response["token"];
       kTokenBox.put(kTokenBoxString, response["user"]["id"]);
       kTokenBox.put(kTokenBoxString, token);
+      kRoleBox.put(kRoleBoxString, response["user"]["role"]);
+      kTouristApplicationsBox.put(kTouristApplicationsBoxString,
+          response["user"]["toursitApplications"]);
+      print(response["user"]["role"]);
+      print(response["user"]["toursitApplications"]);
+
       return Right(UserModel.fromJson(response["user"]));
     } catch (e) {
       print("SignUpRepo: API call failed - Error: $e"); // Debug log

@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 
-class Opportunity extends StatelessWidget {
-  const Opportunity(
+class OpportunityCard extends StatelessWidget {
+  const OpportunityCard(
       {super.key,
       this.onTap,
       required this.image,

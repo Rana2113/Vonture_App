@@ -7,6 +7,6 @@ abstract class OpportunityRepo {
   Future<Either<Failure, List<OpportunityModel>>> searchOpportunity(
       String query);
 
-  // Future<Either<Failure, List<OpportunityModel>>> getSpecifiOpportunity(
-  //     String query);
+  Future<Either<Failure, OpportunityModel>> getSpecifiOpportunity(int id);
+  Future<Either<Failure, OpportunityModel>> applyOpportunity(int id);
 }
