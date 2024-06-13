@@ -13,6 +13,7 @@ class UserModel {
   int? rating;
   DateTime? createdAt;
   DateTime? updatedAt;
+  List<int>? toursitApplications;
 
   UserModel({
     this.id,
@@ -29,6 +30,7 @@ class UserModel {
     this.rating,
     this.createdAt,
     this.updatedAt,
+    this.toursitApplications,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -52,6 +54,9 @@ class UserModel {
         updatedAt: json['updatedAt'] == null
             ? null
             : DateTime.parse(json['updatedAt'] as String),
+        toursitApplications: (json['touristApplications'] as List<dynamic>?)
+            ?.map((e) => e as int)
+            .toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -69,5 +74,6 @@ class UserModel {
         'rating': rating,
         'createdAt': createdAt?.toIso8601String(),
         'updatedAt': updatedAt?.toIso8601String(),
+        'toursitApplications': toursitApplications,
       };
 }

@@ -2,58 +2,111 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/features/application/presentation/views/application_view.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/opportunity_view.dart';
 import 'package:vonture_grad/features/place/presentation/views/place_view.dart';
 import 'package:vonture_grad/features/profile/presentation/views/profile.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 
 PersistentTabController _controller = PersistentTabController();
 
-class HomeNavBarWidget extends StatelessWidget {
+class HomeNavBarWidget extends StatefulWidget {
   const HomeNavBarWidget({super.key});
+
+  @override
+  _HomeNavBarWidgetState createState() => _HomeNavBarWidgetState();
+}
+
+class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
+  List<Widget> _screens = [];
+  List<PersistentBottomNavBarItem> _items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _updateScreensAndItems();
+  }
+
+  void _updateScreensAndItems() {
+    final userRoleBox = Hive.box(kRoleBoxString);
+    String? role = userRoleBox.get(kRoleBoxString);
+
+    setState(() {
+      _screens = _buildScreens(role);
+      _items = _navBarsItems(role);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
       context,
       controller: _controller,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
+      screens: _screens,
+      items: _items,
       confineInSafeArea: true,
       backgroundColor: kPrimaryColor, // Default is Colors.white.
     );
   }
-}
 
-List<Widget> _buildScreens() {
-  return [
-    const OpportunityView(),
-    const PalceView(),
-    const ProfileView(),
-  ];
-}
+  List<Widget> _buildScreens(String? role) {
+    final List<Widget> screens = [
+      const OpportunityView(),
+      const ProfileView(),
+    ];
 
-List<PersistentBottomNavBarItem> _navBarsItems() {
-  return [
-    PersistentBottomNavBarItem(
-      icon: const Icon(
-        Icons.home,
-        color: kLogoColor,
+    if (role == 'TOURIST') {
+      screens.insert(1, const ApplicationView());
+    } else if (role == 'HOST') {
+      screens.insert(1, const PalceView());
+    }
+
+    return screens;
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems(String? role) {
+    final List<PersistentBottomNavBarItem> items = [
+      PersistentBottomNavBarItem(
+        icon: const Icon(
+          Icons.home,
+          color: kLogoColor,
+        ),
+        activeColorPrimary: kShadowcColor,
       ),
-      activeColorPrimary: kShadowcColor,
-    ),
-    PersistentBottomNavBarItem(
-      icon: const Icon(
-        FontAwesomeIcons.plusCircle,
-        color: kLogoColor,
+      PersistentBottomNavBarItem(
+        icon: const Icon(
+          Icons.person,
+          color: kLogoColor,
+        ),
+        activeColorPrimary: kShadowcColor,
       ),
-      activeColorPrimary: kShadowcColor,
-    ),
-    PersistentBottomNavBarItem(
-      icon: const Icon(
-        Icons.person,
-        color: kLogoColor,
-      ),
-      activeColorPrimary: kShadowcColor,
-    ),
-  ];
+    ];
+
+    if (role == 'TOURIST') {
+      items.insert(
+        1,
+        PersistentBottomNavBarItem(
+          icon: const Icon(
+            FontAwesomeIcons.plusCircle,
+            color: kLogoColor,
+          ),
+          activeColorPrimary: kShadowcColor,
+        ),
+      );
+    } else if (role == 'HOST') {
+      items.insert(
+        1,
+        PersistentBottomNavBarItem(
+          icon: const Icon(
+            FontAwesomeIcons.plusSquare,
+            color: kLogoColor,
+          ),
+          activeColorPrimary: kShadowcColor,
+        ),
+      );
+    }
+
+    return items;
+  }
 }

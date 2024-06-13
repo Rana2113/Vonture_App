@@ -26,6 +26,12 @@ class LoginRepoImplementation implements LoginRepo {
       token = response["token"];
       kTokenBox.put(kTokenBoxString, token);
       kidBox.put(kidBoxString, response["user"]["id"]);
+      kRoleBox.put(kRoleBoxString, response["user"]["role"]);
+      kTouristApplicationsBox.put(kTouristApplicationsBoxString,
+          response["user"]["toursitApplications"]);
+      print(response["user"]["role"]);
+      print(response["user"]["toursitApplications"]);
+
       return Right(UserModel.fromJson(response["user"]));
     } catch (e) {
       if (e is DioException) {

@@ -70,4 +70,57 @@ class OpportunityRepoImplementation implements OpportunityRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, OpportunityModel>> getSpecifiOpportunity(
+      int id) async {
+    try {
+      final response = await apiService.get(
+        endPoint: "${EndPoints.opportunity}/$id",
+        jwt: token,
+      );
+
+      final OpportunityModel opportunity =
+          OpportunityModel.fromJson(response["opportunity"]);
+
+      return Right(opportunity);
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final responseData = e.response?.data;
+      print("statuscode: $statusCode - response: $responseData");
+
+      print("search: API call failed - Error: $e");
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      print("search: API call failed - Error: $e");
+
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, OpportunityModel>> applyOpportunity(int id) async {
+    try {
+      final response = await apiService.post(
+        endPoint: "${EndPoints.opportunity}/$id${EndPoints.applyOpportunity}",
+        jwt: token,
+        data: {},
+      );
+
+      final opportunity = OpportunityModel.fromJson(response["application"]);
+
+      return Right(opportunity);
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final responseData = e.response?.data;
+      print("statusCode: $statusCode - response: $responseData");
+
+      print("applyOpportunity: API call failed - Error: $e");
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      print("applyOpportunity: API call failed - Error: $e");
+
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

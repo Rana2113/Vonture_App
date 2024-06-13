@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OpportunityDetailsUpper extends StatelessWidget {
-  const OpportunityDetailsUpper({super.key});
+  const OpportunityDetailsUpper(
+      {super.key,
+      required this.image,
+      required this.title,
+      required this.from,
+      required this.to});
+  final String image;
+  final String title;
+  final String from;
+  final String to;
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +19,7 @@ class OpportunityDetailsUpper extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Image.asset(
-          "assets/shelter.jpg",
+          image,
           height: 350.h,
           width: 600.w,
           fit: BoxFit.cover,
@@ -24,7 +33,7 @@ class OpportunityDetailsUpper extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Remote, part time \nopportunity',
+                  title,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.sp,
@@ -34,7 +43,7 @@ class OpportunityDetailsUpper extends StatelessWidget {
                 ),
                 SizedBox(height: 8.h),
                 Text(
-                  '\$25/hour · 15 hours/week · 6 months',
+                  'Available from $from to $to',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14.sp,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vonture_grad/core/models/user_model.dart';
 import 'package:vonture_grad/features/Home/presentation/views/widgets/home_nav_bar.dart';
 import 'package:vonture_grad/features/login/presentation/views/login_view.dart';
 import 'package:vonture_grad/features/signup/presentation/views/signup_view.dart';

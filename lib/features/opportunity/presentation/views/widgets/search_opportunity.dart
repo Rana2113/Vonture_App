@@ -68,14 +68,6 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
   }
 }
 
-
-
-
-
-
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:vonture_grad/core/constants.dart/colors.dart';
@@ -124,56 +116,6 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
 //     );
 //   }
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // class SearchOpportunity extends StatelessWidget {
 //   const SearchOpportunity({super.key});

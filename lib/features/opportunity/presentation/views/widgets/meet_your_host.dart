@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
-import 'package:vonture_grad/features/opportunity/presentation/views/widgets/apply_button.dart';
 
 class MeetYourHost extends StatelessWidget {
-  const MeetYourHost({super.key});
+  const MeetYourHost(
+      {super.key,
+      required this.fname,
+      required this.lname,
+      required this.rating});
+  final String fname;
+  final String lname;
+  final String rating;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Meet your host',
           style: TextStyle(
             color: kLogoColor,
@@ -19,19 +26,19 @@ class MeetYourHost extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        SizedBox(height: 15),
+        verticalSpacing(15),
         Align(
           child: Column(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 70,
-                backgroundImage: AssetImage("assets/images/avatar.png"),
+                backgroundImage: AssetImage("assets/avatar.png"),
               ),
-              SizedBox(height: 15),
+              verticalSpacing(15),
               Text(
-                'Linda K.',
+                '$fname $lname',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF161111),
                   fontSize: 22,
                   fontFamily: 'Work Sans',
@@ -39,17 +46,15 @@ class MeetYourHost extends StatelessWidget {
                 ),
               ),
               Text(
-                'Senior Marketing Manager at Apple',
+                rating,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF876B63),
                   fontSize: 16,
                   fontFamily: 'Work Sans',
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(height: 48),
-              ApplyButton(),
             ],
           ),
         ),

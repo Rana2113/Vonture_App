@@ -12,8 +12,12 @@ import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/op
 void main() async {
   setup();
   await Hive.initFlutter();
+
   await Hive.openBox(kTokenBoxString);
   await Hive.openBox(kidBoxString);
+  await Hive.openBox(kRoleBoxString);
+  await Hive.openBox(kTouristApplicationsBoxString);
+
   runApp(const VontureApp());
 }
 
