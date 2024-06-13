@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/features/application/presentation/managers/cubit/application_cubit.dart';
 import 'package:vonture_grad/features/application/presentation/views/application_view.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/opportunity_view.dart';
 import 'package:vonture_grad/features/place/presentation/views/place_view.dart';
@@ -12,7 +14,7 @@ import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 PersistentTabController _controller = PersistentTabController();
 
 class HomeNavBarWidget extends StatefulWidget {
-  const HomeNavBarWidget({super.key});
+  const HomeNavBarWidget({Key? key}) : super(key: key);
 
   @override
   _HomeNavBarWidgetState createState() => _HomeNavBarWidgetState();
@@ -91,6 +93,10 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
             FontAwesomeIcons.plusCircle,
             color: kLogoColor,
           ),
+          onPressed: (context) {
+            _controller.jumpToTab(1); // Navigate to the ApplicationView tab
+            context?.read<ApplicationCubit>().getallopportunity();
+          },
           activeColorPrimary: kShadowcColor,
         ),
       );

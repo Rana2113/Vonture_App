@@ -7,6 +7,7 @@ part 'opportunity_state.dart';
 class OpportunityCubit extends Cubit<OpportunityState> {
   OpportunityCubit(this.opportunityRepoImplementation)
       : super(OpportunityInitial());
+
   final OpportunityRepoImplementation opportunityRepoImplementation;
   static OpportunityCubit get(context) => BlocProvider.of(context);
 
@@ -67,6 +68,8 @@ class OpportunityCubit extends Cubit<OpportunityState> {
     emit(ApplyOpportunityLoading());
     print("apply: apply called");
     final response = await opportunityRepoImplementation.applyOpportunity(id);
+    getallopportunity();
+
     print("apply: apply result: $response");
 
     response.fold(

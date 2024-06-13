@@ -5,8 +5,8 @@ class OpportunityModel {
   int? id;
   String? title;
   String? description;
-  DateTime? from;
-  DateTime? to;
+  String? from;
+  String? to;
   DateTime? createdAt;
   Place? place;
   Host? host;
@@ -27,9 +27,8 @@ class OpportunityModel {
       id: json['id'] as int?,
       title: json['title'] as String?,
       description: json['description'] as String?,
-      from:
-          json['from'] == null ? null : DateTime.parse(json['from'] as String),
-      to: json['to'] == null ? null : DateTime.parse(json['to'] as String),
+      from: json['from'] as String?,
+      to: json['to'] as String?,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -46,8 +45,8 @@ class OpportunityModel {
         'id': id,
         'title': title,
         'description': description,
-        'from': from?.toIso8601String(),
-        'to': to?.toIso8601String(),
+        'from': from,
+        'to': to,
         'createdAt': createdAt?.toIso8601String(),
         'place': place?.toJson(),
         'host': host?.toJson(),

@@ -44,6 +44,8 @@ class OpportunityViewBody extends StatelessWidget {
                 image: 'assets/shelter.jpg',
                 title: state.opportunityList[index].title ?? ' ',
                 description: state.opportunityList[index].description ?? ' ',
+                from: state.opportunityList[index].from ?? '',
+                to: state.opportunityList[index].to ?? '',
               );
             },
           ),
@@ -79,6 +81,8 @@ class OpportunityViewBody extends StatelessWidget {
                   image: 'assets/shelter.jpg',
                   title: state.opportunities[index].title ?? ' ',
                   description: state.opportunities[index].description ?? ' ',
+                  from: state.opportunities[index].from ?? ' ',
+                  to: state.opportunities[index].to ?? ' ',
                 );
               },
             ),

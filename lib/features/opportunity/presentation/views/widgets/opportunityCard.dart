@@ -9,11 +9,15 @@ class OpportunityCard extends StatelessWidget {
       this.onTap,
       required this.image,
       required this.title,
-      required this.description});
+      required this.description,
+      required this.from,
+      required this.to});
   final Function()? onTap;
   final String image;
   final String title;
   final String description;
+  final String from;
+  final String to;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +85,7 @@ class OpportunityCard extends StatelessWidget {
                               color: kTextColor2,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500)),
-                      Text('2024-07-01',
+                      Text(from,
                           style: TextStyle(
                               color: kTextColor3,
                               fontSize: 14.sp,
@@ -91,7 +95,7 @@ class OpportunityCard extends StatelessWidget {
                               color: kTextColor2,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500)),
-                      Text('2024-07-15',
+                      Text(to,
                           style: TextStyle(
                               color: kTextColor3,
                               fontSize: 14.sp,

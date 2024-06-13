@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:vonture_grad/core/utils/api_service.dart';
+import 'package:vonture_grad/features/application/data/repositories/application_repo_implementation.dart';
 import 'package:vonture_grad/features/login/data/login_repo.dart';
 import 'package:vonture_grad/features/login/data/login_repo_implementation.dart';
 import 'package:vonture_grad/features/login/presentation/managers/cubit/login_cubit.dart';
@@ -25,9 +26,13 @@ void setup() {
             apiService: getIt<ApiService>(),
           ));
   getIt.registerFactory(() => SignUpCubit(getIt<SignUpRepo>()));
+
   getIt.registerLazySingleton<OpportunityRepoImplementation>(
     () => OpportunityRepoImplementation(
       apiService: getIt<ApiService>(),
     ),
+  );
+  getIt.registerLazySingleton<ApplicationRepoImplementation>(
+    () => ApplicationRepoImplementation(apiService: getIt<ApiService>()),
   );
 }

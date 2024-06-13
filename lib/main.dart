@@ -6,6 +6,8 @@ import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/utils/app_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vonture_grad/core/utils/service_locator.dart';
+import 'package:vonture_grad/features/application/data/repositories/application_repo_implementation.dart';
+import 'package:vonture_grad/features/application/presentation/managers/cubit/application_cubit.dart';
 import 'package:vonture_grad/features/opportunity/data/opportunity_repo_implementation.dart';
 import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/opportunity_cubit.dart';
 
@@ -30,7 +32,10 @@ class VontureApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (context) =>
-                OpportunityCubit(getIt<OpportunityRepoImplementation>()))
+                OpportunityCubit(getIt<OpportunityRepoImplementation>())),
+        BlocProvider(
+            create: (context) =>
+                ApplicationCubit(getIt<ApplicationRepoImplementation>())),
       ],
       child: ScreenUtilInit(
         designSize: const Size(388, 920),

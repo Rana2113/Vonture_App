@@ -4,8 +4,8 @@ class Opportunity {
   int? id;
   String? title;
   String? description;
-  DateTime? from;
-  DateTime? to;
+  String? from;
+  String? to;
   Host? host;
 
   Opportunity({
@@ -21,10 +21,8 @@ class Opportunity {
         id: json['id'] as int?,
         title: json['title'] as String?,
         description: json['description'] as String?,
-        from: json['from'] == null
-            ? null
-            : DateTime.parse(json['from'] as String),
-        to: json['to'] == null ? null : DateTime.parse(json['to'] as String),
+        from: json['from'] as String?,
+        to: json['to'] as String?,
         host: json['host'] == null
             ? null
             : Host.fromJson(json['host'] as Map<String, dynamic>),
@@ -34,8 +32,8 @@ class Opportunity {
         'id': id,
         'title': title,
         'description': description,
-        'from': from?.toIso8601String(),
-        'to': to?.toIso8601String(),
+        'from': from,
+        'to': to,
         'host': host?.toJson(),
       };
 }

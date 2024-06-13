@@ -411,8 +411,8 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                 OpportunityDetailsUpper(
                   image: 'assets/shelter.jpg',
                   title: state.detailsopportunity.title ?? ' ',
-                  from: state.detailsopportunity.from?.toIso8601String() ?? '',
-                  to: state.detailsopportunity.to?.toIso8601String() ?? '',
+                  from: state.detailsopportunity.from ?? '',
+                  to: state.detailsopportunity.to ?? '',
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),

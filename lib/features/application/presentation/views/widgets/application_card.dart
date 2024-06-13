@@ -57,6 +57,14 @@ class ApplicationCard extends StatelessWidget {
                           color: Colors.grey,
                         ),
                       ),
+                      verticalSpacing(8),
+                      Text(
+                        'Status: $status',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -71,14 +79,6 @@ class ApplicationCard extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ),
-        verticalSpacing(8),
-        Text(
-          'Status: $status',
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
           ),
         ),
       ],
