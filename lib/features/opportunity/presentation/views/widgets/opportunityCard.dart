@@ -31,7 +31,7 @@ class OpportunityCard extends StatelessWidget {
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: 340.h, // Set your desired maximum height here
+            maxHeight: 360.h,
           ),
           child: Card(
             color: kCardColor,
@@ -83,23 +83,23 @@ class OpportunityCard extends StatelessWidget {
                       Text('Available From  ',
                           style: TextStyle(
                               color: kTextColor2,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500)),
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400)),
                       Text(from,
                           style: TextStyle(
                               color: kTextColor3,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600)),
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500)),
                       Text(' To ',
                           style: TextStyle(
                               color: kTextColor2,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500)),
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400)),
                       Text(to,
                           style: TextStyle(
                               color: kTextColor3,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600)),
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500)),
                     ],
                   ),
                 ],

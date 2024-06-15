@@ -27,7 +27,7 @@ class OpportunityViewBody extends StatelessWidget {
       } else if (state is OpportunitySuccessState) {
         return Expanded(
           child: ListView.builder(
-            padding: EdgeInsets.zero, // Ensure no padding above the list
+            padding: EdgeInsets.zero,
             shrinkWrap: true,
             itemCount: state.opportunityList.length,
             itemBuilder: (context, index) {
@@ -63,8 +63,7 @@ class OpportunityViewBody extends StatelessWidget {
         } else {
           return Expanded(
             child: ListView.builder(
-              padding: EdgeInsets.zero, // Ensure no padding above the list
-
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               itemCount: state.opportunities.length,
               itemBuilder: (context, index) {

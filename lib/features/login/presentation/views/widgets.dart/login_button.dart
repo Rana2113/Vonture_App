@@ -16,7 +16,6 @@ class LoginButton extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginSuccess) {
           context.go(AppRouter.kHome);
-          // GoRouter.of(context).pushReplacement(AppRouter.kHome);
         } else if (state is LoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

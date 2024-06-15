@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SlidingImage extends StatelessWidget {
   const SlidingImage({
@@ -9,8 +10,8 @@ class SlidingImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: 150,
-        width: 100,
+        height: 150.h,
+        width: 100.w,
         child: Image.asset('assets/BAG2.png'),
       ),
     );
@@ -24,8 +25,8 @@ class SlidingVonture extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: 100,
-        width: 150,
+        height: 100.h,
+        width: 150.w,
         child: Image.asset('assets/LOGO2.png'),
       ),
     );
@@ -45,7 +46,7 @@ class SlidingText extends StatelessWidget {
         'Travel With Purpose',
         style: TextStyle(
           color: const Color(0xffD79977),
-          fontSize: 13 * MediaQuery.of(context).size.width / 500,
+          fontSize: 13.sp,
           // fontSize: 13,
           // fontSize: width * 0.026,
           fontWeight: FontWeight.w900,

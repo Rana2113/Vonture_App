@@ -14,7 +14,7 @@ import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 PersistentTabController _controller = PersistentTabController();
 
 class HomeNavBarWidget extends StatefulWidget {
-  const HomeNavBarWidget({Key? key}) : super(key: key);
+  const HomeNavBarWidget({super.key});
 
   @override
   _HomeNavBarWidgetState createState() => _HomeNavBarWidgetState();
@@ -48,7 +48,7 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
       screens: _screens,
       items: _items,
       confineInSafeArea: true,
-      backgroundColor: kPrimaryColor, // Default is Colors.white.
+      backgroundColor: kPrimaryColor,
     );
   }
 
@@ -90,11 +90,11 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
         1,
         PersistentBottomNavBarItem(
           icon: const Icon(
-            FontAwesomeIcons.plusCircle,
+            FontAwesomeIcons.fileCircleCheck,
             color: kLogoColor,
           ),
           onPressed: (context) {
-            _controller.jumpToTab(1); // Navigate to the ApplicationView tab
+            _controller.jumpToTab(1);
             context?.read<ApplicationCubit>().getallopportunity();
           },
           activeColorPrimary: kShadowcColor,
@@ -105,7 +105,7 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
         1,
         PersistentBottomNavBarItem(
           icon: const Icon(
-            FontAwesomeIcons.plusSquare,
+            FontAwesomeIcons.mapLocationDot,
             color: kLogoColor,
           ),
           activeColorPrimary: kShadowcColor,
