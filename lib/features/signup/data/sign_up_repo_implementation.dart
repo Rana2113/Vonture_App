@@ -49,7 +49,7 @@ class SignUpRepoImplementation implements SignUpRepo {
 
       return Right(UserModel.fromJson(response["user"]));
     } catch (e) {
-      print("SignUpRepo: API call failed - Error: $e"); // Debug log
+      print("SignUpRepo: API call failed - Error: $e");
 
       if (e is DioException) {
         final statusCode = e.response?.statusCode;

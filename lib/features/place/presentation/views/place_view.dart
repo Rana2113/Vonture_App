@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
+import 'package:vonture_grad/features/place/presentation/views/add_place_view.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/place_view_body.dart';
 
 class PalceView extends StatelessWidget {
@@ -10,9 +13,15 @@ class PalceView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _buildAppBar(context),
-        body: const PlaceViewBody(),
+        body: BlocProvider.value(
+          value: BlocProvider.of<PlaceCubit>(context),
+          child: const PlaceViewBody(),
+        ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const AddPlaceView()));
+          },
           backgroundColor: kCardColor,
           child: const Icon(
             Icons.add,

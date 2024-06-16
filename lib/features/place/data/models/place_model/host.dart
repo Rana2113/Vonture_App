@@ -2,7 +2,7 @@ class Host {
   int? id;
   String? firstName;
   String? lastName;
-  double? rating;
+  int? rating;
 
   Host({this.id, this.firstName, this.lastName, this.rating});
 
@@ -10,7 +10,7 @@ class Host {
         id: json['id'] as int?,
         firstName: json['first_name'] as String?,
         lastName: json['last_name'] as String?,
-        rating: (json['rating'] as num?)?.toDouble(),
+        rating: json['rating'] as int?,
       );
 
   Map<String, dynamic> toJson() => {

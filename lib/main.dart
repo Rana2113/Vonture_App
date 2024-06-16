@@ -10,6 +10,8 @@ import 'package:vonture_grad/features/application/data/repositories/application_
 import 'package:vonture_grad/features/application/presentation/managers/cubit/application_cubit.dart';
 import 'package:vonture_grad/features/opportunity/data/opportunity_repo_implementation.dart';
 import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/opportunity_cubit.dart';
+import 'package:vonture_grad/features/place/data/place_repo_implementation.dart';
+import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 
 void main() async {
   setup();
@@ -36,6 +38,8 @@ class VontureApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 ApplicationCubit(getIt<ApplicationRepoImplementation>())),
+        BlocProvider(
+            create: (context) => PlaceCubit(getIt<PlaceRepoImplementation>())),
       ],
       child: ScreenUtilInit(
         designSize: const Size(388, 920),

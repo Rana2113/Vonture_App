@@ -61,13 +61,13 @@ class AppTextField extends StatelessWidget {
       ),
     );
   }
+}
 
-  OutlineInputBorder buildOutlineInputBorder(Color colorborder) {
-    return OutlineInputBorder(
-        borderSide: BorderSide(
-          color: colorborder,
-          width: 1.2.w,
-        ),
-        borderRadius: BorderRadius.circular(16));
-  }
+OutlineInputBorder buildOutlineInputBorder(Color colorborder) {
+  return OutlineInputBorder(
+      borderSide: BorderSide(
+        color: colorborder,
+        width: 1.2.w,
+      ),
+      borderRadius: BorderRadius.circular(16));
 }

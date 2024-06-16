@@ -24,20 +24,17 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(SignUpLoading());
     print("SignUpCubit: login called");
 
-    ///
     String role;
     if (selectedValue == 'Tourist') {
       role = 'TOURIST';
     } else if (selectedValue == 'Host') {
       role = 'HOST';
     } else {
-      // Handle invalid selection case
       role = '';
       print("SignUpCubit: Invalid role selected");
       emit(SignUpFailure("Invalid role selected"));
       return;
     }
-////
     var result = await signUpRepo.signUp(
       firstname,
       lastname,
