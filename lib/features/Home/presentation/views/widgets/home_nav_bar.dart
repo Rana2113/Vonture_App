@@ -6,6 +6,7 @@ import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/application/presentation/managers/cubit/application_cubit.dart';
 import 'package:vonture_grad/features/application/presentation/views/application_view.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/opportunity_view.dart';
+import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 import 'package:vonture_grad/features/place/presentation/views/place_view.dart';
 import 'package:vonture_grad/features/profile/presentation/views/profile.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -108,6 +109,11 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
             FontAwesomeIcons.mapLocationDot,
             color: kLogoColor,
           ),
+          onPressed: (context) {
+            final userid = Hive.box(kidBoxString).get(kidBoxString);
+            _controller.jumpToTab(1);
+            context?.read<PlaceCubit>().getmyplace(userid);
+          },
           activeColorPrimary: kShadowcColor,
         ),
       );

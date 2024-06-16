@@ -6,6 +6,7 @@ import 'package:vonture_grad/features/login/data/login_repo.dart';
 import 'package:vonture_grad/features/login/data/login_repo_implementation.dart';
 import 'package:vonture_grad/features/login/presentation/managers/cubit/login_cubit.dart';
 import 'package:vonture_grad/features/opportunity/data/opportunity_repo_implementation.dart';
+import 'package:vonture_grad/features/place/data/place_repo_implementation.dart';
 import 'package:vonture_grad/features/signup/data/sign_up_repo.dart';
 import 'package:vonture_grad/features/signup/data/sign_up_repo_implementation.dart';
 import 'package:vonture_grad/features/signup/presentation/managers/cubit/sign_up_cubit.dart';
@@ -34,5 +35,8 @@ void setup() {
   );
   getIt.registerLazySingleton<ApplicationRepoImplementation>(
     () => ApplicationRepoImplementation(apiService: getIt<ApiService>()),
+  );
+  getIt.registerLazySingleton<PlaceRepoImplementation>(
+    () => PlaceRepoImplementation(apiService: getIt<ApiService>()),
   );
 }

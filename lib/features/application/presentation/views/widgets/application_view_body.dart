@@ -80,10 +80,6 @@ class _ApplicationViewBodyState extends State<ApplicationViewBody> {
   }
 }
 
-
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:vonture_grad/core/constants.dart/colors.dart';

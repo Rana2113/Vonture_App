@@ -39,6 +39,7 @@ class OpportunityRepoImplementation implements OpportunityRepo {
     }
   }
 
+  @override
   Future<Either<Failure, List<OpportunityModel>>> searchOpportunity(
       String query) async {
     try {

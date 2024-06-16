@@ -3,16 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 
 class Date extends StatefulWidget {
-  const Date(
-      {super.key,
-      required this.hinttext,
-      required this.type,
-      this.suffixIcon,
-      this.controller,
-      this.validator,
-      this.firstDate,
-      this.lastDate,
-      this.onTap});
+  const Date({
+    super.key,
+    required this.hinttext,
+    required this.type,
+    this.suffixIcon,
+    this.controller,
+    this.validator,
+    this.firstDate,
+    this.lastDate,
+    this.onTap,
+  });
 
   final String hinttext;
   final TextInputType type;
@@ -37,74 +38,68 @@ class _DateState extends State<Date> {
       child: TextFormField(
         validator: widget.validator,
         controller: widget.controller,
+        readOnly: true, // Make the TextFormField read-only
         decoration: InputDecoration(
-          suffixIcon: widget.suffixIcon,
+          suffixIcon: widget.suffixIcon ?? const Icon(Icons.calendar_today),
           hintText: widget.hinttext,
           hintStyle: TextStyle(
-              color: const Color(0xff96734F),
-              fontSize: 14.sp,
-              height: 0.09,
-              fontWeight: FontWeight.w400),
-          border: buildOutlineInputBorder(
-            kBorderColor2,
+            color: const Color(0xff96734F),
+            fontSize: 14.sp,
+            height: 0.09,
+            fontWeight: FontWeight.w400,
           ),
-          focusedBorder: buildOutlineInputBorder(
-            kFocusBorder,
-          ),
+          border: buildOutlineInputBorder(kBorderColor2),
+          focusedBorder: buildOutlineInputBorder(kFocusBorder),
           errorBorder: buildOutlineInputBorder(kErrorBorder),
           focusedErrorBorder: buildOutlineInputBorder(kErrorBorder),
           contentPadding: const EdgeInsets.all(12),
           filled: true,
-          fillColor: const Color(0xffF5F2F0),
-          // fillColor: const Color.fromARGB(255, 249, 239, 233),
+          fillColor: kCardColor,
         ),
-        onTap: widget.onTap,
+        onTap: () async {
+          final DateTime? pickedDate = await _selectDate(context);
+          if (pickedDate != null) {
+            setState(() {
+              selectedDate = pickedDate;
+              widget.controller?.text =
+                  "${selectedDate.toLocal()}".split(' ')[0];
+            });
+          }
+        },
       ),
+    );
+  }
+
+  Future<DateTime?> _selectDate(BuildContext context) async {
+    return showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: widget.firstDate ?? DateTime(2000),
+      lastDate: widget.lastDate ?? DateTime(2101),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: kLogoColor,
+              onPrimary: Colors.white,
+              surface: kCardColor,
+              onSurface: kTextColor2,
+            ),
+            dialogBackgroundColor: kCardColor,
+          ),
+          child: child!,
+        );
+      },
     );
   }
 
   OutlineInputBorder buildOutlineInputBorder(Color colorborder) {
     return OutlineInputBorder(
-        borderSide: BorderSide(
-          color: colorborder,
-          width: 1.2.w,
-        ),
-        borderRadius: BorderRadius.circular(16));
+      borderSide: BorderSide(
+        color: colorborder,
+        width: 1.2.w,
+      ),
+      borderRadius: BorderRadius.circular(16),
+    );
   }
 }
-
-//   return Padding(
-//     padding: EdgeInsets.symmetric(horizontal: 16.w),
-//     child: DOBInputField(
-//       firstDate: DateTime(1900),
-//       lastDate: DateTime(2006),
-//       dateFormatType: DateFormatType.YYYYMMDD,
-//       showCursor: true,
-//       cursorColor: const Color(0xff96734F),
-//       inputDecoration: InputDecoration(
-//         suffixIcon: const Icon(Icons.calendar_today_outlined),
-//         border: buildOutlineInputBorder(
-//           kBorderColor2,
-//         ),
-//         focusedBorder: buildOutlineInputBorder(
-//           kFocusBorder,
-//         ),
-//         errorBorder: buildOutlineInputBorder(kErrorBorder),
-//         focusedErrorBorder: buildOutlineInputBorder(kErrorBorder),
-//         contentPadding: const EdgeInsets.all(12),
-//         filled: true,
-//         fillColor: const Color(0xffF5F2F0),
-//         // fillColor: const Color.fromARGB(255, 249, 239, 233),
-//       ),
-//     ),
-//   );
-// }
-
-// OutlineInputBorder buildOutlineInputBorder(Color colorborder) {
-//   return OutlineInputBorder(
-//       borderSide: BorderSide(
-//         color: colorborder,
-//         width: 1.2.w,
-//       ),
-//       borderRadius: BorderRadius.circular(16));
-// }
