@@ -1,8 +1,13 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vonture_grad/core/error/failures.dart';
+import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
+import 'package:vonture_grad/features/place/data/models/place_model/create_opportunity.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/place_model.dart';
+import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
 import 'package:vonture_grad/features/place/data/place_repo_implementation.dart';
 
 part 'place_state.dart';
@@ -11,6 +16,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   PlaceCubit(this.placeRepoImplementation) : super(PlaceLoadingState());
   final PlaceRepoImplementation placeRepoImplementation;
   static PlaceCubit get(context) => BlocProvider.of(context);
+
   Future<void> getmyplace(int id) async {
     emit(PlaceLoadingState());
     print("PlaceCubit: Place called");
@@ -21,6 +27,21 @@ class PlaceCubit extends Cubit<PlaceState> {
       (placeList) {
         print("PlaceCubit: Place successful - User: $placeList");
         emit(PlaceSucessState(placeList: placeList));
+      },
+    );
+  }
+
+  Future<void> getallplaceopportunity(int id) async {
+    emit(GetAllPlaceOpportunityLoadingState());
+    print("PlaceCubit: opportunity called");
+    final response = await placeRepoImplementation.getallplaceopportunity(id);
+    print("PlaceCubit: opportunity result: $response");
+    response.fold(
+      (failure) =>
+          emit(GetAllPlaceOpportunityErrorState(message: failure.toString())),
+      (opportunity) {
+        print("PlaceCubit: opportunity successful - User: $opportunity");
+        emit(GetAllPlaceOpportunitySucessState(opportunity: opportunity));
       },
     );
   }
@@ -85,5 +106,98 @@ class PlaceCubit extends Cubit<PlaceState> {
     }
     print("PlaceCubit: Files: $files");
     return files;
+  }
+
+  Future<void> getRequirementsAndOffers() async {
+    emit(GetRequirementAndOffersLoadingState());
+    print("PlaceCubit: Fetching requirements and offers");
+
+    final results = await Future.wait([
+      placeRepoImplementation.getRequirements(),
+      placeRepoImplementation.getOffers(),
+    ]);
+
+    final requirementsResult =
+        results[0] as Either<Failure, List<Requirements>>;
+    final offersResult = results[1] as Either<Failure, List<Offers>>;
+
+    requirementsResult.fold(
+      (failure) {
+        print(
+            "PlaceCubit: Fetching requirements failed - Error: ${failure.toString()}");
+        emit(GetRequirementAndOffersErrorState(message: failure.toString()));
+      },
+      (requirements) {
+        offersResult.fold(
+          (failure) {
+            print(
+                "PlaceCubit: Fetching offers failed - Error: ${failure.toString()}");
+            emit(
+                GetRequirementAndOffersErrorState(message: failure.toString()));
+          },
+          (offers) {
+            print("PlaceCubit: Fetching requirements and offers succeeded");
+            emit(GetRequirementAndOffersSucessState(
+              requirements: requirements,
+              offers: offers,
+            ));
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> createOpportunity(
+    int id, {
+    required String title,
+    required String description,
+    required String from,
+    required String to,
+    required List<int> requirements,
+    required List<int> offers,
+  }) async {
+    emit(CreateOpportunityLoadingState());
+    print("PlaceCubit: Creating opportunity");
+    final result = await placeRepoImplementation.createopportunity(
+      id,
+      title,
+      description,
+      from,
+      to,
+      requirements,
+      offers,
+    );
+    print("PlaceCubit: Create opportunity result: $result");
+    result.fold(
+      (failure) {
+        print(
+            "PlaceCubit: Create opportunity failed - Error: ${failure.toString()}");
+        emit(CreateOpportunityErrorState(message: failure.toString()));
+      },
+      (createopportunity) {
+        print(
+            "PlaceCubit: Create opportunity successful - Opportunity: $createopportunity");
+        emit(CreateOpportunitySucessState(opportunity: createopportunity));
+      },
+    );
+  }
+
+  Future<void> closeOpportunity(int id) async {
+    emit(CloseOpportunityLoading());
+    print("PlaceCubit: Closing opportunity");
+    final response = await placeRepoImplementation.closeOpportunity(id);
+    print("PlaceCubit: Close opportunity result: $response");
+
+    response.fold(
+      (failure) {
+        print(
+            "PlaceCubit: Close opportunity failed - Error: ${failure.toString()}");
+        emit(CloseOpportunityError(message: failure.toString()));
+      },
+      (success) async {
+        emit(CloseOpportunity(message: success));
+        print("PlaceCubit: Close opportunity successful - Message: $success");
+      },
+    );
   }
 }

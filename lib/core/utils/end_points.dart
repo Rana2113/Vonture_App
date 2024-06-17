@@ -7,4 +7,7 @@ class EndPoints {
   static const String application = '/applications';
   static const String user = '/users/';
   static const String place = '/places';
+  static const String requirements = '/requirements';
+  static const String offers = '/offers';
+  static const String createopportunity = '/opportunities';
 }

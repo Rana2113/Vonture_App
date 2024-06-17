@@ -5,6 +5,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/application/presentation/managers/cubit/application_cubit.dart';
 import 'package:vonture_grad/features/application/presentation/views/application_view.dart';
+import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/opportunity_cubit.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/opportunity_view.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 import 'package:vonture_grad/features/place/presentation/views/place_view.dart';
@@ -62,7 +63,7 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
     if (role == 'TOURIST') {
       screens.insert(1, const ApplicationView());
     } else if (role == 'HOST') {
-      screens.insert(1, const PalceView());
+      screens.insert(1, const MyPalceView());
     }
 
     return screens;
@@ -75,6 +76,10 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
           Icons.home,
           color: kLogoColor,
         ),
+        onPressed: (context) {
+          _controller.jumpToTab(0);
+          context?.read<OpportunityCubit>().getallopportunity();
+        },
         activeColorPrimary: kShadowcColor,
       ),
       PersistentBottomNavBarItem(

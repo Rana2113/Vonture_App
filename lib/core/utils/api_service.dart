@@ -41,6 +41,62 @@ class ApiService {
     }
   }
 
+  Future<List<dynamic>> getreq({
+    required String endPoint,
+    String? jwt,
+  }) async {
+    try {
+      print("ApiService: get called request: $_baseUrl$endPoint");
+      _dio.options.headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt',
+      };
+
+      var response = await _dio.get('$_baseUrl$endPoint');
+      print("ApiService: response received: $response");
+
+      if (response.statusCode == 200) {
+        return response.data as List<dynamic>;
+      } else {
+        throw Exception('Failed to fetch data: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch data: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> get({
+    required String endPoint,
+    String? jwt,
+  }) async {
+    print("ApiService: post called request: to $_baseUrl$endPoint");
+    _dio.options.headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $jwt',
+    };
+    var response = await _dio.get(
+      '$_baseUrl$endPoint',
+    );
+    print("ApiService:  response received : ${response}");
+
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> put({
+    required String endPoint,
+    String? jwt,
+    required Map<String, dynamic> data,
+  }) async {
+    print("ApiService: put called request: to $_baseUrl$endPoint");
+    _dio.options.headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $jwt',
+    };
+    var response = await _dio.put("$_baseUrl$endPoint", data: data);
+    print("ApiService: response received: $response");
+    return response.data;
+  }
+
   // Future<Map<String, dynamic>> post({
   //   required String endPoint,
   //   String? jwt,
@@ -60,21 +116,4 @@ class ApiService {
 
   //   return response.data;
   // }
-
-  Future<Map<String, dynamic>> get({
-    required String endPoint,
-    String? jwt,
-  }) async {
-    print("ApiService: post called request: to $_baseUrl$endPoint");
-    _dio.options.headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $jwt',
-    };
-    var response = await _dio.get(
-      '$_baseUrl$endPoint',
-    );
-    print("ApiService:  response received : ${response}");
-
-    return response.data;
-  }
 }

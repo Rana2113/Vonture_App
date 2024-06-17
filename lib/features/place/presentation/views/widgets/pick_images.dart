@@ -11,10 +11,10 @@ class ImagePickerContainer extends StatefulWidget {
   final Function(List<XFile>) onImagesChanged;
 
   const ImagePickerContainer({
-    Key? key,
+    super.key,
     required this.initialMediaFiles,
     required this.onImagesChanged,
-  }) : super(key: key);
+  });
 
   @override
   _ImagePickerContainerState createState() => _ImagePickerContainerState();

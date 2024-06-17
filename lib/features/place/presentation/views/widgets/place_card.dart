@@ -7,12 +7,16 @@ class PlaceCard extends StatelessWidget {
   final String title;
   final String country;
   final String rating;
+  final String? state;
+  final void Function()? ontap;
 
   const PlaceCard({
     super.key,
     required this.title,
     required this.country,
     required this.rating,
+    required this.state,
+    this.ontap,
   });
 
   @override
@@ -81,24 +85,25 @@ class PlaceCard extends StatelessWidget {
               ),
             ),
             verticalSpacing(16.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kLogoColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+            if (state != 'PENDING') // Conditionally render the button
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: ElevatedButton(
+                  onPressed: ontap,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kLogoColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'Add Opportunity',
-                  style: TextStyle(
-                    color: Color(0xff8C6B59),
+                  child: const Text(
+                    'Add Opportunity',
+                    style: TextStyle(
+                      color: Color(0xff8C6B59),
+                    ),
                   ),
                 ),
               ),
-            ),
             verticalSpacing(16.h),
           ],
         ),
