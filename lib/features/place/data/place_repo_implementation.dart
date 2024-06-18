@@ -60,7 +60,7 @@ class PlaceRepoImplementation implements PlaceRepo {
           endPoint: '${EndPoints.place}/$id${EndPoints.opportunity}',
           jwt: token);
       print("Response from API: $response");
-      if (response != null && response["opportunities"] is List) {
+      if (response["opportunities"] is List) {
         final List<CreateOpportuntity> opportunityList =
             (response["opportunities"] as List)
                 .map((opportunity) => CreateOpportuntity.fromJson(opportunity))
@@ -228,27 +228,6 @@ class PlaceRepoImplementation implements PlaceRepo {
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       print("offers: API call failed - Error: $e");
-      return Left(ServerFailure(e.toString()));
-    }
-  }
-
-  Future<Either<Failure, String>> closeOpportunity(int id) async {
-    try {
-      final response = await apiService.put(
-        endPoint: "${EndPoints.opportunity}$id",
-        jwt: token,
-        data: {},
-      );
-      print("Response from API: $response");
-      return Right(response.toString());
-    } on DioException catch (e) {
-      final statusCode = e.response?.statusCode;
-      final responseData = e.response?.data;
-      print("statuscode: $statusCode - response: $responseData ");
-      print("Place: API call failed - Error: $e");
-      return Left(ServerFailure.fromDioException(e));
-    } catch (e) {
-      print("Place: API call failed - Error: $e");
       return Left(ServerFailure(e.toString()));
     }
   }

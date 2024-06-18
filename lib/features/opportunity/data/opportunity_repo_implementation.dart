@@ -124,4 +124,27 @@ class OpportunityRepoImplementation implements OpportunityRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, OpportunityModel>> closeopportunity(int id) async {
+    try {
+      final response = await apiService.put(
+        endPoint: "${EndPoints.opportunity}$id",
+        jwt: token,
+        data: {},
+      );
+      final close = OpportunityModel.fromJson(response["opportunity"]);
+      print("Response from API: $response");
+      return Right(close);
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final responseData = e.response?.data;
+      print("statuscode: $statusCode - response: $responseData ");
+      print("Place: API call failed - Error: $e");
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      print("Place: API call failed - Error: $e");
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

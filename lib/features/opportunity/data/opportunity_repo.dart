@@ -9,4 +9,5 @@ abstract class OpportunityRepo {
 
   Future<Either<Failure, OpportunityModel>> getSpecifiOpportunity(int id);
   Future<Either<Failure, OpportunityModel>> applyOpportunity(int id);
+  Future<Either<Failure, OpportunityModel>> closeopportunity(int id);
 }

@@ -80,4 +80,23 @@ class OpportunityCubit extends Cubit<OpportunityState> {
       emit(ApplyOpportunitySuccess(applyopportunity: applyopportunity));
     });
   }
+
+  Future<void> closeOpportunity(int id) async {
+    emit(CloseOpportunityLoading());
+    print("PlaceCubit: Closing opportunity");
+    final response = await opportunityRepoImplementation.closeopportunity(id);
+    print("PlaceCubit: Close opportunity result: $response");
+    response.fold(
+      (failure) {
+        print(
+            "PlaceCubit: Close opportunity failed - Error: ${failure.toString()}");
+        emit(CloseOpportunityError(message: failure.toString()));
+      },
+      (Closeopportunity) async {
+        emit(CloseOpportunity(closeOpportunity: Closeopportunity));
+        print(
+            "PlaceCubit: Close opportunity successful - Message: $Closeopportunity");
+      },
+    );
+  }
 }

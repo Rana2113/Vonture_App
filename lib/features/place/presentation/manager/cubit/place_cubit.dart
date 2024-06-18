@@ -181,23 +181,4 @@ class PlaceCubit extends Cubit<PlaceState> {
       },
     );
   }
-
-  Future<void> closeOpportunity(int id) async {
-    emit(CloseOpportunityLoading());
-    print("PlaceCubit: Closing opportunity");
-    final response = await placeRepoImplementation.closeOpportunity(id);
-    print("PlaceCubit: Close opportunity result: $response");
-
-    response.fold(
-      (failure) {
-        print(
-            "PlaceCubit: Close opportunity failed - Error: ${failure.toString()}");
-        emit(CloseOpportunityError(message: failure.toString()));
-      },
-      (success) async {
-        emit(CloseOpportunity(message: success));
-        print("PlaceCubit: Close opportunity successful - Message: $success");
-      },
-    );
-  }
 }

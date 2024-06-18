@@ -10,6 +10,14 @@ abstract class Styles {
     letterSpacing: 0.90,
     color: Colors.white,
   );
+  static const text24w700 = TextStyle(
+    color: PrimaryColor,
+    fontSize: 20,
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.w700,
+    height: 1,
+    letterSpacing: -0.99,
+  );
   static const text20w400 = TextStyle(
     color: Colors.white,
     fontSize: 20,

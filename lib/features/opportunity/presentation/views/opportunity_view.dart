@@ -6,7 +6,9 @@ import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opp
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/search_opportunity.dart';
 
 class OpportunityView extends StatelessWidget {
-  const OpportunityView({Key? key});
+  const OpportunityView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

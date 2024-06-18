@@ -5,8 +5,7 @@ import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cub
 import 'package:vonture_grad/features/place/presentation/views/widgets/my_opportunity_view_body.dart';
 
 class MyOpportunityView extends StatelessWidget {
-  const MyOpportunityView({Key? key, this.onPressed, required this.placeId})
-      : super(key: key);
+  const MyOpportunityView({super.key, this.onPressed, required this.placeId});
 
   final void Function()? onPressed;
   final int placeId;

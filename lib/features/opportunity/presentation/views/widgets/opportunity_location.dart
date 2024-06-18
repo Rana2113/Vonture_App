@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/customloc.dart';
 
 class OpportunityLocation extends StatelessWidget {
@@ -17,19 +17,10 @@ class OpportunityLocation extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Location',
-          style: TextStyle(
-            color: kLogoColor,
-            fontSize: 22,
-            fontFamily: 'Work Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        const Text('Location', style: Styles.text24w700),
         CustomListTile(
           icon: Icons.location_pin,
           title: country,
-          // pin & city
           subTitle: '$city, $pin ',
         ),
       ],

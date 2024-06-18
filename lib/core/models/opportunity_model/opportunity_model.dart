@@ -4,6 +4,8 @@ class OpportunityModel {
   String? description;
   String? from;
   String? to;
+  String? status;
+
   String? createdAt;
   Place? place;
   Host? host;
@@ -16,6 +18,7 @@ class OpportunityModel {
     this.description,
     this.from,
     this.to,
+    this.status,
     this.createdAt,
     this.place,
     this.host,
@@ -29,6 +32,7 @@ class OpportunityModel {
     description = json['description'];
     from = json['from'];
     to = json['to'];
+    status = json['status'];
     createdAt = json['createdAt'];
     place = json['place'] != null ? Place.fromJson(json['place']) : null;
     host = json['host'] != null ? Host.fromJson(json['host']) : null;
@@ -45,6 +49,7 @@ class OpportunityModel {
     data['description'] = description;
     data['from'] = from;
     data['to'] = to;
+    data['status'] = status;
     data['createdAt'] = createdAt;
     if (place != null) {
       data['place'] = place!.toJson();
@@ -66,7 +71,7 @@ class Place {
   String? country;
   String? phoneNumber;
   double? rating;
-  List<String>? placeMedia; // Adjusted to List<String>
+  List<String>? placeMedia;
 
   Place({
     this.id,

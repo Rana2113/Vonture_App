@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/my_details_opportunity.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/my_opportunity_card.dart';
@@ -57,8 +58,9 @@ class _MyOpportunityViewBodyState extends State<MyOpportunityViewBody> {
           );
         } else {
           return const Center(
-            child: Text('No opportunities yet!'),
-          );
+              child: CircularProgressIndicator(
+            color: PrimaryColor,
+          ));
         }
       },
     );

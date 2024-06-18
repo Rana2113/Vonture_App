@@ -51,3 +51,15 @@ class ApplyOpportunityError extends OpportunityState {
   final String message;
   ApplyOpportunityError({required this.message});
 }
+
+final class CloseOpportunity extends OpportunityState {
+  final OpportunityModel closeOpportunity;
+  CloseOpportunity({required this.closeOpportunity});
+}
+
+final class CloseOpportunityLoading extends OpportunityState {}
+
+final class CloseOpportunityError extends OpportunityState {
+  String message;
+  CloseOpportunityError({required this.message});
+}

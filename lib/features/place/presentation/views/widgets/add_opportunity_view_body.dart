@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/components/text_field.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
@@ -46,7 +47,10 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) => Center(child: CircularProgressIndicator()),
+            builder: (context) => const Center(
+                child: CircularProgressIndicator(
+              color: PrimaryColor,
+            )),
           );
         } else if (state is CreateOpportunityErrorState) {
           Navigator.of(context).pop();
@@ -66,7 +70,10 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
       child: BlocBuilder<PlaceCubit, PlaceState>(
         builder: (context, state) {
           if (state is GetRequirementAndOffersLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: PrimaryColor,
+            ));
           }
 
           if (state is GetRequirementAndOffersErrorState) {
@@ -224,7 +231,10 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
             );
           }
 
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(
+            color: PrimaryColor,
+          ));
         },
       ),
     );

@@ -28,5 +28,4 @@ abstract class PlaceRepo {
     List<int> offers,
   );
   Future<Either<Failure, List<Requirements>>> getallplaceopportunity(int id);
-  Future<Either<Failure, List<Requirements>>> closeopportunity(int id);
 }

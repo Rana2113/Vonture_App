@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:vonture_grad/core/constants.dart/api_constants.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 import 'package:vonture_grad/features/place/presentation/views/add_opportunity_view.dart';
 import 'package:vonture_grad/features/place/presentation/views/my-opportunity_view.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/place_card.dart';
 
 class PlaceViewBody extends StatefulWidget {
-  const PlaceViewBody({Key? key});
+  const PlaceViewBody({
+    super.key,
+  });
 
   @override
   _PlaceViewBodyState createState() => _PlaceViewBodyState();
@@ -32,7 +35,9 @@ class _PlaceViewBodyState extends State<PlaceViewBody> {
       builder: (context, state) {
         if (state is PlaceLoadingState) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: PrimaryColor,
+            ),
           );
         } else if (state is PlaceSucessState) {
           return ListView.builder(
@@ -81,7 +86,11 @@ class _PlaceViewBodyState extends State<PlaceViewBody> {
             child: Text('Error: ${state.message}'),
           );
         } else {
-          return const Center();
+          return const Center(
+            child: CircularProgressIndicator(
+              color: PrimaryColor,
+            ),
+          );
         }
       },
     );

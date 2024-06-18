@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 
 class OpportunityRequirements extends StatelessWidget {
   const OpportunityRequirements({super.key, required this.requirements});
@@ -11,40 +13,18 @@ class OpportunityRequirements extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Requirements',
-          style: TextStyle(
-            color: kLogoColor,
-            fontSize: 22,
-            fontFamily: 'Work Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 25),
+        const Text('Requirements', style: Styles.text24w700),
+        verticalSpacing(10),
         for (String requirement in requirements) ...[
           Row(
             children: [
-              const Text(
-                '•  ',
-                style: TextStyle(
-                  color: Color(0xFF161111),
-                  fontSize: 16,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              const Text('•  ', style: Styles.text24w700),
               Flexible(
-                child: Text(
-                  requirement,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    color: Color(0xFF161111),
-                    fontSize: 16,
-                    fontFamily: 'Work Sans',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
+                child: Text(requirement,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: Styles.text16w500.copyWith(
+                        color: PrimaryColor, decoration: TextDecoration.none)),
               ),
             ],
           ),

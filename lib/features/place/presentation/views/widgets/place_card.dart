@@ -85,7 +85,7 @@ class PlaceCard extends StatelessWidget {
               ),
             ),
             verticalSpacing(16.h),
-            if (state != 'PENDING') // Conditionally render the button
+            if (state != 'PENDING')
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: ElevatedButton(

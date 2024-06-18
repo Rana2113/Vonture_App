@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/constants.dart/api_constants.dart';
-import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/utils/app_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vonture_grad/core/utils/service_locator.dart';

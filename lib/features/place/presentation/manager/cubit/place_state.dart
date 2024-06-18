@@ -72,17 +72,17 @@ final class GetAllPlaceOpportunityErrorState extends PlaceState {
   GetAllPlaceOpportunityErrorState({required this.message});
 }
 
-final class CloseOpportunity extends PlaceState {
-  String message;
-  CloseOpportunity({required this.message});
-}
+// final class CloseOpportunity extends PlaceState {
+//   final OpportunityModel closeOpportunity;
+//   CloseOpportunity({required this.closeOpportunity});
+// }
 
-final class CloseOpportunityLoading extends PlaceState {}
+// final class CloseOpportunityLoading extends PlaceState {}
 
-final class CloseOpportunityError extends PlaceState {
-  String message;
-  CloseOpportunityError({required this.message});
-}
+// final class CloseOpportunityError extends PlaceState {
+//   String message;
+//   CloseOpportunityError({required this.message});
+// }
 
 // final class GetOffersLoadingState extends PlaceState {}
 

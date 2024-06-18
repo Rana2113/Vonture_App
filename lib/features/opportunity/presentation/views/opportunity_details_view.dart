@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/opportunity_cubit.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/about_place.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/apply_button.dart';
@@ -51,11 +52,8 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
     BlocProvider.of<OpportunityCubit>(context)
         .getSpecifiOpportunity(widget.opportunityId);
 
-    final userRoleBox = Hive.box(kRoleBoxString);
-    String? role = userRoleBox.get(kRoleBoxString);
-
     return Scaffold(
-      appBar: _buildAppBar(context),
+      appBar: const OpportunityAppBarwithreturn(),
       body: BlocConsumer<OpportunityCubit, OpportunityState>(
         listener: (context, state) {
           if (state is ApplyOpportunitySuccess) {
@@ -156,29 +154,68 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
       ),
     );
   }
+}
 
-  AppBar _buildAppBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: kPrimaryColor,
-      surfaceTintColor: kLogoColor,
-      title: SizedBox(
-        height: 50.h,
-        width: 120.w,
-        child: Image.asset("assets/LOGO2.png"),
+class OpportunityAppBarwithreturn extends StatelessWidget
+    implements PreferredSizeWidget {
+  const OpportunityAppBarwithreturn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        bottomLeft: Radius.circular(20),
+        bottomRight: Radius.circular(20),
       ),
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back,
-          color: kLogoColor,
+      child: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Vonture',
+          style: Styles.textlogo.copyWith(
+            fontSize: 45.sp,
+          ),
         ),
-        onPressed: () {
-          final opportunityCubit = BlocProvider.of<OpportunityCubit>(context);
-          opportunityCubit.getallopportunity().then((_) {
-            Navigator.pop(context);
-          });
-        },
+        backgroundColor: PrimaryColor.withOpacity(0.99),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: white,
+          ),
+          onPressed: () {
+            final opportunityCubit = BlocProvider.of<OpportunityCubit>(context);
+            opportunityCubit.getallopportunity().then((_) {
+              Navigator.pop(context);
+            });
+          },
+        ),
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+// AppBar _buildAppBar(BuildContext context) {
+//     return AppBar(
+//       backgroundColor: kPrimaryColor,
+//       surfaceTintColor: kLogoColor,
+//       title: SizedBox(
+//         height: 50.h,
+//         width: 120.w,
+//         child: Image.asset("assets/LOGO2.png"),
+//       ),
+//       centerTitle: true,
+//       leading: IconButton(
+//         icon: const Icon(
+//           Icons.arrow_back,
+//           color: kLogoColor,
+//         ),
+//         onPressed: () {
+//           final opportunityCubit = BlocProvider.of<OpportunityCubit>(context);
+//           opportunityCubit.getallopportunity().then((_) {
+//             Navigator.pop(context);
+//           });
+//         },
+//       ),
+//     );
+//   }
