@@ -101,9 +101,14 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                   child: Column(
                     children: [
                       verticalSpacing(20),
-                      const OpportunityOffers(),
+                      OpportunityOffers(
+                        offers: state.detailsopportunity.offers ?? [],
+                      ),
                       verticalSpacing(20),
-                      const OpportunityRequirements(),
+                      OpportunityRequirements(
+                        requirements:
+                            state.detailsopportunity.requirements ?? [],
+                      ),
                       verticalSpacing(20),
                       OpportunityLocation(
                         country: state.detailsopportunity.place?.country ?? '',

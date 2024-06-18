@@ -6,15 +6,15 @@ import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opp
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/search_opportunity.dart';
 
 class OpportunityView extends StatelessWidget {
-  const OpportunityView({super.key});
+  const OpportunityView({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const OpportunityAppBar(),
       body: Column(
         children: [
-          const OpportunityAppBar(),
-          verticalSpacing(20.h),
+          verticalSpacing(20),
           const SearchOpportunity(),
           verticalSpacing(20.h),
           const OpportunityViewBody(),

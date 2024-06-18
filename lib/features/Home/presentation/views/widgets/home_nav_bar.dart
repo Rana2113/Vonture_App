@@ -50,7 +50,7 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
       screens: _screens,
       items: _items,
       confineInSafeArea: true,
-      backgroundColor: kPrimaryColor,
+      backgroundColor: white,
     );
   }
 
@@ -74,20 +74,20 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
       PersistentBottomNavBarItem(
         icon: const Icon(
           Icons.home,
-          color: kLogoColor,
+          color: PrimaryColor,
         ),
         onPressed: (context) {
           _controller.jumpToTab(0);
           context?.read<OpportunityCubit>().getallopportunity();
         },
-        activeColorPrimary: kShadowcColor,
+        activeColorPrimary: PrimaryColor.withOpacity(0.3),
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(
           Icons.person,
-          color: kLogoColor,
+          color: PrimaryColor,
         ),
-        activeColorPrimary: kShadowcColor,
+        activeColorPrimary: PrimaryColor.withOpacity(0.3),
       ),
     ];
 
@@ -97,13 +97,13 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
         PersistentBottomNavBarItem(
           icon: const Icon(
             FontAwesomeIcons.fileCircleCheck,
-            color: kLogoColor,
+            color: PrimaryColor,
           ),
           onPressed: (context) {
             _controller.jumpToTab(1);
             context?.read<ApplicationCubit>().getallopportunity();
           },
-          activeColorPrimary: kShadowcColor,
+          activeColorPrimary: PrimaryColor.withOpacity(0.3),
         ),
       );
     } else if (role == 'HOST') {
@@ -112,14 +112,14 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
         PersistentBottomNavBarItem(
           icon: const Icon(
             FontAwesomeIcons.mapLocationDot,
-            color: kLogoColor,
+            color: PrimaryColor,
           ),
           onPressed: (context) {
             final userid = Hive.box(kidBoxString).get(kidBoxString);
             _controller.jumpToTab(1);
             context?.read<PlaceCubit>().getmyplace(userid);
           },
-          activeColorPrimary: kShadowcColor,
+          activeColorPrimary: PrimaryColor.withOpacity(0.3),
         ),
       );
     }

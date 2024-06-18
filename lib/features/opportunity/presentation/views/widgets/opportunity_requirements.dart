@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 
 class OpportunityRequirements extends StatelessWidget {
-  const OpportunityRequirements({super.key});
+  const OpportunityRequirements({super.key, required this.requirements});
+
+  final List<String> requirements;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Requirements',
           style: TextStyle(
             color: kLogoColor,
@@ -18,23 +20,12 @@ class OpportunityRequirements extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        SizedBox(height: 25),
-        Row(
-          children: [
-            Text(
-              '•  ',
-              style: TextStyle(
-                color: Color(0xFF161111),
-                fontSize: 16,
-                fontFamily: 'Work Sans',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                '5+ years of experience in marketing or related field',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
+        const SizedBox(height: 25),
+        for (String requirement in requirements) ...[
+          Row(
+            children: [
+              const Text(
+                '•  ',
                 style: TextStyle(
                   color: Color(0xFF161111),
                   fontSize: 16,
@@ -42,63 +33,23 @@ class OpportunityRequirements extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 15),
-        Row(
-          children: [
-            Text(
-              '•  ',
-              style: TextStyle(
-                color: Color(0xFF161111),
-                fontSize: 16,
-                fontFamily: 'Work Sans',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                'Experience with product marketing',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(
-                  color: Color(0xFF161111),
-                  fontSize: 16,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w400,
+              Flexible(
+                child: Text(
+                  requirement,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    color: Color(0xFF161111),
+                    fontSize: 16,
+                    fontFamily: 'Work Sans',
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 15),
-        Row(
-          children: [
-            Text(
-              '•  ',
-              style: TextStyle(
-                color: Color(0xFF161111),
-                fontSize: 16,
-                fontFamily: 'Work Sans',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                'Strong project management skills',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(
-                  color: Color(0xFF161111),
-                  fontSize: 16,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
-        ),
+            ],
+          ),
+          const SizedBox(height: 15),
+        ],
       ],
     );
   }

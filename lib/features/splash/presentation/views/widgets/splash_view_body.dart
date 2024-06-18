@@ -1,167 +1,123 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:vonture_grad/core/utils/app_router.dart';
-import 'package:vonture_grad/features/splash/presentation/views/widgets/sliding_widgets.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
+import 'package:vonture_grad/features/login/presentation/views/login_view.dart';
+import 'package:vonture_grad/features/signup/presentation/views/signup_view.dart';
 
-class Splashiew extends StatelessWidget {
-  const Splashiew({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SplashViewBody(),
-    );
-  }
-}
-
-class SplashViewBody extends StatefulWidget {
+class SplashViewBody extends StatelessWidget {
   const SplashViewBody({super.key});
 
   @override
-  State<SplashViewBody> createState() => _SplashViewBodyState();
-}
-
-class _SplashViewBodyState extends State<SplashViewBody>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation<Offset> slidingImageAnimation;
-  late Animation<Offset> slidingTextAnimation;
-  Animation<Offset>? slidingVontureAnimation; // Make it nullable
-  late Animation<double> opacityAnimation;
-  bool slidingVontureInitialized = false;
-
-  @override
-  void initState() {
-    super.initState();
-    initSlidingAnimation();
-    navigateTo();
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Spacer(
-            flex: 1,
-          ),
-          SizedBox(
-            width: screenWidth / 5.6,
-            child: AnimatedBuilder(
-              animation: animationController,
-              builder: (context, child) {
-                return SlideTransition(
-                  position: slidingImageAnimation,
-                  child: FadeTransition(
-                    opacity: opacityAnimation,
-                    child: child,
-                  ),
-                );
-              },
-              child: const SlidingImage(),
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: const AssetImage("assets/background.png"),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              PrimaryColor.withOpacity(0.6),
+              BlendMode.dstATop,
             ),
           ),
-          Expanded(
-            child: Column(
-              children: [
-                const Spacer(
-                  flex: 1,
-                ),
-                SizedBox(
-                  height: screenHeight / 18.9,
-                  child: AnimatedBuilder(
-                    animation: animationController,
-                    builder: (context, child) {
-                      if (slidingVontureAnimation == null) {
-                        return const SizedBox(); // Return an empty SizedBox if animation is null
-                      }
-                      return SlideTransition(
-                        position: slidingVontureAnimation!,
-                        child: FadeTransition(
-                          opacity: opacityAnimation,
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: const SlidingVonture(),
+          color: const Color(0xff002F44).withOpacity(0.9),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Vonture',
+                style: Styles.textlogo,
+              ),
+              const SizedBox(height: 8),
+              const SizedBox(
+                width: 450,
+                height: 25,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    'Travel with Purpose, Volunteer with Heart!',
+                    textAlign: TextAlign.center,
+                    style: Styles.text20w400,
                   ),
                 ),
-                SizedBox(
-                  width: screenWidth * 130 / 375,
-                  child: AnimatedBuilder(
-                    animation: animationController,
-                    builder: (context, child) {
-                      return SlideTransition(
-                        position: slidingTextAnimation,
-                        child: FadeTransition(
-                          opacity: opacityAnimation,
-                          child: child,
+              ),
+              const SizedBox(height: 270),
+              const Text('Let’s get started',
+                  textAlign: TextAlign.center, style: Styles.text20w600),
+              Padding(
+                padding: const EdgeInsets.only(top: 25.0, bottom: 25),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpView()),
+                    );
+                  },
+                  child: Container(
+                    width: 380,
+                    height: 47,
+                    padding: const EdgeInsets.all(10),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF002F44),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Create a free account',
+                          style: Styles.text18w400,
                         ),
-                      );
-                    },
-                    child: const SlidingText(),
+                      ],
+                    ),
                   ),
                 ),
-                const Spacer(
-                  flex: 1,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginView()),
+                  );
+                },
+                child: Container(
+                  width: 380,
+                  height: 47,
+                  padding: const EdgeInsets.all(10),
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        width: 1,
+                        strokeAlign: BorderSide.strokeAlignCenter,
+                        color: Colors.white,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Login',
+                        style: Styles.text18w400,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          const Spacer(
-            flex: 1,
-          ),
-        ],
+        ),
       ),
-    );
-  }
-
-  void initSlidingAnimation() {
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
-
-    slidingImageAnimation =
-        Tween<Offset>(begin: const Offset(-1, 0), end: Offset.zero)
-            .animate(animationController);
-
-    Future.delayed(const Duration(milliseconds: 400), () {
-      setState(() {
-        slidingVontureAnimation = Tween<Offset>(
-          begin: const Offset(1, 0),
-          end: Offset.zero,
-        ).animate(animationController);
-        slidingVontureInitialized = true;
-      });
-    });
-
-    slidingTextAnimation =
-        Tween<Offset>(begin: const Offset(2, 0), end: Offset.zero)
-            .animate(animationController);
-
-    opacityAnimation =
-        Tween<double>(begin: 0, end: 1).animate(animationController);
-
-    animationController.forward();
-  }
-
-  void navigateTo() {
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        GoRouter.of(context).pushReplacement(AppRouter.kLogin);
-      },
     );
   }
 }

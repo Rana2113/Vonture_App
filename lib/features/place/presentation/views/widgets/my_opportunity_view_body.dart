@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
+import 'package:vonture_grad/features/place/presentation/views/widgets/my_details_opportunity.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/my_opportunity_card.dart';
 
 class MyOpportunityViewBody extends StatefulWidget {
@@ -38,6 +39,15 @@ class _MyOpportunityViewBodyState extends State<MyOpportunityViewBody> {
                 to: opportunity.to ?? 'No to',
                 id: opportunity.id!,
                 status: opportunity.status!,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyOpportunityDetails(
+                      opportunityId: opportunity.id!,
+                      placeId: widget.placeId,
+                    ),
+                  ),
+                ),
               );
             },
           );

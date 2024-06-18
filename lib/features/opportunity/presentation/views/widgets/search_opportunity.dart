@@ -30,7 +30,7 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
               decoration: InputDecoration(
                 hintText: 'Find opportunities',
                 hintStyle: const TextStyle(
-                  color: kLogoColor,
+                  color: PrimaryColor,
                   fontSize: 14,
                   height: 0.09,
                   fontWeight: FontWeight.w500,
@@ -43,12 +43,12 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: kFocusBorder,
+                    color: TextColor,
                   ),
                 ),
                 contentPadding: const EdgeInsets.all(12),
                 filled: true,
-                fillColor: kCardColor,
+                fillColor: Color.fromARGB(255, 233, 242, 246),
                 suffixIcon: IconButton(
                   onPressed: () {
                     searchController.clear();
