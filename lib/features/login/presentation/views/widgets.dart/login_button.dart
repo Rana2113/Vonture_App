@@ -28,7 +28,8 @@ class LoginButton extends StatelessWidget {
         if (state is LoginLoading) {
           return const Center(
             child: CircularProgressIndicator(
-              backgroundColor: kButtonColor,
+              backgroundColor: white,
+              color: PrimaryColor,
             ),
           );
         } else {

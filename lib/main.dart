@@ -41,7 +41,7 @@ class VontureApp extends StatelessWidget {
             create: (context) => PlaceCubit(getIt<PlaceRepoImplementation>())),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(388, 920),
+        designSize: const Size(482, 926),
         child: MaterialApp.router(
           routerConfig: AppRouter.router,
           debugShowCheckedModeBanner: false,

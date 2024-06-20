@@ -24,14 +24,13 @@ class TouristProfile extends StatefulWidget {
 }
 
 class _TouristProfileState extends State<TouristProfile> {
+  String currentStatus = "";
+
   @override
   void initState() {
     super.initState();
-    context.read<PlaceCubit>().getotherprofile(
-          widget.touristid,
-        );
-    print(
-        'TouristProfile: initState called ${widget.touristid} ${widget.opportunityId}');
+    currentStatus = widget.status;
+    context.read<PlaceCubit>().getotherprofile(widget.touristid);
   }
 
   @override
@@ -39,13 +38,16 @@ class _TouristProfileState extends State<TouristProfile> {
     return Scaffold(
       appBar: AppBarwithReturn(
         opportunityId: widget.opportunityId,
+        onStatusUpdated: (String newStatus) {
+          setState(() {
+            currentStatus = newStatus;
+          });
+        },
       ),
       body: BlocListener<PlaceCubit, PlaceState>(
         listener: (context, state) {
           if (state is CreateReviewSuccess) {
-            context.read<PlaceCubit>().getotherprofile(
-                  widget.touristid,
-                );
+            context.read<PlaceCubit>().getotherprofile(widget.touristid);
           } else if (state is CreateReviewError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -57,9 +59,7 @@ class _TouristProfileState extends State<TouristProfile> {
                 duration: const Duration(seconds: 5),
               ),
             );
-            context.read<PlaceCubit>().getotherprofile(
-                  widget.touristid,
-                );
+            context.read<PlaceCubit>().getotherprofile(widget.touristid);
           } else if (state is GetOtherProfileError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -71,9 +71,7 @@ class _TouristProfileState extends State<TouristProfile> {
               state is AcceptApplicationError ||
               state is RejectApplicationSuccess ||
               state is RejectApplicationError) {
-            context.read<PlaceCubit>().getotherprofile(
-                  widget.touristid,
-                );
+            context.read<PlaceCubit>().getotherprofile(widget.touristid);
           }
         },
         child: BlocBuilder<PlaceCubit, PlaceState>(
@@ -96,7 +94,7 @@ class _TouristProfileState extends State<TouristProfile> {
                 receivedReviews: tourist.receivedReviews ?? [],
                 touristid: tourist.id!,
                 opportunityId: widget.opportunityId,
-                status: widget.status,
+                status: currentStatus,
               );
             } else if (state is GetOtherProfileError) {
               return Center(
@@ -116,8 +114,14 @@ class _TouristProfileState extends State<TouristProfile> {
 }
 
 class AppBarwithReturn extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarwithReturn({super.key, required this.opportunityId});
+  const AppBarwithReturn({
+    super.key,
+    required this.opportunityId,
+    required this.onStatusUpdated,
+  });
+
   final int opportunityId;
+  final void Function(String newStatus) onStatusUpdated;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +134,10 @@ class AppBarwithReturn extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         title: Text(
           'Vonture',
-          style: Styles.textlogo.copyWith(fontSize: 45.sp, color: PrimaryColor),
+          style: Styles.textlogo.copyWith(
+            fontSize: 45.sp,
+            color: PrimaryColor,
+          ),
         ),
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -139,10 +146,11 @@ class AppBarwithReturn extends StatelessWidget implements PreferredSizeWidget {
             color: PrimaryColor,
           ),
           onPressed: () {
-            final applicationcubit = BlocProvider.of<ApplicationCubit>(context);
-            applicationcubit
+            final applicationCubit = BlocProvider.of<ApplicationCubit>(context);
+            applicationCubit
                 .getallapplicationopportunity(opportunityId)
                 .then((_) {
+              onStatusUpdated("Updated Status");
               Navigator.of(context).pop();
             });
           },

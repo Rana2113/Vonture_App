@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 
 class CustomListTile extends StatelessWidget {
   const CustomListTile({
@@ -18,31 +20,17 @@ class CustomListTile extends StatelessWidget {
         width: 48,
         height: 48,
         decoration: ShapeDecoration(
-          color: const Color(0xFFF4F2EF),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            color: PrimaryColor),
         child: Icon(
           icon,
+          color: white,
         ),
       ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: Color(0xFF161111),
-          fontSize: 16,
-          fontFamily: 'Work Sans',
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      subtitle: Text(
-        subTitle,
-        style: const TextStyle(
-          color: Color(0xFF876B63),
-          fontSize: 14,
-          fontFamily: 'Work Sans',
-          fontWeight: FontWeight.w400,
-        ),
-      ),
+      title: Text(title,
+          style: Styles.text16w500.copyWith(decoration: TextDecoration.none)),
+      subtitle: Text(subTitle, style: Styles.text14w400),
     );
   }
 }

@@ -36,7 +36,7 @@ class ProfileModel {
     this.receivedReviews,
     this.skills,
     this.age,
-    this.status, // Update this line to handle null
+    this.status,
   });
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -54,7 +54,7 @@ class ProfileModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     age = json['age'];
-    status = json['status'] ?? ''; // Handle null value here
+    status = json['status'] ?? '';
 
     if (json['place'] != null) {
       place = <Place>[];

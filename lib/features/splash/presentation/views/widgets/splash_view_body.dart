@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/login/presentation/views/login_view.dart';
@@ -22,47 +24,85 @@ class SplashViewBody extends StatelessWidget {
           ),
           color: const Color(0xff002F44).withOpacity(0.9),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Vonture',
-                style: Styles.textlogo,
-              ),
-              const SizedBox(height: 8),
-              const SizedBox(
-                width: 450,
-                height: 25,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    'Travel with Purpose, Volunteer with Heart!',
-                    textAlign: TextAlign.center,
-                    style: Styles.text20w400,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Vonture',
+                  style: Styles.textlogo,
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: 450.w,
+                  height: 25.h,
+                  child: const Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      'Travel with Purpose, Volunteer with Heart!',
+                      textAlign: TextAlign.center,
+                      style: Styles.text20w400,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 270),
-              const Text('Let’s get started',
-                  textAlign: TextAlign.center, style: Styles.text20w600),
-              Padding(
-                padding: const EdgeInsets.only(top: 25.0, bottom: 25),
-                child: GestureDetector(
+                verticalSpacing(270),
+                const Text('Let’s get started',
+                    textAlign: TextAlign.center, style: Styles.text20w600),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25.0, bottom: 25),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpView()),
+                      );
+                    },
+                    child: Container(
+                      width: 380.w,
+                      height: 47.h,
+                      padding: const EdgeInsets.all(10),
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF002F44),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Create a free account',
+                            style: Styles.text18w400,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SignUpView()),
+                          builder: (context) => const LoginView()),
                     );
                   },
                   child: Container(
-                    width: 380,
-                    height: 47,
+                    width: 380.w,
+                    height: 47.h,
                     padding: const EdgeInsets.all(10),
                     decoration: ShapeDecoration(
-                      color: const Color(0xFF002F44),
                       shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          width: 1,
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                          color: Colors.white,
+                        ),
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
@@ -72,49 +112,15 @@ class SplashViewBody extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Create a free account',
+                          'Login',
                           style: Styles.text18w400,
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginView()),
-                  );
-                },
-                child: Container(
-                  width: 380,
-                  height: 47,
-                  padding: const EdgeInsets.all(10),
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        width: 1,
-                        strokeAlign: BorderSide.strokeAlignCenter,
-                        color: Colors.white,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Login',
-                        style: Styles.text18w400,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -3,7 +3,7 @@ import 'package:vonture_grad/core/constants.dart/colors.dart';
 
 abstract class Styles {
   static const textlogo = TextStyle(
-    fontSize: 64,
+    fontSize: 48,
     fontFamily: 'Play',
     fontWeight: FontWeight.w700,
     height: 1.0,
@@ -15,12 +15,12 @@ abstract class Styles {
     fontSize: 20,
     fontFamily: 'Roboto',
     fontWeight: FontWeight.w700,
-    height: 1,
+    height: 0.2,
     letterSpacing: -0.99,
   );
   static const text20w400 = TextStyle(
     color: Colors.white,
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: 'Roboto',
     fontWeight: FontWeight.w400,
     height: 1,
@@ -47,7 +47,7 @@ abstract class Styles {
     fontSize: 18,
     fontFamily: 'Roboto',
     fontWeight: FontWeight.w400,
-    height: 0,
+    height: 0.5,
   );
   static const text16w500 = TextStyle(
     color: TextColor,

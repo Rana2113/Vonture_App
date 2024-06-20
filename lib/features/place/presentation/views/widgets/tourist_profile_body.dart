@@ -44,6 +44,7 @@ class TouristProfileBody extends StatefulWidget {
 class _TouristProfileBodyState extends State<TouristProfileBody> {
   final TextEditingController commentController = TextEditingController();
   double rating = 0.0;
+  bool applicationProcessing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -130,22 +131,42 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
                     .createreview(widget.touristid, rating, comment);
               },
             ),
-            if (widget.status == 'APPLIED')
+            if (!applicationProcessing && widget.status == 'APPLIED')
               Row(
                 children: [
                   Button(
                     text: 'Accept',
                     onTap: () {
-                      context.read<PlaceCubit>().acceptedApplication(
-                          widget.opportunityId, widget.touristid);
+                      setState(() {
+                        applicationProcessing = true;
+                      });
+                      context
+                          .read<PlaceCubit>()
+                          .acceptedApplication(
+                              widget.opportunityId, widget.touristid)
+                          .then((_) {
+                        setState(() {
+                          applicationProcessing = false;
+                        });
+                      });
                     },
                   ),
                   const Spacer(),
                   Button(
                     text: 'Reject',
                     onTap: () {
-                      context.read<PlaceCubit>().rejectApplication(
-                          widget.opportunityId, widget.touristid);
+                      setState(() {
+                        applicationProcessing = true;
+                      });
+                      context
+                          .read<PlaceCubit>()
+                          .rejectApplication(
+                              widget.opportunityId, widget.touristid)
+                          .then((_) {
+                        setState(() {
+                          applicationProcessing = false;
+                        });
+                      });
                     },
                   ),
                 ],
@@ -153,8 +174,8 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
             if (widget.status != 'APPLIED')
               Center(
                 child: Text(
-                    'you have already ${widget.status!.toLowerCase()} this tourist'),
-              )
+                    'You have already ${widget.status!.toLowerCase()} this tourist'),
+              ),
           ],
         ),
       ),

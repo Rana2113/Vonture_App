@@ -84,15 +84,15 @@ class _MyOpportunityDetailsState extends State<MyOpportunityDetails> {
                       OpportunityDescription(
                         description: opportunity.description ?? '',
                       ),
-                      verticalSpacing(20),
+                      verticalSpacing(25),
                       OpportunityOffers(
                         offers: opportunity.offers ?? [],
                       ),
-                      verticalSpacing(20),
+                      verticalSpacing(25),
                       OpportunityRequirements(
                         requirements: opportunity.requirements ?? [],
                       ),
-                      verticalSpacing(20),
+                      verticalSpacing(25),
                       OpportunityLocation(
                         country: opportunity.place?.country ?? '',
                         city: opportunity.place?.city ?? ' ',
@@ -179,7 +179,7 @@ class Button extends StatelessWidget {
             backgroundColor: PrimaryColor,
             shadowColor: white,
           ),
-          child: Text(text, style: Styles.text14w600),
+          child: Text(text, style: Styles.text14w600.copyWith()),
         ),
       ),
     );

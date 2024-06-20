@@ -13,8 +13,8 @@ class OpportunityRequirements extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Requirements', style: Styles.text24w700.copyWith(fontSize: 26)),
-        verticalSpacing(10),
+        const Text('Requirements', style: Styles.text24w700),
+        verticalSpacing(20),
         for (String requirement in requirements) ...[
           Row(
             children: [

@@ -13,8 +13,8 @@ class OpportunityOffers extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Offers', style: Styles.text24w700.copyWith(fontSize: 26)),
-        verticalSpacing(10),
+        const Text('Offers', style: Styles.text24w700),
+        verticalSpacing(20),
         ...offers.map((offer) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
               child: Row(

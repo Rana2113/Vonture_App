@@ -28,22 +28,24 @@ class LoginView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: 88.0),
+                  padding: EdgeInsets.only(top: 88.0, left: 75, right: 75),
                   child: Text(
                     'Vonture',
                     style: Styles.textlogo,
                   ),
                 ),
-                const SizedBox(height: 8),
-                const SizedBox(
-                  width: 450,
-                  height: 25,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'Travel with Purpose, Volunteer with Heart!',
-                      textAlign: TextAlign.center,
-                      style: Styles.text20w400,
+                const Padding(
+                  padding: EdgeInsets.all(24.0),
+                  child: SizedBox(
+                    width: 450,
+                    height: 20,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        'Travel with Purpose, Volunteer with Heart!',
+                        textAlign: TextAlign.center,
+                        style: Styles.text20w400,
+                      ),
                     ),
                   ),
                 ),

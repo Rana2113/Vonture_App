@@ -75,15 +75,3 @@ class _MyOpportunityViewBodyState extends State<MyOpportunityViewBody> {
     );
   }
 }
-
-// ListView.builder(
-//         itemCount: 5,
-//         itemBuilder: (context, index) {
-//           return MyOpportunityCard(
-//             title: 'Siwa Oasis',
-//             description: 'Siwa Oasis',
-//             onTap: () {},
-//             from: '2024-06-01',
-//             to: '2024-6-24',
-//           );
-//         });

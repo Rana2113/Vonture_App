@@ -10,7 +10,7 @@ class OpportunityDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       description,
-      style: Styles.text18w400.copyWith(color: PrimaryColor),
+      style: Styles.text18w400.copyWith(color: PrimaryColor, height: 2),
     );
   }
 }
