@@ -60,11 +60,12 @@ class GetAllApplicationCard extends StatelessWidget {
                             style: Styles.text18w400.copyWith(
                                 decoration: TextDecoration.none,
                                 color: PrimaryColor)),
+                        verticalSpacing(5),
                         Row(
                           children: [
                             Text(
                               'From: $nationality',
-                              style: Styles.text14w600.copyWith(
+                              style: Styles.text14w400.copyWith(
                                 height: 1.2,
                                 color: textblue,
                               ),
@@ -85,9 +86,9 @@ class GetAllApplicationCard extends StatelessWidget {
                                         width: 1,
                                       )),
                                   child: Text(
-                                    'view profile',
+                                    'view',
                                     style: Styles.text14w500.copyWith(
-                                        color: PrimaryColor, height: 1),
+                                        color: PrimaryColor, fontSize: 15),
                                   ),
                                 ),
                               ),

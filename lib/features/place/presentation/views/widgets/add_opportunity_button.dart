@@ -20,7 +20,7 @@ class AddOpportunityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<PlaceCubit, PlaceState>(
       listener: (context, state) {
-        if (state is GetAllPlaceOpportunitySucessState) {
+        if (state is CreateOpportunitySucessState) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Opportunity added successfully'),

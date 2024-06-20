@@ -12,6 +12,7 @@ class OpportunityRequirements extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const Text('Requirements', style: Styles.text24w700),
         verticalSpacing(20),

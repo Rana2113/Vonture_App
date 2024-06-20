@@ -16,6 +16,7 @@ class CustomListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.all(0),
       leading: Container(
         width: 48,
         height: 48,

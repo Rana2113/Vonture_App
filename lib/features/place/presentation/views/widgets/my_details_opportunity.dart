@@ -179,7 +179,7 @@ class Button extends StatelessWidget {
             backgroundColor: PrimaryColor,
             shadowColor: white,
           ),
-          child: Text(text, style: Styles.text14w600.copyWith()),
+          child: Text(text, style: Styles.text14w600.copyWith(fontSize: 13)),
         ),
       ),
     );

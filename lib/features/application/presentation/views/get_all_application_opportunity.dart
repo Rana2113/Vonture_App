@@ -66,15 +66,13 @@ class AppBarwithreturn extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         title: Text(
           'Vonture',
-          style: Styles.textlogo.copyWith(
-            fontSize: 45.sp,
-          ),
+          style: Styles.textlogo.copyWith(fontSize: 45.sp, color: PrimaryColor),
         ),
-        backgroundColor: PrimaryColor.withOpacity(0.99),
+        backgroundColor: white,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: white,
+            color: PrimaryColor,
           ),
           onPressed: () {
             final opportunitycubit = BlocProvider.of<OpportunityCubit>(context);

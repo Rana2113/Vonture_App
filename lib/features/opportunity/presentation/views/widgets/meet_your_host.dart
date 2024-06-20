@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 
 class MeetYourHost extends StatelessWidget {
   const MeetYourHost(
@@ -17,15 +18,7 @@ class MeetYourHost extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Meet your host',
-          style: TextStyle(
-            color: kLogoColor,
-            fontSize: 22,
-            fontFamily: 'Work Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        const Text('Meet your host', style: Styles.text24w700),
         verticalSpacing(15),
         Align(
           child: Column(
@@ -38,22 +31,13 @@ class MeetYourHost extends StatelessWidget {
               Text(
                 '$fname $lname',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF161111),
-                  fontSize: 22,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Styles.text20w600.copyWith(color: PrimaryColor),
               ),
+              verticalSpacing(5),
               Text(
                 rating,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF876B63),
-                  fontSize: 16,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w400,
-                ),
+                style: Styles.text20w600.copyWith(color: PrimaryColor),
               ),
             ],
           ),

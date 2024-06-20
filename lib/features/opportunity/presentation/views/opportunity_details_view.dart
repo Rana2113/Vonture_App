@@ -10,6 +10,7 @@ import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/op
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/about_place.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/apply_button.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/meet_your_host.dart';
+import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_description.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_details_upper.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_location.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_offers.dart';
@@ -104,7 +105,11 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      OpportunityDescription(
+                          description:
+                              state.detailsopportunity.description ?? ''),
                       verticalSpacing(20),
                       OpportunityOffers(
                         offers: state.detailsopportunity.offers ?? [],
@@ -164,18 +169,17 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: kPrimaryColor,
-      surfaceTintColor: kLogoColor,
-      title: SizedBox(
-        height: 50.h,
-        width: 120.w,
-        child: Image.asset("assets/LOGO2.png"),
-      ),
       centerTitle: true,
+      title: Text(
+        'Vonture',
+        style: Styles.textlogo.copyWith(fontSize: 45.sp, color: PrimaryColor),
+      ),
+      backgroundColor: white,
+      shadowColor: white,
       leading: IconButton(
         icon: const Icon(
           Icons.arrow_back,
-          color: kLogoColor,
+          color: PrimaryColor,
         ),
         onPressed: () {
           final opportunityCubit = BlocProvider.of<OpportunityCubit>(context);
