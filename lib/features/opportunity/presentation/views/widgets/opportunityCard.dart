@@ -35,7 +35,7 @@ class OpportunityCard extends StatelessWidget {
             maxHeight: 360.h,
           ),
           child: Card(
-            color: Color.fromARGB(255, 233, 242, 246),
+            color: const Color.fromARGB(255, 233, 242, 246),
             //  Color.fromARGB(255, 217, 236, 245),  Color.fromARGB(255, 224, 239, 246),
             elevation: 7.0,
 

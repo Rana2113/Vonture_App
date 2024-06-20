@@ -17,3 +17,17 @@ final class ApplicationError extends ApplicationState {
 
   ApplicationError({required this.message});
 }
+
+final class GetallApplicationOpportunityLoading extends ApplicationState {}
+
+final class GetallAplicationOpportunitySuccess extends ApplicationState {
+  final List<TouristApplicationModel> applications;
+
+  GetallAplicationOpportunitySuccess({required this.applications});
+}
+
+final class GetallApplicationOpportunityError extends ApplicationState {
+  final String message;
+
+  GetallApplicationOpportunityError({required this.message});
+}

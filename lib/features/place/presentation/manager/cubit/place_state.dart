@@ -72,6 +72,21 @@ final class GetAllPlaceOpportunityErrorState extends PlaceState {
   GetAllPlaceOpportunityErrorState({required this.message});
 }
 
+final class GetOtherProfileLoading extends PlaceState {}
+
+final class GetOtherProfileSuccess extends PlaceState {
+  final ProfileModel application;
+
+  GetOtherProfileSuccess({required this.application});
+}
+
+final class GetOtherProfileError extends PlaceState {
+  final String message;
+
+  GetOtherProfileError({required this.message});
+}
+
+
 // final class CloseOpportunity extends PlaceState {
 //   final OpportunityModel closeOpportunity;
 //   CloseOpportunity({required this.closeOpportunity});

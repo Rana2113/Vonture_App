@@ -3,12 +3,14 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/error/failures.dart';
+import 'package:vonture_grad/core/models/user_model.dart';
 import 'package:vonture_grad/core/utils/api_service.dart';
 import 'package:vonture_grad/core/utils/end_points.dart';
 import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/create_opportunity.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/place_model.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
+import 'package:vonture_grad/features/place/data/models/profile%20_model/profile_model.dart';
 
 abstract class PlaceRepo {
   Future<Either<Failure, List<PlaceModel>>> getmyplace(int id);
@@ -190,7 +192,7 @@ class PlaceRepoImplementation implements PlaceRepo {
 
       print("Requirements API call successful - Response: $response");
 
-      final List<Requirements> requirementsList = (response as List)
+      final List<Requirements> requirementsList = (response)
           .map((requirement) => Requirements.fromJson(requirement))
           .toList();
 
@@ -228,6 +230,28 @@ class PlaceRepoImplementation implements PlaceRepo {
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       print("offers: API call failed - Error: $e");
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, ProfileModel>> getotherprofile(int id) async {
+    try {
+      final response =
+          await apiService.get(endPoint: '${EndPoints.user}$id', jwt: token);
+      print('otherProfile: API call successful - Response: $response');
+      final ProfileModel touristprofile =
+          ProfileModel.fromJson(response["user"]);
+      return Right(touristprofile);
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final responseData = e.response?.data;
+      print("statuscode: $statusCode - response: $responseData");
+
+      print("otherprofile: API call failed - Error: $e");
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      print("otherprofile: API call failed - Error: $e");
+
       return Left(ServerFailure(e.toString()));
     }
   }

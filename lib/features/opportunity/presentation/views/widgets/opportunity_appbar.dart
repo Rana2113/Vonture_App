@@ -4,7 +4,7 @@ import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/constants.dart/styles.dart';
 
 class OpportunityAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const OpportunityAppBar({Key? key}) : super(key: key);
+  const OpportunityAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,15 @@ class OpportunityAppBar extends StatelessWidget implements PreferredSizeWidget {
           'Vonture',
           style: Styles.textlogo.copyWith(
             fontSize: 45.sp,
+            color: PrimaryColor,
           ),
         ),
-        backgroundColor: PrimaryColor.withOpacity(0.99),
+        backgroundColor: white,
+        // backgroundColor: PrimaryColor.withOpacity(0.99),
       ),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

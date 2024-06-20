@@ -43,15 +43,12 @@ class VontureApp extends StatelessWidget {
       child: ScreenUtilInit(
         designSize: const Size(388, 920),
         child: MaterialApp.router(
-            routerConfig: AppRouter.router,
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData.light().copyWith(
-              scaffoldBackgroundColor: Color(0xffFFFFFF),
-            )
-            // .copyWith(
-            //   scaffoldBackgroundColor: kPrimaryColor,
-            // ),
-            ),
+          routerConfig: AppRouter.router,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData.light().copyWith(
+            scaffoldBackgroundColor: const Color(0xffFFFFFF),
+          ),
+        ),
       ),
     );
   }

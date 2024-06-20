@@ -24,7 +24,9 @@ class _ApplicationViewBodyState extends State<ApplicationViewBody> {
       builder: (context, state) {
         if (state is ApplicationLoading) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: PrimaryColor,
+            ),
           );
         } else if (state is ApplicationSuccess) {
           if (state.applications.isEmpty) {
