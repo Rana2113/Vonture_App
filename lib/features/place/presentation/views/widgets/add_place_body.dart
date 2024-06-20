@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/components/text_field.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/add_place_button.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/pick_images.dart';
@@ -43,6 +44,10 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             AppTextField(
+              label: const Text(
+                'Place name',
+                style: Styles.text16w500,
+              ),
               controller: nameController,
               hinttext: 'Place name',
               validator: (value) {
@@ -62,8 +67,23 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
                 });
               },
             ),
+            Builder(
+              builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    mediaFiles.isEmpty ? 'Please add at least one image.' : '',
+                    style: TextStyle(color: Color.fromARGB(255, 172, 45, 36)),
+                  ),
+                );
+              },
+            ),
             verticalSpacing(24),
             AppTextField(
+              label: const Text(
+                'Location',
+                style: Styles.text16w500,
+              ),
               controller: locationController,
               hinttext: 'Location',
               validator: (value) {
@@ -76,6 +96,10 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
             ),
             verticalSpacing(24),
             AppTextField(
+              label: const Text(
+                'City',
+                style: Styles.text16w500,
+              ),
               controller: cityController,
               hinttext: 'City',
               validator: (value) {
@@ -88,6 +112,10 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
             ),
             verticalSpacing(24),
             AppTextField(
+              label: const Text(
+                'Country',
+                style: Styles.text16w500,
+              ),
               controller: countryController,
               hinttext: 'Country',
               validator: (value) {
@@ -100,10 +128,14 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
             ),
             verticalSpacing(24),
             AppTextField(
+              label: const Text(
+                'phone number',
+                style: Styles.text16w500,
+              ),
               controller: phoneController,
               hinttext: 'Phone number',
               validator: (value) {
-                if (value.isEmpty) {
+                if (value.isEmpty && value.length < 11) {
                   return 'Please enter a phone number';
                 }
                 return null;
@@ -112,6 +144,10 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
             ),
             verticalSpacing(24),
             AppTextField(
+              label: const Text(
+                'Type of place',
+                style: Styles.text16w500,
+              ),
               controller: typeController,
               hinttext: 'Type of place',
               validator: (value) {
@@ -135,7 +171,7 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
   }
 
   void _createPlace(PlaceCubit placeCubit) {
-    if (formKey.currentState!.validate()) {
+    if (formKey.currentState!.validate() && mediaFiles.isNotEmpty) {
       placeCubit.createPlace(
         name: nameController.text,
         location: locationController.text,
@@ -145,6 +181,10 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
         type: typeController.text,
         mediaFiles: mediaFiles,
       );
+    } else {
+      setState(() {
+        // Triggering validation error message for ImagePickerContainer
+      });
     }
   }
 }

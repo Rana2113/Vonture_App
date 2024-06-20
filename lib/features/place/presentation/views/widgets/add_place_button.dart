@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 
 class AddPlaceButton extends StatelessWidget {
@@ -43,20 +44,22 @@ class AddPlaceButton extends StatelessWidget {
           );
         } else {
           return ElevatedButton(
-            onPressed: onPressed,
-            style: ElevatedButton.styleFrom(
-              fixedSize: Size(200.w, 48.h),
-              backgroundColor: kButtonColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+              onPressed: onPressed,
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(200.w, 48.h),
+                backgroundColor: PrimaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 12.w,
+                  vertical: 12.h,
+                ),
               ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 12.w,
-                vertical: 12.h,
-              ),
-            ),
-            child: const Text('Add Place'),
-          );
+              child: Text(
+                'Add Place',
+                style: Styles.text16w500.copyWith(color: white),
+              ));
         }
       },
     );

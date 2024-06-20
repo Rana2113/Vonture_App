@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 
 class PlaceCard extends StatelessWidget {
   final String title;
@@ -31,8 +32,8 @@ class PlaceCard extends StatelessWidget {
         right: 16.w,
       ),
       child: Card(
-        color: kCardColor,
         elevation: 4.0,
+        color: white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -50,67 +51,51 @@ class PlaceCard extends StatelessWidget {
                   ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )),
-            verticalSpacing(16.h),
+            verticalSpacing(16),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
                 title,
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w800,
-                  color: const Color(0xff8C6B59),
-                ),
+                style: Styles.text18w400.copyWith(color: PrimaryColor),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            verticalSpacing(8.h),
+            verticalSpacing(8),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
                 country,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xff8C6B59),
-                ),
+                style: Styles.text16w400
+                    .copyWith(height: 1.5, color: PrimaryColor),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            verticalSpacing(4.h),
+            verticalSpacing(4),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Text(
-                'Rating: $rating',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xff8C6B59),
-                ),
-              ),
+              child: Text('Rating: $rating',
+                  style: Styles.text16w400
+                      .copyWith(color: PrimaryColor, height: 1.5)),
             ),
-            verticalSpacing(16.h),
+            verticalSpacing(16),
             if (state != 'PENDING')
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: ElevatedButton(
                   onPressed: ontap,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: kLogoColor,
+                    backgroundColor: PrimaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
-                  child: const Text(
-                    'Add Opportunity',
-                    style: TextStyle(
-                      color: Color(0xff8C6B59),
-                    ),
-                  ),
+                  child: Text('Add Opportunity',
+                      style: Styles.text16w600.copyWith(color: white)),
                 ),
               ),
-            verticalSpacing(16.h),
+            verticalSpacing(16),
           ],
         ),
       ),

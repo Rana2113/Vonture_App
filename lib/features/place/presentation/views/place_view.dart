@@ -18,14 +18,16 @@ class MyPalceView extends StatelessWidget {
           child: const PlaceViewBody(),
         ),
         floatingActionButton: FloatingActionButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const AddPlaceView()));
           },
-          backgroundColor: kCardColor,
+          backgroundColor: PrimaryColor,
           child: const Icon(
             Icons.add,
-            color: kLogoColor,
+            color: white,
           ),
         ));
   }

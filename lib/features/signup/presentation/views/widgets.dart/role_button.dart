@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/signup/presentation/managers/cubit/sign_up_cubit.dart';
 
 class CustomButtonRole extends StatefulWidget {
@@ -66,17 +67,15 @@ class CustomButton extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: isSelected == true
-                ? const Color(0xffF5C499)
-                : const Color.fromARGB(255, 228, 214, 203),
-          ),
+              borderRadius: BorderRadius.circular(16),
+              color: isSelected == true ? PrimaryColor : BorderColor),
           width: double.infinity,
           height: heigh,
           child: Center(
             child: Text(
               text,
-              style: TextStyle(fontSize: size, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                  fontSize: size, fontWeight: FontWeight.w600, color: white),
             ),
           ),
         ),

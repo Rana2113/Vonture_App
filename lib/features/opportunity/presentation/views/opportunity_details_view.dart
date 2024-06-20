@@ -137,14 +137,16 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                             state.detailsopportunity.host?.rating?.toString() ??
                                 '',
                       ),
-                      verticalSpacing(48),
+                      verticalSpacing(20),
                       if (role == 'TOURIST')
                         hasApplied
-                            ? Text(
-                                'Already applied',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 16.sp,
+                            ? Center(
+                                child: Text(
+                                  'Already applied',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 16.sp,
+                                  ),
                                 ),
                               )
                             : ApplyButton(

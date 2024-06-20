@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 
 class ApplyButton extends StatelessWidget {
   const ApplyButton({super.key, this.onTap});
@@ -12,17 +13,9 @@ class ApplyButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: kButtonColor,
+          backgroundColor: PrimaryColor,
         ),
-        child: const Text(
-          'Apply',
-          style: TextStyle(
-            color: Color(0xFF161411),
-            fontSize: 16,
-            fontFamily: 'Plus Jakarta Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        child: Text('Apply', style: Styles.text16w600.copyWith(color: white)),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/core/utils/app_router.dart';
 import 'package:vonture_grad/features/signup/presentation/managers/cubit/sign_up_cubit.dart';
 
@@ -20,7 +21,7 @@ class SignUpButton extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: kButtonColor,
+              backgroundColor: PrimaryColor,
             ),
           );
         }
@@ -29,7 +30,7 @@ class SignUpButton extends StatelessWidget {
         if (state is SignUpLoading) {
           return const Center(
             child: CircularProgressIndicator(
-              backgroundColor: kButtonColor,
+              backgroundColor: PrimaryColor,
             ),
           );
         } else {
@@ -39,8 +40,8 @@ class SignUpButton extends StatelessWidget {
                 onTap: onPressed,
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: kButtonColor,
+                    borderRadius: BorderRadius.circular(16),
+                    color: PrimaryColor,
                   ),
                   width: double.infinity,
                   height: 48.h,
@@ -48,14 +49,8 @@ class SignUpButton extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 12.w, vertical: 12.h),
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w700,
-                          height: 0.09.h,
-                        ),
-                      ),
+                      child: Text('Login',
+                          style: Styles.text16w600.copyWith(color: white)),
                     ),
                   ),
                 ),

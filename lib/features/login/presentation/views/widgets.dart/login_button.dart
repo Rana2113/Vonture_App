@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/core/utils/app_router.dart';
 import 'package:vonture_grad/features/login/presentation/managers/cubit/login_cubit.dart';
 
@@ -47,22 +48,14 @@ class LoginButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      'Sign in',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFFFCFCFC),
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                        height: 0.10,
-                      ),
-                    ),
+                    Text('Sign in',
+                        textAlign: TextAlign.center,
+                        style: Styles.text16w600.copyWith(color: white)),
                   ],
                 ),
               ));

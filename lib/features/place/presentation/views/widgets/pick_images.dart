@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 
 class ImagePickerContainer extends StatefulWidget {
@@ -38,20 +39,15 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Images',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: kLogoColor,
-            ),
-          ),
+          Text('Images',
+              style: Styles.text16w400
+                  .copyWith(decoration: TextDecoration.underline)),
           const SizedBox(height: 8),
           Container(
             decoration: BoxDecoration(
-              color: kCardColor,
-              borderRadius: BorderRadius.circular(12),
-            ),
+                color: white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: BorderColor, width: 1)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -81,7 +77,7 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
                                         padding: const EdgeInsets.all(4),
                                         decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.red,
+                                          color: PrimaryColor,
                                         ),
                                         child: const Icon(
                                           Icons.delete,
