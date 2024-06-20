@@ -92,10 +92,10 @@ class OpportunityCubit extends Cubit<OpportunityState> {
             "PlaceCubit: Close opportunity failed - Error: ${failure.toString()}");
         emit(CloseOpportunityError(message: failure.toString()));
       },
-      (Closeopportunity) async {
-        emit(CloseOpportunity(closeOpportunity: Closeopportunity));
+      (closeopportunity) async {
+        emit(CloseOpportunity(closeOpportunity: closeopportunity));
         print(
-            "PlaceCubit: Close opportunity successful - Message: $Closeopportunity");
+            "PlaceCubit: Close opportunity successful - Message: $closeopportunity");
       },
     );
   }

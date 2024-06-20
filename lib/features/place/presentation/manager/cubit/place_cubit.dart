@@ -8,6 +8,7 @@ import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/create_opportunity.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/place_model.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
+import 'package:vonture_grad/features/place/data/models/profile%20_model/profile_model.dart';
 import 'package:vonture_grad/features/place/data/place_repo_implementation.dart';
 
 part 'place_state.dart';
@@ -181,4 +182,34 @@ class PlaceCubit extends Cubit<PlaceState> {
       },
     );
   }
+
+  Future<void> getotherprofile(int id) async {
+    emit(GetOtherProfileLoading());
+    print("otherprofile: getotherprofile called with id: $id");
+    final response = await placeRepoImplementation.getotherprofile(id);
+    response.fold(
+      (failure) {
+        print("otherprofile: API call failed - Error: $failure");
+        emit(GetOtherProfileError(message: failure.toString()));
+      },
+      (response) {
+        print(
+            "otherprofile cubit : API call successful - Response: ${response.toJson()}");
+        emit(GetOtherProfileSuccess(application: response));
+      },
+    );
+  }
+
+  // Future<void> getotherprofile(int id) async {
+  //   emit(GetOtherProfileLoading());
+  //   print("otherprofile: otherprofile called");
+  //   final response = await placeRepoImplementation.getotherprofile(id);
+  //   print("otherprofile: otherprofile result: $response");
+  //   response.fold(
+  //       (failure) => emit(GetOtherProfileError(message: failure.toString())),
+  //       (response) {
+  //     print("otherprofile: otherprofile successful - User: $response");
+  //     emit(GetOtherProfileSuccess(application: response));
+  //   });
+  // }
 }

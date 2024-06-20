@@ -48,7 +48,7 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
                 ),
                 contentPadding: const EdgeInsets.all(12),
                 filled: true,
-                fillColor: Color.fromARGB(255, 233, 242, 246),
+                fillColor: const Color.fromARGB(255, 233, 242, 246),
                 suffixIcon: IconButton(
                   onPressed: () {
                     searchController.clear();

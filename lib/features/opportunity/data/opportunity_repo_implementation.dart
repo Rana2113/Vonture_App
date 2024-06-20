@@ -90,7 +90,7 @@ class OpportunityRepoImplementation implements OpportunityRepo {
       final responseData = e.response?.data;
       print("statuscode: $statusCode - response: $responseData");
 
-      print("search: API call failed - Error: $e");
+      print("getspecific: API call failed - Error: $e");
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       print("search: API call failed - Error: $e");

@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:vonture_grad/core/error/failures.dart';
+import 'package:vonture_grad/core/models/user_model.dart';
+import 'package:vonture_grad/features/application/data/models/application_model/tourists_model.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/place_model.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
+import 'package:vonture_grad/features/place/data/models/profile%20_model/profile_model.dart';
 
 abstract class PlaceRepo {
   Future<Either<Failure, List<PlaceModel>>> getmyplace(int id);
@@ -28,4 +31,5 @@ abstract class PlaceRepo {
     List<int> offers,
   );
   Future<Either<Failure, List<Requirements>>> getallplaceopportunity(int id);
+  Future<Either<Failure, ProfileModel>> getotherprofile(int id);
 }

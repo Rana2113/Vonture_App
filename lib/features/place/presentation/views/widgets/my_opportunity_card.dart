@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyOpportunityCard extends StatelessWidget {
   const MyOpportunityCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.from,
@@ -10,7 +10,7 @@ class MyOpportunityCard extends StatelessWidget {
     required this.id,
     required this.status,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final String title;
   final String description;

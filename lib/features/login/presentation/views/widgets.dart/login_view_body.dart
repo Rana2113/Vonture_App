@@ -111,31 +111,29 @@ class LoginViewBody extends StatelessWidget {
                           ),
                         ),
                         verticalSpacing(18),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Don\'t have an account?',
-                                style: Styles.text16w600,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Don\'t have an account?',
+                              style: Styles.text16w600,
+                            ),
+                            horizontalSpacing(5),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUpView(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'Sign up',
+                                style: Styles.text16w500,
                               ),
-                              horizontalSpacing(5),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const SignUpView(),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  'Sign up',
-                                  style: Styles.text16w500,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

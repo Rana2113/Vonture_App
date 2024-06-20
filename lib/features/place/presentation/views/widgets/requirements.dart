@@ -8,13 +8,13 @@ class MultiSelectDropdown extends StatefulWidget {
   final List<String> items;
 
   const MultiSelectDropdown({
-    Key? key,
+    super.key,
     required this.hinttext,
     required this.onChanged,
     required this.value,
     required this.validator,
     required this.items,
-  }) : super(key: key);
+  });
 
   @override
   _MultiSelectDropdownState createState() => _MultiSelectDropdownState();
