@@ -16,6 +16,7 @@ class ProfileModel {
   List<ReceivedReviews>? receivedReviews;
   List<String>? skills;
   int? age;
+  String? status;
 
   ProfileModel({
     this.id,
@@ -35,6 +36,7 @@ class ProfileModel {
     this.receivedReviews,
     this.skills,
     this.age,
+    this.status, // Update this line to handle null
   });
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -52,6 +54,7 @@ class ProfileModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     age = json['age'];
+    status = json['status'] ?? ''; // Handle null value here
 
     if (json['place'] != null) {
       place = <Place>[];
@@ -84,6 +87,7 @@ class ProfileModel {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['age'] = age;
+    data['status'] = status;
 
     if (place != null) {
       data['place'] = place!.map((v) => v.toJson()).toList();

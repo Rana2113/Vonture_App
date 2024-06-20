@@ -28,6 +28,7 @@ class GetAllApplicationCard extends StatelessWidget {
             elevation: 4.0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
+              side: const BorderSide(color: PrimaryColor, width: 0.5),
             ),
             child: Container(
               height: 130,
@@ -83,7 +84,11 @@ class GetAllApplicationCard extends StatelessWidget {
                                         color: PrimaryColor,
                                         width: 1,
                                       )),
-                                  child: const Text('view profile'),
+                                  child: Text(
+                                    'view profile',
+                                    style: Styles.text14w500.copyWith(
+                                        color: PrimaryColor, height: 1),
+                                  ),
                                 ),
                               ),
                             )

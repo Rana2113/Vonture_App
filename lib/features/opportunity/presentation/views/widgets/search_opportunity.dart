@@ -16,7 +16,7 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 19.0),
       child: Row(
         children: [
           Expanded(
@@ -36,7 +36,7 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
                   fontWeight: FontWeight.w500,
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(5),
                   borderSide: const BorderSide(
                     color: kBorderColor2,
                   ),
@@ -47,8 +47,6 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
                   ),
                 ),
                 contentPadding: const EdgeInsets.all(12),
-                filled: true,
-                fillColor: const Color.fromARGB(255, 233, 242, 246),
                 suffixIcon: IconButton(
                   onPressed: () {
                     searchController.clear();

@@ -68,6 +68,7 @@ class ApiService {
   Future<Map<String, dynamic>> get({
     required String endPoint,
     String? jwt,
+    dynamic data,
   }) async {
     print("ApiService: post called request: to $_baseUrl$endPoint");
     _dio.options.headers = {

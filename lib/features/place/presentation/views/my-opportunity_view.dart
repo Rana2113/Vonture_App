@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
+import 'package:vonture_grad/features/place/presentation/views/add_opportunity_view.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/my_opportunity_view_body.dart';
 
 class MyOpportunityView extends StatelessWidget {
@@ -18,7 +19,16 @@ class MyOpportunityView extends StatelessWidget {
         placeId: placeId,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: onPressed,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddOpportunityView(
+                placeId: placeId,
+              ),
+            ),
+          );
+        },
         backgroundColor: kCardColor,
         child: const Icon(
           Icons.add,

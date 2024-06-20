@@ -7,7 +7,6 @@ import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
-import 'package:vonture_grad/features/place/presentation/views/my-opportunity_view.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/add_opportunity_button.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/requirements.dart';
 import 'package:vonture_grad/features/signup/presentation/views/widgets.dart/date_widget.dart';
@@ -21,7 +20,7 @@ class AddOpportunityViewBody extends StatefulWidget {
 }
 
 class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController availableControllerTo = TextEditingController();
   final TextEditingController availableControllerFrom = TextEditingController();
   final TextEditingController titleController = TextEditingController();
@@ -41,228 +40,194 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PlaceCubit, PlaceState>(
-      listener: (context, state) {
-        if (state is CreateOpportunityLoadingState) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => const Center(
-                child: CircularProgressIndicator(
-              color: PrimaryColor,
-            )),
-          );
-        } else if (state is CreateOpportunityErrorState) {
-          Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        } else if (state is CreateOpportunitySucessState) {
-          Navigator.of(context).pop();
+    final PlaceCubit placeCubit = context.read<PlaceCubit>();
 
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => MyOpportunityView(placeId: widget.placeId),
-            ),
-          );
-        }
-      },
-      child: BlocBuilder<PlaceCubit, PlaceState>(
-        builder: (context, state) {
-          if (state is GetRequirementAndOffersLoadingState) {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: PrimaryColor,
-            ));
-          }
-
-          if (state is GetRequirementAndOffersErrorState) {
-            return Center(child: Text('Error: ${state.message}'));
-          }
-
-          if (state is GetRequirementAndOffersSucessState) {
-            final requirements = state.requirements;
-            final offers = state.offers;
-
-            return SingleChildScrollView(
-              padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 16.w),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppTextField(
-                      controller: titleController,
-                      hinttext: 'Title',
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a title';
-                        }
-                        return null;
-                      },
-                      type: TextInputType.text,
-                    ),
-                    verticalSpacing(24),
-                    AppTextField(
-                      controller: descriptionController,
-                      hinttext: 'Description',
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a description';
-                        } else if (value.length < 50) {
-                          return 'Description must be at least 50 characters long';
-                        }
-                        return null;
-                      },
-                      type: TextInputType.text,
-                    ),
-                    verticalSpacing(24),
-                    Date(
-                      controller: availableControllerFrom,
-                      hinttext: 'Available From',
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please select a date';
-                        }
-                        return null;
-                      },
-                      type: TextInputType.text,
-                      onTap: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
-                        ).then((value) {
-                          if (value != null) {
-                            availableControllerFrom.text =
-                                value.toString().substring(0, 10);
-                          }
-                        });
-                      },
-                    ),
-                    verticalSpacing(24),
-                    Date(
-                      controller: availableControllerTo,
-                      hinttext: 'Available To',
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please select a date';
-                        }
-                        return null;
-                      },
-                      type: TextInputType.text,
-                      onTap: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
-                        ).then((value) {
-                          if (value != null) {
-                            availableControllerTo.text =
-                                value.toString().substring(0, 10);
-                          }
-                        });
-                      },
-                    ),
-                    verticalSpacing(24),
-                    MultiSelectDropdown(
-                      hinttext: 'Requirements',
-                      value: selectedRequirementNames,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select at least one requirement';
-                        }
-                        return null;
-                      },
-                      onChanged: (List<String> values) {
-                        setState(() {
-                          selectedRequirementNames = values;
-                          selectedRequirementIds = values.map((name) {
-                            final requirement = requirements.firstWhere(
-                              (req) => req.name == name,
-                              orElse: () => Requirements(
-                                  id: -1, name: 'Unknown Requirement'),
-                            );
-                            return requirement.id;
-                          }).toList();
-                        });
-                      },
-                      items: requirements.map((e) => e.name).toList(),
-                    ),
-                    verticalSpacing(24),
-                    MultiSelectDropdown(
-                      hinttext: 'Offers',
-                      value: selectedOfferNames,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select at least one offer';
-                        }
-                        return null;
-                      },
-                      onChanged: (List<String> values) {
-                        setState(() {
-                          selectedOfferNames = values;
-                          selectedOfferIds = values.map((name) {
-                            final offer = offers.firstWhere(
-                              (offer) => offer.name == name,
-                              orElse: () =>
-                                  Offers(id: -1, name: 'Unknown Offer'),
-                            );
-                            return offer.id;
-                          }).toList();
-                        });
-                      },
-                      items: offers.map((e) => e.name ?? '').toList(),
-                    ),
-                    verticalSpacing(24),
-                    AddOpportunityButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _handleSubmit(context);
-                        }
-                      },
-                      placeId: widget.placeId,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-
+    return BlocBuilder<PlaceCubit, PlaceState>(
+      builder: (context, state) {
+        if (state is GetRequirementAndOffersLoadingState) {
           return const Center(
               child: CircularProgressIndicator(
             color: PrimaryColor,
           ));
-        },
-      ),
+        }
+
+        if (state is GetRequirementAndOffersErrorState) {
+          return Center(child: Text('Error: ${state.message}'));
+        }
+
+        if (state is GetRequirementAndOffersSucessState) {
+          final requirements = state.requirements;
+          final offers = state.offers;
+
+          return SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 16.w),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppTextField(
+                    controller: titleController,
+                    hinttext: 'Title',
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter a title';
+                      }
+                      return null;
+                    },
+                    type: TextInputType.text,
+                  ),
+                  verticalSpacing(24),
+                  AppTextField(
+                    controller: descriptionController,
+                    hinttext: 'Description',
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter a description';
+                      } else if (value.length < 50) {
+                        return 'Description must be at least 50 characters long';
+                      }
+                      return null;
+                    },
+                    type: TextInputType.text,
+                  ),
+                  verticalSpacing(24),
+                  Date(
+                    controller: availableControllerFrom,
+                    hinttext: 'Available From',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please select a date';
+                      }
+                      return null;
+                    },
+                    type: TextInputType.text,
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      ).then((value) {
+                        if (value != null) {
+                          availableControllerFrom.text =
+                              value.toString().substring(0, 10);
+                        }
+                      });
+                    },
+                  ),
+                  verticalSpacing(24),
+                  Date(
+                    controller: availableControllerTo,
+                    hinttext: 'Available To',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please select a date';
+                      }
+                      return null;
+                    },
+                    type: TextInputType.text,
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      ).then((value) {
+                        if (value != null) {
+                          availableControllerTo.text =
+                              value.toString().substring(0, 10);
+                        }
+                      });
+                    },
+                  ),
+                  verticalSpacing(24),
+                  MultiSelectDropdown(
+                    hinttext: 'Requirements',
+                    value: selectedRequirementNames,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select at least one requirement';
+                      }
+                      return null;
+                    },
+                    onChanged: (List<String> values) {
+                      setState(() {
+                        selectedRequirementNames = values;
+                        selectedRequirementIds = values.map((name) {
+                          final requirement = requirements.firstWhere(
+                            (req) => req.name == name,
+                            orElse: () => Requirements(
+                                id: -1, name: 'Unknown Requirement'),
+                          );
+                          return requirement.id;
+                        }).toList();
+                      });
+                    },
+                    items: requirements.map((e) => e.name).toList(),
+                  ),
+                  verticalSpacing(24),
+                  MultiSelectDropdown(
+                    hinttext: 'Offers',
+                    value: selectedOfferNames,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select at least one offer';
+                      }
+                      return null;
+                    },
+                    onChanged: (List<String> values) {
+                      setState(() {
+                        selectedOfferNames = values;
+                        selectedOfferIds = values.map((name) {
+                          final offer = offers.firstWhere(
+                            (offer) => offer.name == name,
+                            orElse: () => Offers(id: -1, name: 'Unknown Offer'),
+                          );
+                          return offer.id;
+                        }).toList();
+                      });
+                    },
+                    items: offers.map((e) => e.name ?? '').toList(),
+                  ),
+                  verticalSpacing(24),
+                  AddOpportunityButton(
+                    onPressed: () {
+                      _createOpportunity(placeCubit);
+                    },
+                    placeId: widget.placeId,
+                    onSuccess: () {
+                      Navigator.of(context).pop(true);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return const Center(
+            child: CircularProgressIndicator(
+          color: PrimaryColor,
+        ));
+      },
     );
   }
 
-  void _handleSubmit(BuildContext context) {
-    final title = titleController.text;
-    final description = descriptionController.text;
-    final from = availableControllerFrom.text;
-    final to = availableControllerTo.text;
-    final requirements = selectedRequirementIds.whereType<int>().toList();
-    final offers = selectedOfferIds.whereType<int>().toList();
-
-    BlocProvider.of<PlaceCubit>(context).createOpportunity(
-      widget.placeId,
-      title: title,
-      description: description,
-      from: from,
-      to: to,
-      requirements: requirements,
-      offers: offers,
-    );
+  void _createOpportunity(PlaceCubit placeCubit) {
+    if (formKey.currentState!.validate()) {
+      placeCubit.createOpportunity(
+        widget.placeId,
+        title: titleController.text,
+        description: descriptionController.text,
+        from: availableControllerFrom.text,
+        to: availableControllerTo.text,
+        requirements: selectedRequirementIds.whereType<int>().toList(),
+        offers: selectedOfferIds.whereType<int>().toList(),
+      );
+    }
   }
 }
-
-
-
-
 
 
 // import 'package:flutter/material.dart';

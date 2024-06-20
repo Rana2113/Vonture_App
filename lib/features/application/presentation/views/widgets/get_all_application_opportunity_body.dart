@@ -54,8 +54,7 @@ class _GetAllApplicationOpportunityBodyState
                       '${state.applications[index].tourist!.firstName} ${state.applications[index].tourist!.lastName}',
                   nationality:
                       state.applications[index].tourist!.nationality ?? '',
-                  bio:
-                      'jbgjhgjhgvhjgvhjhjvghvhgvhgchcytydtyrdjhvbkhkjhkhiuhiugyhvjhuyguig',
+                  bio: state.applications[index].tourist!.bio ?? '',
                   ontap: () {
                     Navigator.push(
                         context,
@@ -63,6 +62,8 @@ class _GetAllApplicationOpportunityBodyState
                             builder: (context) => TouristProfile(
                                   touristid:
                                       state.applications[index].tourist!.id!,
+                                  opportunityId: widget.opportunityId,
+                                  status: state.applications[index].status!,
                                 )));
                   },
                 );

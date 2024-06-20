@@ -17,6 +17,10 @@ class _MyOpportunityViewBodyState extends State<MyOpportunityViewBody> {
   @override
   void initState() {
     super.initState();
+    _fetchOpportunity();
+  }
+
+  void _fetchOpportunity() {
     BlocProvider.of<PlaceCubit>(context).getallplaceopportunity(widget.placeId);
   }
 
@@ -26,7 +30,9 @@ class _MyOpportunityViewBodyState extends State<MyOpportunityViewBody> {
       builder: (context, state) {
         if (state is GetAllPlaceOpportunityLoadingState) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: PrimaryColor,
+            ),
           );
         } else if (state is GetAllPlaceOpportunitySucessState) {
           return ListView.builder(
@@ -34,22 +40,25 @@ class _MyOpportunityViewBodyState extends State<MyOpportunityViewBody> {
             itemBuilder: (context, index) {
               final opportunity = state.opportunity[index];
               return MyOpportunityCard(
-                title: opportunity.title ?? 'No title',
-                description: opportunity.description ?? 'No description',
-                from: opportunity.from ?? 'No from',
-                to: opportunity.to ?? 'No to',
-                id: opportunity.id!,
-                status: opportunity.status!,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyOpportunityDetails(
-                      opportunityId: opportunity.id!,
-                      placeId: widget.placeId,
-                    ),
-                  ),
-                ),
-              );
+                  title: opportunity.title ?? 'No title',
+                  description: opportunity.description ?? 'No description',
+                  from: opportunity.from ?? 'No from',
+                  to: opportunity.to ?? 'No to',
+                  id: opportunity.id!,
+                  status: opportunity.status!,
+                  onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyOpportunityDetails(
+                            opportunityId: opportunity.id!,
+                            placeId: widget.placeId,
+                          ),
+                        ),
+                      ).then((value) {
+                        if (value == true) {
+                          _fetchOpportunity();
+                        }
+                      }));
             },
           );
         } else if (state is GetAllPlaceOpportunityErrorState) {

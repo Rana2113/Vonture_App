@@ -4,11 +4,13 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vonture_grad/core/error/failures.dart';
+import 'package:vonture_grad/features/place/data/models/applications/app_model.dart';
 import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/create_opportunity.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/place_model.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
 import 'package:vonture_grad/features/place/data/models/profile%20_model/profile_model.dart';
+import 'package:vonture_grad/features/place/data/models/review_model/review.dart';
 import 'package:vonture_grad/features/place/data/place_repo_implementation.dart';
 
 part 'place_state.dart';
@@ -183,33 +185,81 @@ class PlaceCubit extends Cubit<PlaceState> {
     );
   }
 
-  Future<void> getotherprofile(int id) async {
+  Future<void> getotherprofile(
+    int id,
+  ) async {
     emit(GetOtherProfileLoading());
-    print("otherprofile: getotherprofile called with id: $id");
-    final response = await placeRepoImplementation.getotherprofile(id);
+    print("PlaceCubit: getotherprofile called with id: $id");
+    final response = await placeRepoImplementation.getotherprofile(
+      id,
+    );
     response.fold(
       (failure) {
-        print("otherprofile: API call failed - Error: $failure");
+        print("PlaceCubit: API call failed - Error: $failure");
         emit(GetOtherProfileError(message: failure.toString()));
       },
       (response) {
         print(
-            "otherprofile cubit : API call successful - Response: ${response.toJson()}");
+            "PlaceCubit  : API call successful - Response: ${response.toJson()}");
         emit(GetOtherProfileSuccess(application: response));
       },
     );
   }
 
-  // Future<void> getotherprofile(int id) async {
-  //   emit(GetOtherProfileLoading());
-  //   print("otherprofile: otherprofile called");
-  //   final response = await placeRepoImplementation.getotherprofile(id);
-  //   print("otherprofile: otherprofile result: $response");
-  //   response.fold(
-  //       (failure) => emit(GetOtherProfileError(message: failure.toString())),
-  //       (response) {
-  //     print("otherprofile: otherprofile successful - User: $response");
-  //     emit(GetOtherProfileSuccess(application: response));
-  //   });
-  // }
+  Future<void> createreview(int id, double rating, String comment) async {
+    emit(CreateReviewLoading());
+    print("PlaceCubit: Creating review");
+    final result =
+        await placeRepoImplementation.createreview(id, rating, comment);
+    print("PlaceCubit: Create review result: $result");
+    result.fold(
+      (failure) {
+        print(
+            "PlaceCubit: Create review failed - Error: ${failure.toString()}");
+        emit(CreateReviewError(message: failure.errorMessages));
+      },
+      (review) {
+        print("PlaceCubit: Create review successful - Review: $review");
+        emit(CreateReviewSuccess(review: review));
+      },
+    );
+  }
+
+  Future<void> acceptedApplication(int opportunityId, int touristId) async {
+    emit(RejectApplicationLoading());
+    print('PlaceCubit: Accepting application');
+    final result = await placeRepoImplementation.rejectApplication(
+        opportunityId, touristId);
+    result.fold(
+      (failure) {
+        print(
+            'PlaceCubit: Accept application failed - Error: ${failure.toString()}');
+        emit(RejectApplicationError(message: failure.toString()));
+      },
+      (response) {
+        print(
+            'PlaceCubit: Accept application successful - Response: $response');
+        emit(RejectApplicationSuccess(application: response));
+      },
+    );
+  }
+
+  Future<void> rejectApplication(int opportunityId, int touristId) async {
+    emit(RejectApplicationLoading());
+    print('PlaceCubit: Rejecting application');
+    final result = await placeRepoImplementation.rejectApplication(
+        opportunityId, touristId);
+    result.fold(
+      (failure) {
+        print(
+            'PlaceCubit: Reject application failed - Error: ${failure.toString()}');
+        emit(RejectApplicationError(message: failure.toString()));
+      },
+      (response) {
+        print(
+            'PlaceCubit: Reject application successful - Response: $response');
+        emit(RejectApplicationSuccess(application: response));
+      },
+    );
+  }
 }

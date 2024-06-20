@@ -38,7 +38,7 @@ class AddPlaceButton extends StatelessWidget {
         if (state is PlaceCreateLoadingState) {
           return const Center(
             child: CircularProgressIndicator(
-              backgroundColor: kButtonColor,
+              color: PrimaryColor,
             ),
           );
         } else {

@@ -10,4 +10,7 @@ class EndPoints {
   static const String requirements = '/requirements';
   static const String offers = '/offers';
   static const String createopportunity = '/opportunities';
+  static const String review = '/reviews';
+  static const String accept = '/accept';
+  static const String reject = '/reject';
 }

@@ -79,4 +79,20 @@ abstract class Styles {
     height: 0.09,
     letterSpacing: 0.32,
   );
+  static const text16w400 = TextStyle(
+    color: Color(0xFF1E1E1E),
+    fontSize: 16,
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.w400,
+    height: 0.09,
+    letterSpacing: -0.27,
+  );
+  static const text14w400 = TextStyle(
+    color: Color(0xFF6C6B6B),
+    fontSize: 14,
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.w400,
+    height: 0.12,
+    letterSpacing: -0.27,
+  );
 }

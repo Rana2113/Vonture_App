@@ -10,7 +10,7 @@ class UserModel {
   String? gender;
   DateTime? birthdate;
   String? role;
-  int? rating;
+  dynamic rating;
   DateTime? createdAt;
   DateTime? updatedAt;
   List<int>? toursitApplications;
@@ -47,7 +47,7 @@ class UserModel {
             ? null
             : DateTime.parse(json['birthdate'] as String),
         role: json['role'] as String?,
-        rating: json['rating'] as int?,
+        rating: json['rating'] as dynamic,
         createdAt: json['createdAt'] == null
             ? null
             : DateTime.parse(json['createdAt'] as String),

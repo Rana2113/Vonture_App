@@ -3,34 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
-import 'package:vonture_grad/features/place/presentation/views/my-opportunity_view.dart';
 
 class AddOpportunityButton extends StatelessWidget {
   final void Function() onPressed;
   final int placeId;
+  final VoidCallback onSuccess;
 
-  const AddOpportunityButton(
-      {super.key, required this.onPressed, required this.placeId});
+  const AddOpportunityButton({
+    super.key,
+    required this.onPressed,
+    required this.placeId,
+    required this.onSuccess,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PlaceCubit, PlaceState>(
       listener: (context, state) {
-        if (state is CreateOpportunitySucessState) {
+        if (state is GetAllPlaceOpportunitySucessState) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Place added successfully'),
+              content: Text('Opportunity added successfully'),
               backgroundColor: kButtonColor,
             ),
           );
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => MyOpportunityView(
-                placeId: placeId,
-              ),
-            ),
-          );
+
           context.read<PlaceCubit>().getallplaceopportunity(placeId);
+
+          onSuccess();
         } else if (state is CreateOpportunityErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -41,12 +41,12 @@ class AddOpportunityButton extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is CreateOpportunityLoadingState ||
-            state is GetAllPlaceOpportunityLoadingState) {
-          return const CircularProgressIndicator(
-            color: PrimaryColor,
+        if (state is CreateOpportunityLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(color: PrimaryColor),
           );
         }
+
         return ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
@@ -60,7 +60,7 @@ class AddOpportunityButton extends StatelessWidget {
               vertical: 12.h,
             ),
           ),
-          child: const Text('Add Place'),
+          child: const Text('Add Opportunity'),
         );
       },
     );

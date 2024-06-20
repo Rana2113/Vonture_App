@@ -86,27 +86,44 @@ final class GetOtherProfileError extends PlaceState {
   GetOtherProfileError({required this.message});
 }
 
+final class CreateReviewLoading extends PlaceState {}
 
-// final class CloseOpportunity extends PlaceState {
-//   final OpportunityModel closeOpportunity;
-//   CloseOpportunity({required this.closeOpportunity});
-// }
+final class CreateReviewSuccess extends PlaceState {
+  final ReviewModel review;
 
-// final class CloseOpportunityLoading extends PlaceState {}
+  CreateReviewSuccess({required this.review});
+}
 
-// final class CloseOpportunityError extends PlaceState {
-//   String message;
-//   CloseOpportunityError({required this.message});
-// }
+final class CreateReviewError extends PlaceState {
+  final String message;
 
-// final class GetOffersLoadingState extends PlaceState {}
+  CreateReviewError({required this.message});
+}
 
-// final class GetOffersSucessState extends PlaceState {
-//   final List<Offers> offers;
-//   GetOffersSucessState({required this.offers});
-// }
+final class AcceptApplicationLoading extends PlaceState {}
 
-// final class GetOffersErrorState extends PlaceState {
-//   final String message;
-//   GetOffersErrorState({required this.message});
-// }
+final class AcceptApplicationSuccess extends PlaceState {
+  final Application application;
+
+  AcceptApplicationSuccess({required this.application});
+}
+
+final class AcceptApplicationError extends PlaceState {
+  final String message;
+
+  AcceptApplicationError({required this.message});
+}
+
+final class RejectApplicationLoading extends PlaceState {}
+
+final class RejectApplicationSuccess extends PlaceState {
+  final Application application;
+
+  RejectApplicationSuccess({required this.application});
+}
+
+final class RejectApplicationError extends PlaceState {
+  final String message;
+
+  RejectApplicationError({required this.message});
+}

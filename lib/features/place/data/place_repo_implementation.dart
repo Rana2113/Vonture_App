@@ -3,14 +3,15 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/error/failures.dart';
-import 'package:vonture_grad/core/models/user_model.dart';
 import 'package:vonture_grad/core/utils/api_service.dart';
 import 'package:vonture_grad/core/utils/end_points.dart';
+import 'package:vonture_grad/features/place/data/models/applications/app_model.dart';
 import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/create_opportunity.dart';
 import 'package:vonture_grad/features/place/data/models/place_model/place_model.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
 import 'package:vonture_grad/features/place/data/models/profile%20_model/profile_model.dart';
+import 'package:vonture_grad/features/place/data/models/review_model/review.dart';
 
 abstract class PlaceRepo {
   Future<Either<Failure, List<PlaceModel>>> getmyplace(int id);
@@ -253,6 +254,118 @@ class PlaceRepoImplementation implements PlaceRepo {
       print("otherprofile: API call failed - Error: $e");
 
       return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, ReviewModel>> createreview(
+    int id,
+    double rating,
+    String comment,
+  ) async {
+    try {
+      final response = await apiService.post(
+        endPoint: '${EndPoints.user}/$id${EndPoints.review}',
+        data: {
+          "comment": comment,
+          "rating": rating,
+        },
+        jwt: token,
+      );
+
+      print("Response from API: $response");
+
+      if (response.containsKey("review")) {
+        ReviewModel review = ReviewModel.fromJson(response["review"]);
+        return Right(review);
+      } else {
+        print("Unexpected response format: $response");
+        return Left(ServerFailure("Invalid response format"));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        final statusCode = e.response?.statusCode;
+        final responseData = e.response?.data;
+        print("statuscode: $statusCode - response: $responseData ");
+        return Left(responseData != null
+            ? ServerFailure(responseData["message"])
+            : ServerFailure.fromDioException(e));
+      } else {
+        print("Place: API call failed - Error: $e");
+
+        return Left(ServerFailure(
+          e.toString(),
+        ));
+      }
+    }
+  }
+
+  Future<Either<Failure, Application>> acceptApplication(
+      int opportunityId, int touristId) async {
+    try {
+      final response = await apiService.put(
+        endPoint: '${EndPoints.application}${EndPoints.accept}',
+        data: {
+          "opportunityId": opportunityId,
+          "touristId": touristId,
+        },
+        jwt: token,
+      );
+
+      if (response["application"] != null) {
+        final Application application =
+            Application.fromJson(response["application"]);
+        return Right(application);
+      } else {
+        return Left(ServerFailure("Invalid response from server"));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        final statusCode = e.response?.statusCode;
+        final responseData = e.response?.data;
+        print("statuscode: $statusCode - response: $responseData ");
+        return Left(responseData != null
+            ? ServerFailure(responseData["message"])
+            : ServerFailure.fromDioException(e));
+      } else {
+        print("Place: API call failed - Error: $e");
+
+        return Left(ServerFailure(e.toString()));
+      }
+    }
+  }
+
+  Future<Either<Failure, Application>> rejectApplication(
+      int opportunityId, int touristId) async {
+    try {
+      final response = await apiService.put(
+        endPoint: '${EndPoints.application}${EndPoints.reject}',
+        data: {
+          "opportunityId": opportunityId,
+          "touristId": touristId,
+        },
+        jwt: token,
+      );
+
+      if (response["application"] != null) {
+        final Application application =
+            Application.fromJson(response["application"]);
+        return Right(application);
+      } else {
+        return Left(ServerFailure("Invalid response from server"));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        final statusCode = e.response?.statusCode;
+        final responseData = e.response?.data;
+        print("statuscode: $statusCode - response: $responseData ");
+        return Left(responseData != null
+            ? ServerFailure(responseData["message"])
+            : ServerFailure.fromDioException(e));
+      } else {
+        print("Place: API call failed - Error: $e");
+
+        return Left(ServerFailure(e.toString()));
+      }
     }
   }
 }

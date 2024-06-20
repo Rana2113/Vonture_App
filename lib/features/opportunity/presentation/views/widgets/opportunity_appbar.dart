@@ -23,7 +23,6 @@ class OpportunityAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         backgroundColor: white,
-        // backgroundColor: PrimaryColor.withOpacity(0.99),
       ),
     );
   }
