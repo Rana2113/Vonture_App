@@ -19,3 +19,17 @@ final class SignUpFailure extends SignUpState {
 }
 
 class SignUpSelectValueState extends SignUpState {}
+
+final class GetSkillsLoadingState extends SignUpState {}
+
+final class GetSkillsSuccessState extends SignUpState {
+  final List<Requirements> skills;
+
+  GetSkillsSuccessState(
+      {required this.skills});
+}
+
+final class GetSkillsErrorState extends SignUpState {
+  final String message;
+  GetSkillsErrorState({required this.message});
+}

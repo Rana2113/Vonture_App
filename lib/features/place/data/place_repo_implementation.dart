@@ -213,6 +213,7 @@ class PlaceRepoImplementation implements PlaceRepo {
     }
   }
 
+
   Future<Either<Failure, List<Offers>>> getOffers({String? jwt}) async {
     try {
       final responseData = await apiService.getreq(
@@ -235,13 +236,38 @@ class PlaceRepoImplementation implements PlaceRepo {
     }
   }
 
-  Future<Either<Failure, ProfileModel>> getotherprofile(int id) async {
+  Future<Either<Failure, ProfileModel>> getotherprofile(int id,int opportunityID) async {
     try {
       final response =
-          await apiService.get(endPoint: '${EndPoints.user}$id', jwt: token);
+          await apiService.get(endPoint: '${EndPoints.user}$id', jwt: token,data: {
+            "opportunityId":opportunityID
+          });
       print('otherProfile: API call successful - Response: $response');
+
       final ProfileModel touristprofile =
           ProfileModel.fromJson(response["user"]);
+      return Right(touristprofile);
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final responseData = e.response?.data;
+      print("statuscode: $statusCode - response: $responseData");
+
+      print("otherprofile: API call failed - Error: $e");
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      print("otherprofile: API call failed - Error: $e");
+
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+  Future<Either<Failure, ProfileModel>> getUserData(int id) async {
+    try {
+      final response =
+      await apiService.get(endPoint: '${EndPoints.user}$id', jwt: token);
+      print('otherProfile: API call successful - Response: $response');
+
+      final ProfileModel touristprofile =
+      ProfileModel.fromJson(response["user"]);
       return Right(touristprofile);
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
@@ -265,6 +291,49 @@ class PlaceRepoImplementation implements PlaceRepo {
     try {
       final response = await apiService.post(
         endPoint: '${EndPoints.user}/$id${EndPoints.review}',
+        data: {
+          "comment": comment,
+          "rating": rating,
+        },
+        jwt: token,
+      );
+
+      print("Response from API: $response");
+
+      if (response.containsKey("review")) {
+        ReviewModel review = ReviewModel.fromJson(response["review"]);
+        return Right(review);
+      } else {
+        print("Unexpected response format: $response");
+        return Left(ServerFailure("Invalid response format"));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        final statusCode = e.response?.statusCode;
+        final responseData = e.response?.data;
+        print("statuscode: $statusCode - response: $responseData ");
+        return Left(responseData != null
+            ? ServerFailure(responseData["message"])
+            : ServerFailure.fromDioException(e));
+      } else {
+        print("Place: API call failed - Error: $e");
+
+        return Left(ServerFailure(
+          e.toString(),
+        ));
+      }
+    }
+  }
+
+
+  Future<Either<Failure, ReviewModel>> createReviewTourist(
+      int placeId,
+      double rating,
+      String comment,
+      ) async {
+    try {
+      final response = await apiService.post(
+        endPoint: '${EndPoints.place}/$placeId${EndPoints.review}',
         data: {
           "comment": comment,
           "rating": rating,

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,7 +9,8 @@ class OpportunityDetailsUpper extends StatelessWidget {
       required this.title,
       required this.from,
       required this.to});
-  final String image;
+
+  final List<String> image;
   final String title;
   final String from;
   final String to;
@@ -18,11 +20,24 @@ class OpportunityDetailsUpper extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Image.asset(
-          image,
-          height: 350.h,
-          width: 600.w,
-          fit: BoxFit.cover,
+        CarouselSlider(
+          options: CarouselOptions(
+              height: 300.0,
+              aspectRatio: 18 / 9,
+              autoPlay: true,
+              viewportFraction: 1),
+          items: image.map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Image.network(
+                  i,
+                  fit: BoxFit.contain,
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                );
+              },
+            );
+          }).toList(),
         ),
         Positioned(
           bottom: 30.h,

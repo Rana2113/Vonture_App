@@ -69,7 +69,7 @@ class _MyOpportunityDetailsState extends State<MyOpportunityDetails> {
             return ListView(
               children: [
                 OpportunityDetailsUpper(
-                  image: 'assets/shelter.jpg',
+                  image: opportunity.place!.placeMedia??[],
                   title: opportunity.title ?? ' ',
                   from: opportunity.from ?? '',
                   to: opportunity.to ?? '',
@@ -213,9 +213,9 @@ class AppBarwithreturn extends StatelessWidget implements PreferredSizeWidget {
           ),
           onPressed: () {
             final placeCubit = BlocProvider.of<PlaceCubit>(context);
-            placeCubit.getallplaceopportunity(placeId).then((_) {
-              Navigator.of(context).pop();
-            });
+            Navigator.of(context).pop();
+
+            placeCubit.getallplaceopportunity(placeId);
           },
         ),
       ),

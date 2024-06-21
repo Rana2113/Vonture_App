@@ -1,6 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vonture_grad/core/models/user_model.dart';
 import 'package:vonture_grad/features/signup/data/sign_up_repo.dart';
+
+import '../../../../../core/error/failures.dart';
+import '../../../../place/data/models/requirements/requirements.dart';
+import '../../../../place/data/place_repo_implementation.dart';
 
 part 'sign_up_state.dart';
 
@@ -8,6 +13,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit(this.signUpRepo) : super(SignUpInitial());
   final SignUpRepo signUpRepo;
   static SignUpCubit get(context) => BlocProvider.of(context);
+  List<Requirements> listSkills =[];
 
   Future<void> signUP({
     required String firstname,
@@ -19,6 +25,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     required String bio,
     required String birthdate,
     required String gender,
+    required List<int> skills,
     required String role,
   }) async {
     emit(SignUpLoading());
@@ -44,6 +51,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       nationality,
       bio,
       birthdate,
+      skills,
       gender,
       role,
     );
@@ -59,6 +67,34 @@ class SignUpCubit extends Cubit<SignUpState> {
       },
     );
   }
+  Future getSkills() async {
+    print("PlaceCubit: Fetching requirements and offers");
+emit(GetSkillsLoadingState());
+    final results = await signUpRepo.skills();
+
+    final skillsResult =
+    results;
+
+    skillsResult.fold(
+          (failure) {
+        print(
+            "PlaceCubit: Fetching skills failed - Error: ${failure.toString()}");
+      },
+          (skills) {
+            emit(GetSkillsSuccessState(
+              skills: skills,
+            ));
+            listSkills
+            =skills;
+            print("PlaceCubit: Fetching skills and offers succeeded");
+
+      },
+    );
+    return listSkills;
+  }
+
+
+
 
   String? selectedValue;
   void selectValue(String value) {

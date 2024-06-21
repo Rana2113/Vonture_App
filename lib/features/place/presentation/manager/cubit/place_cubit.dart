@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vonture_grad/core/error/failures.dart';
@@ -13,11 +15,15 @@ import 'package:vonture_grad/features/place/data/models/profile%20_model/profile
 import 'package:vonture_grad/features/place/data/models/review_model/review.dart';
 import 'package:vonture_grad/features/place/data/place_repo_implementation.dart';
 
+import '../../../../../core/constants.dart/api_constants.dart';
+import '../../../../opportunity/presentation/managers/cubit/opportunity_cubit.dart';
+
 part 'place_state.dart';
 
 class PlaceCubit extends Cubit<PlaceState> {
   PlaceCubit(this.placeRepoImplementation) : super(PlaceLoadingState());
   final PlaceRepoImplementation placeRepoImplementation;
+
   static PlaceCubit get(context) => BlocProvider.of(context);
 
   Future<void> getmyplace(int id) async {
@@ -53,6 +59,34 @@ class PlaceCubit extends Cubit<PlaceState> {
     List<XFile> updatedMediaFiles = List.from(mediaFiles)..add(media);
     emit(UploadMedia(mediaFiles: updatedMediaFiles));
     print("PlaceCubit: Media files: $mediaFiles");
+  }
+
+  uploadProfile(dynamic image, BuildContext context) async {
+    print(token);
+    print(image);
+    String fileName = image.split('/').last;
+    const url =
+        'http://192.168.1.30:8000/users/profile_img'; // Replace with your server URL
+    final formData = FormData.fromMap({
+      'profile_img': await MultipartFile.fromFile(image, filename: fileName),
+    });
+
+    try {
+      final response = await Dio().put(url,
+          data: formData,
+          options: Options(headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer $token',
+          }));
+      print("/////////////////");
+      print(response.data["message"]);
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Image uploaded successfully")));
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
   }
 
   Future<void> createPlace({
@@ -101,6 +135,8 @@ class PlaceCubit extends Cubit<PlaceState> {
     print("PlaceCubit: Media files: $mediaFiles");
   }
 
+/////////////////////////////////////////////////uploadImage Profile///////////////////////////////////////
+
   Future<List<File>> uploadImagesToAPI(List<XFile> images) async {
     List<File> files = [];
     for (var image in images) {
@@ -111,6 +147,30 @@ class PlaceCubit extends Cubit<PlaceState> {
     return files;
   }
 
+/////////////////////////////////////////////////subscription///////////////////////////////////////
+  Future getSubscription() async {
+    String? url;
+    emit(SubscriptionLoading());
+    try {
+      var response =
+          await Dio().get("http://192.168.1.30:8000/plans/1/subscribe",
+              options: Options(headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token',
+              }));
+      if (response.statusCode == 200) {
+        url = response.data["session"];
+        print(url);
+        emit(SubscriptionSuccess(url: url!));
+      }
+    } catch (e) {
+      emit(SubscriptionError(message: e.toString()));
+      rethrow;
+    }
+    return url;
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
   Future<void> getRequirementsAndOffers() async {
     emit(GetRequirementAndOffersLoadingState());
     print("PlaceCubit: Fetching requirements and offers");
@@ -159,7 +219,6 @@ class PlaceCubit extends Cubit<PlaceState> {
     required List<int> requirements,
     required List<int> offers,
   }) async {
-    emit(CreateOpportunityLoadingState());
     print("PlaceCubit: Creating opportunity");
     final result = await placeRepoImplementation.createopportunity(
       id,
@@ -185,14 +244,30 @@ class PlaceCubit extends Cubit<PlaceState> {
     );
   }
 
-  Future<void> getotherprofile(
-    int id,
-  ) async {
+  Future<void> getotherprofile(int id, int opportunityID) async {
     emit(GetOtherProfileLoading());
     print("PlaceCubit: getotherprofile called with id: $id");
-    final response = await placeRepoImplementation.getotherprofile(
-      id,
+    final response =
+        await placeRepoImplementation.getotherprofile(id, opportunityID);
+    response.fold(
+      (failure) {
+        print("PlaceCubit: API call failed - Error: $failure");
+        emit(GetOtherProfileError(message: failure.toString()));
+      },
+      (response) {
+        print(
+            "PlaceCubit  : API call successful - Response: ${response.toJson()}");
+        emit(GetOtherProfileSuccess(application: response));
+      },
     );
+  }
+
+  Future<void> getUserData() async {
+    emit(GetOtherProfileLoading());
+    print(
+        "PlaceCubit: getotherprofile called with id: ${kidBox.get(kidBoxString)}");
+    final response =
+        await placeRepoImplementation.getUserData(kidBox.get(kidBoxString));
     response.fold(
       (failure) {
         print("PlaceCubit: API call failed - Error: $failure");
@@ -225,10 +300,41 @@ class PlaceCubit extends Cubit<PlaceState> {
     );
   }
 
+  Future<void> createReviewTourist(int id, int opportunityId, double rating,
+      String comment, BuildContext context) async {
+    emit(CreateReviewLoading());
+
+    print("PlaceCubit: Creating review");
+    final result =
+        await placeRepoImplementation.createReviewTourist(id, rating, comment);
+    print("PlaceCubit: Create review result: $result");
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(failure.errorMessages),
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        print(
+            "PlaceCubit: Create review failed - Error: ${failure.errorMessages}");
+        emit(CreateReviewError(message: failure.errorMessages));
+      },
+      (review) {
+        print("PlaceCubit: Create review successful - Review: $review");
+        BlocProvider.of<OpportunityCubit>(context)
+            .getSpecifiOpportunity(opportunityId);
+        emit(CreateReviewSuccess(review: review));
+      },
+    );
+  }
+
   Future<void> acceptedApplication(int opportunityId, int touristId) async {
     emit(RejectApplicationLoading());
     print('PlaceCubit: Accepting application');
-    final result = await placeRepoImplementation.rejectApplication(
+    final result = await placeRepoImplementation.acceptApplication(
         opportunityId, touristId);
     result.fold(
       (failure) {
@@ -239,6 +345,7 @@ class PlaceCubit extends Cubit<PlaceState> {
       (response) {
         print(
             'PlaceCubit: Accept application successful - Response: $response');
+        getotherprofile(opportunityId, opportunityId);
         emit(RejectApplicationSuccess(application: response));
       },
     );

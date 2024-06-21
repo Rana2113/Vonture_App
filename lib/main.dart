@@ -11,6 +11,8 @@ import 'package:vonture_grad/features/opportunity/data/opportunity_repo_implemen
 import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/opportunity_cubit.dart';
 import 'package:vonture_grad/features/place/data/place_repo_implementation.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
+import 'package:vonture_grad/features/signup/data/sign_up_repo_implementation.dart';
+import 'package:vonture_grad/features/signup/presentation/managers/cubit/sign_up_cubit.dart';
 
 void main() async {
   setup();
@@ -26,14 +28,21 @@ void main() async {
 
 class VontureApp extends StatelessWidget {
   const VontureApp({super.key});
-
   @override
   Widget build(BuildContext context) {
+
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
             create: (context) =>
                 OpportunityCubit(getIt<OpportunityRepoImplementation>())),
+        BlocProvider(
+            create: (context) =>
+                SignUpCubit(getIt<SignUpRepoImplementation>())..getSkills()),
+        BlocProvider(
+            create: (context) =>
+            PlaceCubit(getIt<PlaceRepoImplementation>())..getUserData()),
         BlocProvider(
             create: (context) =>
                 ApplicationCubit(getIt<ApplicationRepoImplementation>())),
@@ -48,7 +57,9 @@ class VontureApp extends StatelessWidget {
           theme: ThemeData.light().copyWith(
             scaffoldBackgroundColor: const Color(0xffFFFFFF),
           ),
+
         ),
+
       ),
     );
   }

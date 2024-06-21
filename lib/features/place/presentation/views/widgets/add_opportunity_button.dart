@@ -41,13 +41,9 @@ class AddOpportunityButton extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is CreateOpportunityLoadingState) {
-          return const Center(
-            child: CircularProgressIndicator(color: PrimaryColor),
-          );
-        }
 
-        return ElevatedButton(
+
+        return state is CreateOpportunityLoadingState? const Center(child: CircularProgressIndicator.adaptive(),):ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             fixedSize: Size(200.w, 48.h),

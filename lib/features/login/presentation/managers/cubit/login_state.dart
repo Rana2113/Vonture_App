@@ -20,3 +20,4 @@ final class ChangePasswordVisibility extends LoginState {
   final bool isPasswordVisible;
   ChangePasswordVisibility(this.isPasswordVisible);
 }
+

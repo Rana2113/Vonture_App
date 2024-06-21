@@ -11,6 +11,8 @@ class ProfileModel {
   String? role;
   double? rating;
   String? createdAt;
+  String? profileImg;
+
   String? updatedAt;
   List<Place>? place;
   List<ReceivedReviews>? receivedReviews;
@@ -26,6 +28,7 @@ class ProfileModel {
     this.phoneNumber,
     this.nationality,
     this.bio,
+    this.profileImg,
     this.gender,
     this.birthdate,
     this.role,
@@ -44,6 +47,8 @@ class ProfileModel {
     firstName = json['first_name'];
     lastName = json['last_name'];
     email = json['email'];
+    profileImg = json['profile_img'];
+
     phoneNumber = json['phone_number'];
     nationality = json['nationality'];
     bio = json['bio'];
@@ -75,6 +80,8 @@ class ProfileModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['first_name'] = firstName;
+    data['profile_img'] = profileImg;
+
     data['last_name'] = lastName;
     data['email'] = email;
     data['phone_number'] = phoneNumber;

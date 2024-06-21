@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/constants.dart/styles.dart';
+import 'package:vonture_grad/features/application/presentation/managers/cubit/application_cubit.dart';
 import 'package:vonture_grad/features/opportunity/presentation/managers/cubit/opportunity_cubit.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/about_place.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/apply_button.dart';
@@ -16,11 +18,18 @@ import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opp
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_offers.dart';
 import 'package:vonture_grad/features/opportunity/presentation/views/widgets/opportunity_requirements.dart';
 
+import '../../../../core/models/opportunity_model/opportunity_model.dart';
+import '../../../place/data/models/profile _model/profile_model.dart';
+import '../../../place/presentation/manager/cubit/place_cubit.dart';
+import '../../../place/presentation/views/widgets/my_details_opportunity.dart';
+
 class OpportunityDetails extends StatefulWidget {
-  const OpportunityDetails({Key? key, required this.opportunityId})
+  OpportunityDetails(
+      {Key? key, required this.opportunityId, this.isApllication})
       : super(key: key);
 
   final int opportunityId;
+  bool? isApllication;
 
   @override
   _OpportunityDetailsState createState() => _OpportunityDetailsState();
@@ -29,19 +38,24 @@ class OpportunityDetails extends StatefulWidget {
 class _OpportunityDetailsState extends State<OpportunityDetails> {
   bool hasApplied = false;
   List<int> touristApplications = [];
+  TextEditingController commentController = TextEditingController();
+
+  double rating=0.0;
 
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<OpportunityCubit>(context)
+        .getSpecifiOpportunity(widget.opportunityId);
     checkIfApplied();
   }
 
   void checkIfApplied() {
     final userTouristApplicationsBox = Hive.box(kTouristApplicationsBoxString);
     touristApplications = (userTouristApplicationsBox
-                .get(kTouristApplicationsBoxString) as List<dynamic>?)
-            ?.map((e) => e as int)
-            .toList() ??
+        .get(kTouristApplicationsBoxString) as List<dynamic>?)
+        ?.map((e) => e as int)
+        .toList() ??
         [];
 
     setState(() {
@@ -49,10 +63,10 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<OpportunityCubit>(context)
-        .getSpecifiOpportunity(widget.opportunityId);
+
 
     final userRoleBox = Hive.box(kRoleBoxString);
     String? role = userRoleBox.get(kRoleBoxString);
@@ -79,7 +93,7 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
 
             // Update Hive with updated touristApplications
             final userTouristApplicationsBox =
-                Hive.box(kTouristApplicationsBoxString);
+            Hive.box(kTouristApplicationsBoxString);
             userTouristApplicationsBox.put(
                 kTouristApplicationsBoxString, touristApplications);
 
@@ -97,7 +111,7 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
             return ListView(
               children: [
                 OpportunityDetailsUpper(
-                  image: 'assets/shelter.jpg',
+                  image: state.detailsopportunity.place!.placeMedia??[],
                   title: state.detailsopportunity.title ?? ' ',
                   from: state.detailsopportunity.from ?? '',
                   to: state.detailsopportunity.to ?? '',
@@ -109,7 +123,7 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                     children: [
                       OpportunityDescription(
                           description:
-                              state.detailsopportunity.description ?? ''),
+                          state.detailsopportunity.description ?? ''),
                       verticalSpacing(20),
                       OpportunityOffers(
                         offers: state.detailsopportunity.offers ?? [],
@@ -117,7 +131,7 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                       verticalSpacing(20),
                       OpportunityRequirements(
                         requirements:
-                            state.detailsopportunity.requirements ?? [],
+                        state.detailsopportunity.requirements ?? [],
                       ),
                       verticalSpacing(20),
                       OpportunityLocation(
@@ -134,27 +148,108 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                         fname: state.detailsopportunity.host?.firstName ?? '',
                         lname: state.detailsopportunity.host?.lastName ?? '',
                         rating:
-                            state.detailsopportunity.host?.rating?.toString() ??
-                                '',
+                        state.detailsopportunity.host?.rating?.toString() ??
+                            '',
                       ),
                       verticalSpacing(20),
-                      if (role == 'TOURIST')
-                        hasApplied
-                            ? Center(
-                                child: Text(
-                                  'Already applied',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                              )
-                            : ApplyButton(
-                                onTap: () {
-                                  BlocProvider.of<OpportunityCubit>(context)
-                                      .applyOpportunity(widget.opportunityId);
-                                },
+                      widget.isApllication == null
+                          ? role == 'TOURIST'
+                          ? hasApplied
+                          ? Center(
+                        child: Text(
+                          'Already applied',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      )
+                          : ApplyButton(
+                        onTap: () {
+                          BlocProvider.of<OpportunityCubit>(
+                              context)
+                              .applyOpportunity(
+                              widget.opportunityId);
+                        },
+                      )
+                          : SizedBox()
+                          : Column(
+
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ...(state.detailsopportunity.place!.touristReviews?? [])
+                              .map((review) => displayRating(review)),
+                          const SizedBox(height: 10,),
+                          RatingBar.builder(
+                            initialRating: 0,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => const Icon(
+                              Icons.star,
+                              color: PrimaryColor,
+                            ),
+                            onRatingUpdate: (newRating) {
+
+                                rating = newRating;
+                            },
+                          ),
+                          const SizedBox(height: 10,),
+
+                          TextField(
+                            controller: commentController,
+                            maxLines: 4,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(5)),
+                                borderSide: BorderSide(color: PrimaryColor),
                               ),
+                              hintText: 'Enter your comment here...',
+                              focusColor: PrimaryColor,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(5)),
+                                borderSide: BorderSide(
+                                    color: PrimaryColor, width: 2),
+                              ),
+                            ),
+                          ),
+                          verticalSpacing(16),
+                          Button(
+                            text: 'Submit',
+                            onTap: () {
+                              final comment = commentController.text;
+                              context
+                                  .read<PlaceCubit>()
+                                  .createReviewTourist(
+                                  state.detailsopportunity.place!.id!,
+                                  state.detailsopportunity.id!,
+                                  rating,
+                                  comment,context).then((v){
+                                    commentController.clear();
+                                    rating=0.0;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 170,
+                            child: ElevatedButton(
+                              onPressed: () {context.read<ApplicationCubit>().deleteApplication(
+                                  state.detailsopportunity.id!, context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                              ),
+                              child: Text('Delete',
+                                  style: Styles.text16w600
+                                      .copyWith(color: white)),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -192,6 +287,43 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
       ),
     );
   }
+}
+
+
+Column displayRating(TouristReviews review) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        '${review.tourist?.firstName ?? ''}, ${review.tourist?.lastName ?? ''}',
+        style: Styles.text18w400.copyWith(color: PrimaryColor),
+      ),
+      verticalSpacing(4),
+      RatingBarIndicator(
+        rating: review.rating!.toDouble() ?? 0,
+        itemBuilder: (context, index) =>
+        const Icon(
+          Icons.star,
+          color: PrimaryColor,
+        ),
+        itemCount: 5,
+        itemSize: 20.0.sp,
+        direction: Axis.horizontal,
+      ),
+      verticalSpacing(12),
+      Text(
+        review.comment ?? '',
+        style: Styles.text18w400.copyWith(color: PrimaryColor),
+      ),
+      verticalSpacing(5),
+      Divider(
+        color: PrimaryColor,
+        thickness: 0.5.sp,
+        height: 2.h,
+      ),
+      verticalSpacing(20),
+    ],
+  );
 }
 
 class OpportunityAppBarwithreturn extends StatelessWidget
@@ -233,11 +365,6 @@ class OpportunityAppBarwithreturn extends StatelessWidget
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/application/presentation/managers/cubit/application_cubit.dart';
 import 'package:vonture_grad/features/application/presentation/views/widgets/application_card.dart';
+import 'package:vonture_grad/features/opportunity/presentation/views/opportunity_details_view.dart';
 
 class ApplicationViewBody extends StatefulWidget {
   const ApplicationViewBody({super.key});
@@ -12,73 +14,93 @@ class ApplicationViewBody extends StatefulWidget {
 }
 
 class _ApplicationViewBodyState extends State<ApplicationViewBody> {
+
   @override
   void initState() {
     super.initState();
-    context.read<ApplicationCubit>().getallopportunity();
+    context.read<ApplicationCubit>().getMyApplications();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ApplicationCubit, ApplicationState>(
-      builder: (context, state) {
-        if (state is ApplicationLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: PrimaryColor,
-            ),
-          );
-        } else if (state is ApplicationSuccess) {
-          if (state.applications.isEmpty) {
+    return BlocConsumer<ApplicationCubit, ApplicationState>(
+        builder: (context, state) {
+          if (state is ApplicationLoading) {
             return const Center(
-              child: Text('No opportunities found'),
+              child: CircularProgressIndicator(
+                color: PrimaryColor,
+              ),
             );
-          } else {
-            return ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              shrinkWrap: true,
-              itemCount: state.applications.length,
-              itemBuilder: (context, index) {
-                final application = state.applications[index];
-                Widget? additionalWidget;
+          } else if (state is ApplicationSuccess) {
+            if (state.applications.isEmpty) {
+              return const Center(
+                child: Text('No opportunities found'),
+              );
+            } else {
+              return ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                shrinkWrap: true,
+                itemCount: state.applications.length,
+                itemBuilder: (context, index) {
+                  final application = state.applications[index];
+                  Widget? additionalWidget;
 
-                if (application.status == 'PENDING') {
-                  additionalWidget = ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kPrimaryColor,
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Pay',
-                      style: TextStyle(
-                        color: Color(0xff8C6B59),
+                  if (application.status == 'PENDING') {
+                    additionalWidget = ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kPrimaryColor,
                       ),
+                      onPressed: () {
+                        ApplicationCubit.get(context)
+                            .getPayment(application.opportunity!.id!);
+                      },
+                      child: const Text(
+                        'Pay',
+                        style: TextStyle(
+                          color: Color(0xff8C6B59),
+                        ),
+                      ),
+                    );
+                  }
+
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) =>
+                          OpportunityDetails(opportunityId: state.applications[index].opportunity!.id!,isApllication: true,)));
+                    },
+                    child: ApplicationCard(
+                      title: application.opportunity?.title ?? ' ',
+                      dateRange: '${application.opportunity?.from ?? ' '}'
+                          ' - ${application.opportunity?.to ?? ' '}',
+                      status: application.status ?? '',
+                      imageUrl: 'assets/shelter.jpg',
+                      additionalWidget: additionalWidget,
                     ),
                   );
-                }
-
-                return ApplicationCard(
-                  title: application.opportunity?.title ?? ' ',
-                  dateRange: '${application.opportunity?.from ?? ' '}'
-                      ' - ${application.opportunity?.to ?? ' '}',
-                  status: application.status ?? '',
-                  imageUrl: 'assets/shelter.jpg',
-                  additionalWidget: additionalWidget,
-                );
-              },
+                },
+              );
+            }
+          } else if (state is ApplicationError) {
+            return Center(
+              child: Text(state.message),
+            );
+          } else {
+            return const Center(
+              child: Text('Payment loading'),
             );
           }
-        } else if (state is ApplicationError) {
-          return Center(
-            child: Text(state.message),
-          );
-        } else {
-          return Center(
-            child: Text('Unknown state: $state'),
-          );
-        }
-      },
-    );
+        },
+        listener: (BuildContext context, ApplicationState state) async {
+          if (state is PaymentLoading) {
+            print("Loading");
+          } else if (state is PaymentSuccess) {
+            print(state.url);
+            !await launchUrl(Uri.parse(state.url));
+            ApplicationCubit.get(context).getMyApplications();
+          } else if (state is PaymentError) {
+            print(state.message);
+          }
+        });
   }
 }
 

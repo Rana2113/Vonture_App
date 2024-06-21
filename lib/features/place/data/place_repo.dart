@@ -20,6 +20,7 @@ abstract class PlaceRepo {
     final List<File> media,
   );
   Future<Either<Failure, List<Requirements>>> getRequirements();
+
   Future<Either<Failure, List<Requirements>>> getOffers();
   Future<Either<Failure, List<Requirements>>> createopportunity(
     int id,
@@ -31,7 +32,7 @@ abstract class PlaceRepo {
     List<int> offers,
   );
   Future<Either<Failure, List<Requirements>>> getallplaceopportunity(int id);
-  Future<Either<Failure, ProfileModel>> getotherprofile(int id);
+  Future<Either<Failure, ProfileModel>> getotherprofile(int id,int opportunityId);
   Future<Either<Failure, ReviewModel>> createreview(
     int id,
     double rating,

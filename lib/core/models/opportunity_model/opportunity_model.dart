@@ -1,3 +1,7 @@
+import 'package:flutter/cupertino.dart';
+
+import '../../../features/place/data/models/review_model/review.dart';
+
 class OpportunityModel {
   int? id;
   String? title;
@@ -5,7 +9,7 @@ class OpportunityModel {
   String? from;
   String? to;
   String? status;
-
+List<ReviewModel>? reviewModel;
   String? createdAt;
   Place? place;
   Host? host;
@@ -15,6 +19,7 @@ class OpportunityModel {
   OpportunityModel({
     this.id,
     this.title,
+    this.reviewModel,
     this.description,
     this.from,
     this.to,
@@ -36,6 +41,9 @@ class OpportunityModel {
     createdAt = json['createdAt'];
     place = json['place'] != null ? Place.fromJson(json['place']) : null;
     host = json['host'] != null ? Host.fromJson(json['host']) : null;
+    reviewModel = json['touristReviews'] != null
+        ? List<ReviewModel>.from(json['touristReviews'])
+        : null;
     requirements = json['requirements'] != null
         ? List<String>.from(json['requirements'])
         : null;
@@ -70,19 +78,20 @@ class Place {
   String? city;
   String? country;
   String? phoneNumber;
-  double? rating;
+  dynamic rating;
   List<String>? placeMedia;
+  List<TouristReviews>? touristReviews;
 
-  Place({
-    this.id,
-    this.name,
-    this.pin,
-    this.city,
-    this.country,
-    this.phoneNumber,
-    this.rating,
-    this.placeMedia,
-  });
+  Place(
+      {this.id,
+        this.name,
+        this.pin,
+        this.city,
+        this.country,
+        this.phoneNumber,
+        this.rating,
+        this.placeMedia,
+        this.touristReviews});
 
   Place.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -91,30 +100,84 @@ class Place {
     city = json['city'];
     country = json['country'];
     phoneNumber = json['phone_number'];
-    rating = (json['rating'] is int)
-        ? (json['rating'] as int).toDouble()
-        : json['rating'];
-    if (json['placeMedia'] != null) {
-      placeMedia = List<String>.from(json['placeMedia']);
+    rating = json['rating'];
+    placeMedia = json['placeMedia'].cast<String>();
+    if (json['touristReviews'] != null) {
+      touristReviews = <TouristReviews>[];
+      json['touristReviews'].forEach((v) {
+        touristReviews!.add(new TouristReviews.fromJson(v));
+      });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['pin'] = pin;
-    data['city'] = city;
-    data['country'] = country;
-    data['phone_number'] = phoneNumber;
-    data['rating'] = rating;
-    if (placeMedia != null) {
-      data['placeMedia'] = placeMedia;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['pin'] = this.pin;
+    data['city'] = this.city;
+    data['country'] = this.country;
+    data['phone_number'] = this.phoneNumber;
+    data['rating'] = this.rating;
+    data['placeMedia'] = this.placeMedia;
+    if (this.touristReviews != null) {
+      data['touristReviews'] =
+          this.touristReviews!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
+class TouristReviews {
+  Tourist? tourist;
+  dynamic rating;
+  String? comment;
+  String? createdAt;
+
+
+  TouristReviews({this.tourist, this.rating, this.comment, this.createdAt});
+
+  TouristReviews.fromJson(Map<String, dynamic> json) {
+    tourist =
+    json['tourist'] != null ? new Tourist.fromJson(json['tourist']) : null;
+    rating = json['rating'];
+    comment = json['comment'];
+    createdAt = json['createdAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.tourist != null) {
+      data['tourist'] = this.tourist!.toJson();
+    }
+    data['rating'] = this.rating;
+    data['comment'] = this.comment;
+    data['createdAt'] = this.createdAt;
+    return data;
+  }
+}
+
+class Tourist {
+  int? id;
+  String? firstName;
+  String? lastName;
+
+  Tourist({this.id, this.firstName, this.lastName});
+
+  Tourist.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['first_name'] = this.firstName;
+    data['last_name'] = this.lastName;
+    return data;
+  }
+}
 class Media {
   String? url;
   String? type;
@@ -182,7 +245,7 @@ class Host {
 //   DateTime? createdAt;
 //   Place? place;
 //   Host? host;
-  
+
 
 //   OpportunityModel({
 //     this.id,

@@ -41,6 +41,7 @@ class ApplicationRepoImplementation implements ApplicationRepo {
     }
   }
 
+
   @override
   Future<Either<Failure, List<TouristApplicationModel>>>
       getallapplicationopportunity(int opportunityId) async {

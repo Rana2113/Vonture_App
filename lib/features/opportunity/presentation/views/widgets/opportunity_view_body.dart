@@ -46,7 +46,7 @@ class OpportunityViewBody extends StatelessWidget {
                 description: state.opportunityList[index].description ?? ' ',
                 from: state.opportunityList[index].from ?? '',
                 to: state.opportunityList[index].to ?? '',
-                rating: state.opportunityList[index].place!.rating!,
+                rating: state.opportunityList[index].place!.rating!.toDouble(),
                 country: state.opportunityList[index].place!.country!,
               );
             },
@@ -84,7 +84,7 @@ class OpportunityViewBody extends StatelessWidget {
                   description: state.opportunities[index].description ?? ' ',
                   from: state.opportunities[index].from ?? ' ',
                   to: state.opportunities[index].to ?? ' ',
-                  rating: state.opportunities[index].place!.rating!,
+                  rating: state.opportunities[index].place!.rating!.toDouble(),
                   country: state.opportunities[index].place!.country!,
                 );
               },

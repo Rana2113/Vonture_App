@@ -39,6 +39,7 @@ final class GetRequirementAndOffersLoadingState extends PlaceState {}
 final class GetRequirementAndOffersSucessState extends PlaceState {
   final List<Requirements> requirements;
   final List<Offers> offers;
+
   GetRequirementAndOffersSucessState(
       {required this.offers, required this.requirements});
 }
@@ -47,6 +48,11 @@ final class GetRequirementAndOffersErrorState extends PlaceState {
   final String message;
   GetRequirementAndOffersErrorState({required this.message});
 }
+
+
+
+
+
 
 final class CreateOpportunityLoadingState extends PlaceState {}
 
@@ -126,4 +132,21 @@ final class RejectApplicationError extends PlaceState {
   final String message;
 
   RejectApplicationError({required this.message});
+}
+final class SubscriptionLoading extends PlaceState {
+
+  SubscriptionLoading();
+
+}
+
+final class SubscriptionSuccess extends PlaceState {
+  final String url;
+
+  SubscriptionSuccess({required this.url});
+}
+
+final class SubscriptionError extends PlaceState {
+  final String message;
+
+  SubscriptionError({required this.message});
 }

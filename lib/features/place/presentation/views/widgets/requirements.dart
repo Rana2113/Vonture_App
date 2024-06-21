@@ -42,6 +42,65 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
               setState(() {
                 _isExpanded = !_isExpanded;
               });
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Success'),
+                    content:
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+
+                    child: SingleChildScrollView(
+                      child: Stack(
+                        children: [
+                          StatefulBuilder(
+                            builder: (context,set) {
+                              return Column(
+                                  children:[
+                                    ...widget.items.map((item) {
+                                      final isSelected = _selectedItems.contains(item);
+                                      return CheckboxListTile(
+                                        value: isSelected,
+                                        title: Text(item),
+                                        onChanged: (bool? checked) {
+                                          set(() {
+                                            isSelected==true;
+                                          });
+                                          print(isSelected);
+                                          setState(() {
+                                            if (checked == true) {
+
+                                              _selectedItems.add(item);
+                                            } else {
+                                              _selectedItems.remove(item);
+                                            }
+                                            widget.onChanged!(_selectedItems);
+                                          });
+                                        },
+                                      );
+                                    }).toList(),
+
+                                  ]
+                              );
+                            }
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
             child: InputDecorator(
               decoration: InputDecoration(
@@ -71,37 +130,7 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
               ),
             ),
           ),
-          if (_isExpanded)
-            Container(
-              height: 200,
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: widget.items.map((item) {
-                    final isSelected = _selectedItems.contains(item);
-                    return CheckboxListTile(
-                      value: isSelected,
-                      title: Text(item),
-                      onChanged: (bool? checked) {
-                        setState(() {
-                          if (checked == true) {
-                            _selectedItems.add(item);
-                          } else {
-                            _selectedItems.remove(item);
-                          }
-                          widget.onChanged!(_selectedItems);
-                        });
-                      },
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
+
         ],
       ),
     );

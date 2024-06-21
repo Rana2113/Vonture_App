@@ -5,6 +5,7 @@ import 'package:vonture_grad/features/application/data/models/application_model/
 
 abstract class ApplicationRepo {
   Future<Either<Failure, List<ApplicationModel>>> getmyapplication();
+
   Future<Either<Failure, List<TouristApplicationModel>>>
       getallapplicationopportunity(
     int opportunityId,

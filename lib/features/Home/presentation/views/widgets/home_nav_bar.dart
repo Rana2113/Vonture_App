@@ -101,7 +101,7 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
           ),
           onPressed: (context) {
             _controller.jumpToTab(1);
-            context?.read<ApplicationCubit>().getallopportunity();
+            context?.read<ApplicationCubit>().getMyApplications();
           },
           activeColorPrimary: PrimaryColor.withOpacity(0.3),
         ),

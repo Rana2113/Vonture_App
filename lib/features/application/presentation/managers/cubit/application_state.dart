@@ -18,6 +18,25 @@ final class ApplicationError extends ApplicationState {
   ApplicationError({required this.message});
 }
 
+
+final class PaymentLoading extends ApplicationState {
+
+  PaymentLoading();
+
+}
+
+final class PaymentSuccess extends ApplicationState {
+  final String url;
+
+  PaymentSuccess({required this.url});
+}
+
+final class PaymentError extends ApplicationState {
+  final String message;
+
+  PaymentError({required this.message});
+}
+
 final class GetallApplicationOpportunityLoading extends ApplicationState {}
 
 final class GetallAplicationOpportunitySuccess extends ApplicationState {

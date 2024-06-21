@@ -47,6 +47,26 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
   bool applicationProcessing = false;
 
   @override
+  void initState() {
+    print(widget.status!);
+    if (widget.status == "APPLIED") {
+
+        applicationProcessing = false;
+
+    } else {
+      applicationProcessing = true;
+    }
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -87,6 +107,9 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
             const SizedBox(height: 20),
             ...(widget.receivedReviews ?? [])
                 .map((review) => displayRating(review)),
+
+
+
             RatingBar.builder(
               initialRating: 0,
               minRating: 1,
@@ -131,47 +154,34 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
                     .createreview(widget.touristid, rating, comment);
               },
             ),
-            if (!applicationProcessing && widget.status == 'APPLIED')
+            if (applicationProcessing == false)
               Row(
                 children: [
                   Button(
                     text: 'Accept',
                     onTap: () {
-                      setState(() {
-                        applicationProcessing = true;
-                      });
                       context
                           .read<PlaceCubit>()
                           .acceptedApplication(
-                              widget.opportunityId, widget.touristid)
-                          .then((_) {
-                        setState(() {
-                          applicationProcessing = false;
-                        });
-                      });
+                              widget.opportunityId, widget.touristid);
+
+
                     },
                   ),
                   const Spacer(),
                   Button(
                     text: 'Reject',
                     onTap: () {
-                      setState(() {
-                        applicationProcessing = true;
-                      });
                       context
                           .read<PlaceCubit>()
                           .rejectApplication(
                               widget.opportunityId, widget.touristid)
-                          .then((_) {
-                        setState(() {
-                          applicationProcessing = false;
-                        });
-                      });
+                         ;
                     },
                   ),
                 ],
               ),
-            if (widget.status != 'APPLIED')
+            if (applicationProcessing == true)
               Center(
                 child: Text(
                     'You have already ${widget.status!.toLowerCase()} this tourist'),
