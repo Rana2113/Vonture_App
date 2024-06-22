@@ -115,11 +115,11 @@ class _ProfileViewState extends State<ProfileView> {
                       Text(
                           '${state.application.firstName!} ${state.application.lastName!}',
                           style: Styles.text24w700.copyWith(fontSize: 26.sp)),
-                      verticalSpacing(24),
+                      verticalSpacing(29),
                       Text(state.application.bio.toString(),
                           style: Styles.text18w400
                               .copyWith(color: PrimaryColor, height: 1)),
-                      const SizedBox(height: 16),
+                      verticalSpacing(26),
                       _buildProfileDetail(
                         icon: Icons.mail,
                         text: '${state.application.email}',
@@ -140,13 +140,13 @@ class _ProfileViewState extends State<ProfileView> {
                       if (role == 'TOURIST')
                         Column(
                           children: [
-                            verticalSpacing(40),
+                            verticalSpacing(55),
                             Skills(skills: state.application.skills ?? []),
                           ],
                         )
                       else
                         Container(),
-                      verticalSpacing(40),
+                      verticalSpacing(55),
                       Text('Reviews',
                           style: Styles.text24w700.copyWith(
                               fontSize: 26, fontWeight: FontWeight.w600)),
