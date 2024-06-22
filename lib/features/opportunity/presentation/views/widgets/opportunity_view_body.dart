@@ -41,7 +41,15 @@ class OpportunityViewBody extends StatelessWidget {
                             )),
                   );
                 },
-                image: 'assets/shelter.jpg',
+                image: state.opportunityList[index].place!.placeMedia!.isEmpty
+                    ? 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'
+                    : state.opportunityList[index].place!.placeMedia!.first,
+                // (state.opportunityList[index].place!.placeMedia !=
+                //             null &&
+                //         state.opportunityList[index].place!.placeMedia!
+                //             .isNotEmpty)
+                //     ? state.opportunityList[index].place!.placeMedia!.first
+                //     : 'https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg',
                 title: state.opportunityList[index].title ?? ' ',
                 description: state.opportunityList[index].description ?? ' ',
                 from: state.opportunityList[index].from ?? '',

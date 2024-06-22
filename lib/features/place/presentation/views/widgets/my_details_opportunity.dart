@@ -69,10 +69,12 @@ class _MyOpportunityDetailsState extends State<MyOpportunityDetails> {
             return ListView(
               children: [
                 OpportunityDetailsUpper(
-                  image: opportunity.place!.placeMedia??[],
-                  title: opportunity.title ?? ' ',
-                  from: opportunity.from ?? '',
-                  to: opportunity.to ?? '',
+                  image: opportunity.place!.placeMedia!.isEmpty
+                      ? [
+                          'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png',
+                          'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'
+                        ]
+                      : opportunity.place!.placeMedia!,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -82,6 +84,9 @@ class _MyOpportunityDetailsState extends State<MyOpportunityDetails> {
                     children: [
                       verticalSpacing(20),
                       OpportunityDescription(
+                        title: opportunity.title ?? ' ',
+                        from: opportunity.from ?? '',
+                        to: opportunity.to ?? '',
                         description: opportunity.description ?? '',
                       ),
                       verticalSpacing(25),
@@ -192,32 +197,30 @@ class AppBarwithreturn extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(0),
-        bottomRight: Radius.circular(0),
+    return AppBar(
+      centerTitle: true,
+      title: Text(
+        'Vonture',
+        style: Styles.textlogo.copyWith(
+          fontSize: 45.sp,
+          color: PrimaryColor,
+        ),
       ),
-      child: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Vonture',
-          style: Styles.textlogo.copyWith(
-            fontSize: 45.sp,
-          ),
+      elevation: 0,
+      bottomOpacity: 0.0,
+      scrolledUnderElevation: 0,
+      backgroundColor: Colors.transparent,
+      leading: IconButton(
+        icon: const Icon(
+          Icons.arrow_back,
+          color: PrimaryColor,
         ),
-        backgroundColor: PrimaryColor.withOpacity(0.99),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: white,
-          ),
-          onPressed: () {
-            final placeCubit = BlocProvider.of<PlaceCubit>(context);
-            Navigator.of(context).pop();
+        onPressed: () {
+          final placeCubit = BlocProvider.of<PlaceCubit>(context);
+          Navigator.of(context).pop();
 
-            placeCubit.getallplaceopportunity(placeId);
-          },
-        ),
+          placeCubit.getallplaceopportunity(placeId);
+        },
       ),
     );
   }

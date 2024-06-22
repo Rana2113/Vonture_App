@@ -3,16 +3,11 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vonture_grad/features/Home/presentation/views/widgets/home_nav_bar.dart';
 import 'package:vonture_grad/features/application/data/models/application_model/application_model.dart';
 import 'package:vonture_grad/features/application/data/models/application_model/tourists_model.dart';
 import 'package:vonture_grad/features/application/data/repositories/application_repo_implementation.dart';
-import 'package:vonture_grad/features/application/presentation/views/application_view.dart';
-import 'package:vonture_grad/features/opportunity/presentation/views/opportunity_view.dart';
-import 'package:vonture_grad/features/place/data/models/applications/app_model.dart';
 
 import '../../../../../core/constants.dart/api_constants.dart';
-import '../../../../opportunity/presentation/managers/cubit/opportunity_cubit.dart';
 
 part 'application_state.dart';
 
@@ -44,7 +39,7 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     print(opportunityId);
     try {
       var response = await Dio().delete(
-          "http://192.168.1.30:8000/opportunities/$opportunityId/application",
+          "http://192.168.1.5:8000/opportunities/$opportunityId/application",
           options: Options(headers: {
             'Authorization': 'Bearer $token',
           }));
@@ -58,13 +53,10 @@ class ApplicationCubit extends Cubit<ApplicationState> {
             duration: Duration(seconds: 2),
           ),
         );
-      final opportunityCubit = BlocProvider.of<OpportunityCubit>(context);
-        BlocProvider.of<ApplicationCubit>(context)
-            .getMyApplications()
-            .then((v) {
-          Navigator.pop(context);
-        });
-
+      // final opportunityCubit = BlocProvider.of<OpportunityCubit>(context);
+      BlocProvider.of<ApplicationCubit>(context).getMyApplications().then((v) {
+        Navigator.pop(context);
+      });
     } catch (e) {
       print(e);
     }
@@ -75,7 +67,7 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     emit(PaymentLoading());
     try {
       var response =
-          await Dio().get("http://192.168.1.30:8000/opportunities/$id/payment",
+          await Dio().get("http://192.168.1.5:8000/opportunities/$id/payment",
               options: Options(headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer $token',

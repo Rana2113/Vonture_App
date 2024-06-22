@@ -213,7 +213,6 @@ class PlaceRepoImplementation implements PlaceRepo {
     }
   }
 
-
   Future<Either<Failure, List<Offers>>> getOffers({String? jwt}) async {
     try {
       final responseData = await apiService.getreq(
@@ -236,12 +235,13 @@ class PlaceRepoImplementation implements PlaceRepo {
     }
   }
 
-  Future<Either<Failure, ProfileModel>> getotherprofile(int id,int opportunityID) async {
+  Future<Either<Failure, ProfileModel>> getotherprofile(
+      int id, int opportunityID) async {
     try {
-      final response =
-          await apiService.get(endPoint: '${EndPoints.user}$id', jwt: token,data: {
-            "opportunityId":opportunityID
-          });
+      final response = await apiService.get(
+          endPoint: '${EndPoints.user}$id',
+          jwt: token,
+          data: {"opportunityId": opportunityID});
       print('otherProfile: API call successful - Response: $response');
 
       final ProfileModel touristprofile =
@@ -260,14 +260,15 @@ class PlaceRepoImplementation implements PlaceRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
   Future<Either<Failure, ProfileModel>> getUserData(int id) async {
     try {
       final response =
-      await apiService.get(endPoint: '${EndPoints.user}$id', jwt: token);
+          await apiService.get(endPoint: '${EndPoints.user}$id', jwt: token);
       print('otherProfile: API call successful - Response: $response');
 
       final ProfileModel touristprofile =
-      ProfileModel.fromJson(response["user"]);
+          ProfileModel.fromJson(response["user"]);
       return Right(touristprofile);
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
@@ -325,12 +326,11 @@ class PlaceRepoImplementation implements PlaceRepo {
     }
   }
 
-
   Future<Either<Failure, ReviewModel>> createReviewTourist(
-      int placeId,
-      double rating,
-      String comment,
-      ) async {
+    int placeId,
+    double rating,
+    String comment,
+  ) async {
     try {
       final response = await apiService.post(
         endPoint: '${EndPoints.place}/$placeId${EndPoints.review}',

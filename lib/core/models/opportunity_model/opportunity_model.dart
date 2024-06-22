@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 import '../../../features/place/data/models/review_model/review.dart';
 
 class OpportunityModel {
@@ -9,7 +7,7 @@ class OpportunityModel {
   String? from;
   String? to;
   String? status;
-List<ReviewModel>? reviewModel;
+  List<ReviewModel>? reviewModel;
   String? createdAt;
   Place? place;
   Host? host;
@@ -84,14 +82,14 @@ class Place {
 
   Place(
       {this.id,
-        this.name,
-        this.pin,
-        this.city,
-        this.country,
-        this.phoneNumber,
-        this.rating,
-        this.placeMedia,
-        this.touristReviews});
+      this.name,
+      this.pin,
+      this.city,
+      this.country,
+      this.phoneNumber,
+      this.rating,
+      this.placeMedia,
+      this.touristReviews});
 
   Place.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -134,12 +132,11 @@ class TouristReviews {
   String? comment;
   String? createdAt;
 
-
   TouristReviews({this.tourist, this.rating, this.comment, this.createdAt});
 
   TouristReviews.fromJson(Map<String, dynamic> json) {
     tourist =
-    json['tourist'] != null ? new Tourist.fromJson(json['tourist']) : null;
+        json['tourist'] != null ? new Tourist.fromJson(json['tourist']) : null;
     rating = json['rating'];
     comment = json['comment'];
     createdAt = json['createdAt'];
@@ -178,6 +175,7 @@ class Tourist {
     return data;
   }
 }
+
 class Media {
   String? url;
   String? type;

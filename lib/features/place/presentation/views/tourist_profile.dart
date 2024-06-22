@@ -30,7 +30,9 @@ class _TouristProfileState extends State<TouristProfile> {
   void initState() {
     super.initState();
     currentStatus = widget.status;
-    context.read<PlaceCubit>().getotherprofile(widget.touristid,widget.opportunityId);
+    context
+        .read<PlaceCubit>()
+        .getotherprofile(widget.touristid, widget.opportunityId);
   }
 
   @override
@@ -39,15 +41,15 @@ class _TouristProfileState extends State<TouristProfile> {
       appBar: AppBarwithReturn(
         opportunityId: widget.opportunityId,
         onStatusUpdated: (String newStatus) {
-
-            currentStatus = newStatus;
-
+          currentStatus = newStatus;
         },
       ),
       body: BlocListener<PlaceCubit, PlaceState>(
         listener: (context, state) {
           if (state is CreateReviewSuccess) {
-            context.read<PlaceCubit>().getotherprofile(widget.touristid,widget.opportunityId);
+            context
+                .read<PlaceCubit>()
+                .getotherprofile(widget.touristid, widget.opportunityId);
           } else if (state is CreateReviewError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -59,24 +61,27 @@ class _TouristProfileState extends State<TouristProfile> {
                 duration: const Duration(seconds: 5),
               ),
             );
-            context.read<PlaceCubit>().getotherprofile(widget.touristid,widget.opportunityId);
+            context
+                .read<PlaceCubit>()
+                .getotherprofile(widget.touristid, widget.opportunityId);
           } else if (state is GetOtherProfileError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                duration: const Duration(seconds: 2),
+            Center(
+              child: CircularProgressIndicator(
+                color: PrimaryColor,
               ),
             );
           } else if (state is AcceptApplicationSuccess ||
               state is AcceptApplicationError ||
               state is RejectApplicationSuccess ||
               state is RejectApplicationError) {
-            context.read<PlaceCubit>().getotherprofile(widget.touristid,widget.opportunityId);
+            context
+                .read<PlaceCubit>()
+                .getotherprofile(widget.touristid, widget.opportunityId);
           }
         },
         child: BlocBuilder<PlaceCubit, PlaceState>(
           builder: (context, state) {
-           if (state is GetOtherProfileSuccess) {
+            if (state is GetOtherProfileSuccess) {
               final tourist = state.application;
               return TouristProfileBody(
                 bio: tourist.bio!,
@@ -91,8 +96,10 @@ class _TouristProfileState extends State<TouristProfile> {
                 status: tourist.status,
               );
             } else if (state is GetOtherProfileError) {
-              return Center(
-                child: Text('Error: ${state.message}'),
+              Center(
+                child: CircularProgressIndicator(
+                  color: PrimaryColor,
+                ),
               );
             }
             return const Center(
@@ -133,6 +140,7 @@ class AppBarwithReturn extends StatelessWidget implements PreferredSizeWidget {
             color: PrimaryColor,
           ),
         ),
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(

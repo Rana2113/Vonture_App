@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 
 class ApplicationCard extends StatelessWidget {
   final String title;
@@ -28,7 +29,7 @@ class ApplicationCard extends StatelessWidget {
         Container(
           height: additionalWidget != null ? 210.h : 140.h,
           decoration: BoxDecoration(
-            color: kCardColor,
+            color: white,
             borderRadius: BorderRadius.circular(12),
             boxShadow: const [
               BoxShadow(
@@ -46,30 +47,21 @@ class ApplicationCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 198, 134, 99),
-                        ),
-                      ),
+                      Text(title,
+                          style:
+                              Styles.text16w500.copyWith(color: PrimaryColor)),
                       verticalSpacing(8),
-                      Text(
-                        dateRange,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: const Color(0xff8C6B59),
-                        ),
-                      ),
+                      Text(dateRange,
+                          style: Styles.text14w600.copyWith(
+                              color: PrimaryColor,
+                              fontWeight: FontWeight.w400,
+                              height: 1)),
                       verticalSpacing(8),
-                      Text(
-                        'Status: $status',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: const Color(0xff8C6B59),
-                        ),
-                      ),
+                      Text('$status',
+                          style: Styles.text14w600.copyWith(
+                              color: PrimaryColor,
+                              fontWeight: FontWeight.w500,
+                              height: 1)),
                       if (additionalWidget != null) ...[
                         verticalSpacing(8),
                         additionalWidget!,
@@ -81,8 +73,8 @@ class ApplicationCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
                     imageUrl,
-                    width: 80.w,
-                    height: 60.sp,
+                    width: 130.w,
+                    height: 150.sp,
                     fit: BoxFit.cover,
                   ),
                 ),

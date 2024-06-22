@@ -30,7 +30,7 @@ class Date extends StatefulWidget {
 }
 
 class _DateState extends State<Date> {
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime(2008);
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +41,13 @@ class _DateState extends State<Date> {
         controller: widget.controller,
         readOnly: true,
         decoration: InputDecoration(
-          suffixIcon: widget.suffixIcon ?? const Icon(Icons.calendar_today),
+          suffixIcon: widget.suffixIcon ??
+              const Icon(
+                Icons.calendar_today,
+                color: PrimaryColor,
+              ),
           hintText: widget.hinttext,
-          hintStyle: Styles.text16w500,
+          hintStyle: Styles.text14w500,
           border: buildOutlineInputBorder(kBorderColor2),
           focusedBorder: buildOutlineInputBorder(kFocusBorder),
           errorBorder: buildOutlineInputBorder(kErrorBorder),
@@ -70,8 +74,8 @@ class _DateState extends State<Date> {
     return showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: widget.firstDate ?? DateTime(2000),
-      lastDate: widget.lastDate ?? DateTime(2101),
+      firstDate: widget.firstDate ?? DateTime(1900),
+      lastDate: widget.lastDate ?? DateTime(2025),
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(

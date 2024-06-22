@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/components/text_field.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/constants.dart/styles.dart';
-import 'package:vonture_grad/core/utils/service_locator.dart';
+import 'package:vonture_grad/features/login/presentation/views/login_view.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/requirements.dart';
-import 'package:vonture_grad/features/signup/data/sign_up_repo_implementation.dart';
 import 'package:vonture_grad/features/signup/presentation/managers/cubit/sign_up_cubit.dart';
 import 'package:vonture_grad/features/signup/presentation/views/widgets.dart/date_widget.dart';
 import 'package:vonture_grad/features/signup/presentation/views/widgets.dart/role_button.dart';
 import 'package:vonture_grad/features/signup/presentation/views/widgets.dart/sign_up_button.dart';
 
 class SignUpViewBody extends StatefulWidget {
-
   const SignUpViewBody({super.key});
 
   @override
@@ -24,18 +21,24 @@ class SignUpViewBody extends StatefulWidget {
 }
 
 class _SignUpViewBodyState extends State<SignUpViewBody> {
-  List<String>  value=[];
-  List<String>  itemSelected=[];
-  List<int>  selectedId=[];
+  List<String> value = [];
+  List<String> itemSelected = [];
+  List<int> selectedId = [];
 
-  List<Requirements>  requirements=[];
+  List<Requirements> requirements = [];
 
   @override
   void initState() {
-
-    // TODO: implement initState
+    SignUpCubit.get(context).getSkills();
+    print(SignUpCubit.get(context).listSkills.length);
+    // SignUpCubit.get(context).listSkills.forEach((e) {
+    //   requirements.add(e);
+    //   value.add(e.name);
+    //   setState(() {});
+    // });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -50,7 +53,6 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
     TextEditingController gendercontroller = TextEditingController();
 
     return BlocConsumer<SignUpCubit, SignUpState>(
-
       builder: (context, state) {
         print(" hello $value");
         return SingleChildScrollView(
@@ -63,8 +65,6 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
               ),
               child: Container(
                 color: Colors.white,
-                padding:
-                    EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -84,8 +84,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                                   decoration: TextDecoration.underline),
                             ),
                             hinttext: 'First Name',
-                            suffixIcon:
-                                const Icon(FontAwesomeIcons.circleUser),
+                            suffixIcon: const Icon(
+                              FontAwesomeIcons.circleUser,
+                              color: PrimaryColor,
+                            ),
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Please enter your first name';
@@ -108,8 +110,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                                   decoration: TextDecoration.underline),
                             ),
                             hinttext: 'Last Name',
-                            suffixIcon:
-                                const Icon(FontAwesomeIcons.circleUser),
+                            suffixIcon: const Icon(
+                              FontAwesomeIcons.circleUser,
+                              color: PrimaryColor,
+                            ),
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Please enter your last name';
@@ -129,7 +133,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                       ),
                       controller: emailcontroller,
                       hinttext: 'Email',
-                      suffixIcon: const Icon(Icons.alternate_email),
+                      suffixIcon: const Icon(
+                        Icons.alternate_email,
+                        color: PrimaryColor,
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Email is required';
@@ -143,21 +150,44 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                     ),
                     verticalSpacing(10),
                     AppTextField(
-                      controller: passwordcontroller,
-                      label: const Text(
-                        'Password',
-                        style: Styles.text16w500,
-                      ),
-                      hinttext: 'Password',
-                      suffixIcon: const Icon(Icons.password),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                      type: TextInputType.visiblePassword,
-                    ),
+                        controller: passwordcontroller,
+                        label: const Text(
+                          'Password',
+                          style: Styles.text16w500,
+                        ),
+                        hinttext: 'Password',
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          if (!value.contains(RegExp(r'^(?=.*?[A-Z])'))) {
+                            return 'Password not validated';
+                          }
+
+                          if (!value.contains(RegExp(r'^(?=.*?[0-9])'))) {
+                            return 'Password not validated';
+                          }
+
+                          if (!value.contains(RegExp(r'^(?=.*?[!@#\$&*~])'))) {
+                            return 'Password not validated';
+                          }
+
+                          return null;
+                        },
+                        type: TextInputType.visiblePassword,
+                        isPassword: SignUpCubit.get(context).isPasswordVisible,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            SignUpCubit.get(context).changePasswordVisibility();
+                          },
+                          icon: Icon(
+                            state is ChangePasswordVisibility &&
+                                    state.isPasswordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: PrimaryColor,
+                          ),
+                        )),
                     verticalSpacing(10),
                     AppTextField(
                       controller: phonenumbercontroller,
@@ -166,7 +196,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                         style: Styles.text16w500,
                       ),
                       hinttext: 'Phone Number',
-                      suffixIcon: const Icon(Icons.phone_enabled_outlined),
+                      suffixIcon: const Icon(
+                        Icons.phone_enabled_outlined,
+                        color: PrimaryColor,
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please enter your phone number';
@@ -183,7 +216,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                         style: Styles.text16w500,
                       ),
                       hinttext: 'Country',
-                      suffixIcon: const Icon(FontAwesomeIcons.earthAfrica),
+                      suffixIcon: const Icon(
+                        FontAwesomeIcons.earthAfrica,
+                        color: PrimaryColor,
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please enter your country';
@@ -195,13 +231,16 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                     verticalSpacing(10),
                     AppTextField(
                       controller: biocontroller,
+                      maxLines: 2,
                       label: const Text(
                         'Bio',
                         style: Styles.text16w500,
-                        maxLines: 3,
                       ),
                       hinttext: 'Bio',
-                      suffixIcon: const Icon(Icons.notes),
+                      suffixIcon: const Icon(
+                        Icons.notes,
+                        color: PrimaryColor,
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please enter your bio';
@@ -222,6 +261,12 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                         if (value!.isEmpty) {
                           return 'Please enter your birthdate';
                         }
+                        if (value != null &&
+                            DateTime.now().year -
+                                    int.parse(value.substring(0, 4)) <
+                                18) {
+                          return 'must be above 18 years old';
+                        }
                         return null;
                       },
                       type: TextInputType.text,
@@ -229,8 +274,8 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                         showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
+                          firstDate: DateTime(1940),
+                          lastDate: DateTime(2006),
                         ).then((value) {
                           if (value != null) {
                             birthdatecontroller.text =
@@ -238,6 +283,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                           }
                         });
                       },
+                      firstDate: null,
                     ),
                     verticalSpacing(10),
                     AppTextField(
@@ -247,7 +293,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                         style: Styles.text16w500,
                       ),
                       hinttext: 'Gender',
-                      suffixIcon: const Icon(FontAwesomeIcons.venusMars),
+                      suffixIcon: const Icon(
+                        FontAwesomeIcons.venusMars,
+                        color: PrimaryColor,
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please enter your gender';
@@ -259,71 +308,98 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                     verticalSpacing(24),
                     context.read<SignUpCubit>().selectedValue == "Tourist"
                         ? MultiSelectDropdown(
-                        hinttext: "Select Your Skills",
-                        onChanged: (val){
-                          selectedId=[];
-                          for (var e in val) {
-                    var req=   requirements.firstWhere((val)=>e==val.name);
-                    selectedId.add(req.id);
-                          }
-                          print(selectedId);
-                        },
-                        value: itemSelected,
-                        validator: (v){},
-                        items: value)
+                            hinttext: "Select Your Skills",
+                            onChanged: (val) {
+                              selectedId = [];
+                              for (var e in val) {
+                                var req = requirements
+                                    .firstWhere((val) => e == val.name);
+                                selectedId.add(req.id);
+                              }
+                            },
+                            value: itemSelected,
+                            validator: (v) {},
+                            items: value)
                         : const SizedBox(),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     SignUpButton(
                       onPressed: () {
-
                         if (formKey.currentState!.validate()) {
-                          if(itemSelected.isNotEmpty){
-                          SignUpCubit.get(context).signUP(
-                            skills: selectedId,
-                            firstname: firstnamecontroller.text,
-                            lastname: lastnamecontroller.text,
-                            email: emailcontroller.text,
-                            password: passwordcontroller.text,
-                            phonenumber: phonenumbercontroller.text,
-                            nationality: countrycontroller.text,
-                            bio: biocontroller.text,
-                            birthdate: birthdatecontroller.text,
-                            gender: gendercontroller.text,
-                            role: SignUpCubit.get(context).selectedValue ==
-                                    'Tourist'
-                                ? 'TOURIST'
-                                : SignUpCubit.get(context).selectedValue ==
-                                        'Host'
-                                    ? 'HOST'
-                                    : 'null',
-                          );
-                        }
-                          else{
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Skills Empty")));
+                          if (itemSelected.isNotEmpty) {
+                            SignUpCubit.get(context).signUP(
+                              skills: selectedId,
+                              firstname: firstnamecontroller.text,
+                              lastname: lastnamecontroller.text,
+                              email: emailcontroller.text,
+                              password: passwordcontroller.text,
+                              phonenumber: phonenumbercontroller.text,
+                              nationality: countrycontroller.text,
+                              bio: biocontroller.text,
+                              birthdate: birthdatecontroller.text,
+                              gender: gendercontroller.text,
+                              role: SignUpCubit.get(context).selectedValue ==
+                                      'Tourist'
+                                  ? 'TOURIST'
+                                  : SignUpCubit.get(context).selectedValue ==
+                                          'Host'
+                                      ? 'HOST'
+                                      : 'null',
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Skills Empty")));
                           }
                         }
                       },
                     ),
-
-
-                    verticalSpacing(24),
+                    verticalSpacing(18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Don\'t have an account?',
+                          style: Styles.text16w600,
+                        ),
+                        horizontalSpacing(5),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginView(),
+                              ),
+                            );
+                            SignUpCubit.get(context).selectedValue = '';
+                          },
+                          child: Text(
+                            'Sign up',
+                            style: Styles.text16w500.copyWith(
+                              color: PrimaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    verticalSpacing(20),
                   ],
                 ),
               ),
             ),
           ),
         );
-      }, listener: (BuildContext context, SignUpState state) {
-        if(state is GetSkillsSuccessState){
+      },
+      listener: (BuildContext context, SignUpState state) {
+        if (state is GetSkillsSuccessState) {
           print(SignUpCubit.get(context).listSkills.length);
-          SignUpCubit.get(context).listSkills.forEach((e){
+          SignUpCubit.get(context).listSkills.forEach((e) {
             requirements.add(e);
             value.add(e.name);
-            setState(() {
-            });
+            setState(() {});
           });
         }
-    },
+      },
     );
   }
 }

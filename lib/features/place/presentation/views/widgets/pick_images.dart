@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/constants.dart/styles.dart';
@@ -35,19 +36,21 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
     final PlaceCubit placeCubit = context.read<PlaceCubit>();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 22.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Images',
-              style: Styles.text16w400
-                  .copyWith(decoration: TextDecoration.underline)),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child:
+                Text('Images', style: Styles.text16w500.copyWith(height: -0.1)),
+          ),
           const SizedBox(height: 8),
           Container(
             decoration: BoxDecoration(
                 color: white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: BorderColor, width: 1)),
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: BorderColor, width: 2.w)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -61,8 +64,8 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
                                 children: [
                                   Image.file(
                                     File(media.path),
-                                    height: 80,
-                                    width: 80,
+                                    height: 80.h,
+                                    width: 80.w,
                                     fit: BoxFit.cover,
                                   ),
                                   Positioned(
@@ -79,10 +82,10 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
                                           shape: BoxShape.circle,
                                           color: PrimaryColor,
                                         ),
-                                        child: const Icon(
+                                        child: Icon(
                                           Icons.delete,
                                           color: Colors.white,
-                                          size: 16,
+                                          size: 16.sp,
                                         ),
                                       ),
                                     ),
@@ -93,7 +96,10 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.photo_library),
+                    icon: const Icon(
+                      Icons.photo_library,
+                      color: PrimaryColor,
+                    ),
                     onPressed: () {
                       _pickImage(context, placeCubit);
                     },

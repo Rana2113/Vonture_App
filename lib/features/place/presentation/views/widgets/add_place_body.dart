@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/components/text_field.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/add_place_button.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
@@ -70,10 +71,16 @@ class _AddPlaceBodyState extends State<AddPlaceBody> {
             Builder(
               builder: (context) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    mediaFiles.isEmpty ? 'Please add at least one image.' : '',
-                    style: TextStyle(color: Color.fromARGB(255, 172, 45, 36)),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 35),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      mediaFiles.isEmpty
+                          ? 'Please add at least one image.'
+                          : '',
+                      style: Styles.text14w400.copyWith(color: error),
+                    ),
                   ),
                 );
               },

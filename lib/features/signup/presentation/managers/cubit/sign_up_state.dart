@@ -25,11 +25,15 @@ final class GetSkillsLoadingState extends SignUpState {}
 final class GetSkillsSuccessState extends SignUpState {
   final List<Requirements> skills;
 
-  GetSkillsSuccessState(
-      {required this.skills});
+  GetSkillsSuccessState({required this.skills});
 }
 
 final class GetSkillsErrorState extends SignUpState {
   final String message;
   GetSkillsErrorState({required this.message});
+}
+
+final class ChangePasswordVisibility extends SignUpState {
+  final bool isPasswordVisible;
+  ChangePasswordVisibility(this.isPasswordVisible);
 }

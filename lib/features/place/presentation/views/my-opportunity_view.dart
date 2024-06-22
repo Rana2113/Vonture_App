@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
 import 'package:vonture_grad/features/place/presentation/views/add_opportunity_view.dart';
 import 'package:vonture_grad/features/place/presentation/views/widgets/my_opportunity_view_body.dart';
@@ -19,6 +21,7 @@ class MyOpportunityView extends StatelessWidget {
         placeId: placeId,
       ),
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
         onPressed: () {
           Navigator.push(
             context,
@@ -29,10 +32,10 @@ class MyOpportunityView extends StatelessWidget {
             ),
           );
         },
-        backgroundColor: kCardColor,
+        backgroundColor: PrimaryColor,
         child: const Icon(
           Icons.add,
-          color: kLogoColor,
+          color: white,
         ),
       ),
     );
@@ -40,17 +43,17 @@ class MyOpportunityView extends StatelessWidget {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: kPrimaryColor,
-      title: SizedBox(
-        height: 50,
-        width: 120,
-        child: Image.asset("assets/LOGO2.png"),
+      backgroundColor: white,
+      title: Text(
+        'Vonture',
+        style: Styles.textlogo.copyWith(fontSize: 45.sp, color: PrimaryColor),
       ),
+      scrolledUnderElevation: 0,
       centerTitle: true,
       leading: IconButton(
         icon: const Icon(
           Icons.arrow_back,
-          color: kLogoColor,
+          color: PrimaryColor,
         ),
         onPressed: () {
           final placeCubit = context.read<PlaceCubit>();
@@ -62,6 +65,16 @@ class MyOpportunityView extends StatelessWidget {
     );
   }
 }
+
+// AppBar(
+//     centerTitle: true,
+//     title: Text(
+//       'Vonture',
+//       style: Styles.textlogo.copyWith(fontSize: 45.sp, color: PrimaryColor),
+//     ),
+//     backgroundColor: white,
+//     shadowColor: white,
+//   );
 
 //   AppBar _buildAppBar(BuildContext context) {
 //     return AppBar(

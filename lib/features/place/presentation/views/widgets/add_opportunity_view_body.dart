@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/components/text_field.dart';
 import 'package:vonture_grad/core/constants.dart/colors.dart';
+import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
 import 'package:vonture_grad/features/place/data/models/requirements/requirements.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
@@ -60,7 +61,7 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
           final offers = state.offers;
 
           return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 16.w),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Form(
               key: formKey,
               child: Column(
@@ -68,6 +69,10 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
                 children: [
                   AppTextField(
                     controller: titleController,
+                    label: const Text(
+                      'Title',
+                      style: Styles.text16w500,
+                    ),
                     hinttext: 'Title',
                     validator: (value) {
                       if (value.isEmpty) {
@@ -77,9 +82,14 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
                     },
                     type: TextInputType.text,
                   ),
-                  verticalSpacing(24),
+                  verticalSpacing(2),
                   AppTextField(
+                    maxLines: 2,
                     controller: descriptionController,
+                    label: const Text(
+                      'Description',
+                      style: Styles.text16w500,
+                    ),
                     hinttext: 'Description',
                     validator: (value) {
                       if (value.isEmpty) {
@@ -91,7 +101,7 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
                     },
                     type: TextInputType.text,
                   ),
-                  verticalSpacing(24),
+                  verticalSpacing(20),
                   Date(
                     controller: availableControllerFrom,
                     hinttext: 'Available From',
@@ -105,9 +115,9 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
                     onTap: () {
                       showDatePicker(
                         context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now(),
+                        initialDate: DateTime(1969, 1, 1),
+                        firstDate: DateTime(2015, 8),
+                        lastDate: DateTime(2101),
                       ).then((value) {
                         if (value != null) {
                           availableControllerFrom.text =
@@ -116,7 +126,7 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
                       });
                     },
                   ),
-                  verticalSpacing(24),
+                  verticalSpacing(35),
                   Date(
                     controller: availableControllerTo,
                     hinttext: 'Available To',
@@ -141,7 +151,7 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
                       });
                     },
                   ),
-                  verticalSpacing(24),
+                  verticalSpacing(35),
                   MultiSelectDropdown(
                     hinttext: 'Requirements',
                     value: selectedRequirementNames,
@@ -166,7 +176,7 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
                     },
                     items: requirements.map((e) => e.name).toList(),
                   ),
-                  verticalSpacing(24),
+                  verticalSpacing(35),
                   MultiSelectDropdown(
                     hinttext: 'Offers',
                     value: selectedOfferNames,
@@ -191,14 +201,16 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
                     items: offers.map((e) => e.name ?? '').toList(),
                   ),
                   verticalSpacing(24),
-                  AddOpportunityButton(
-                    onPressed: () {
-                      _createOpportunity(placeCubit);
-                    },
-                    placeId: widget.placeId,
-                    onSuccess: () {
-                      Navigator.of(context).pop(true);
-                    },
+                  Center(
+                    child: AddOpportunityButton(
+                      onPressed: () {
+                        _createOpportunity(placeCubit);
+                      },
+                      placeId: widget.placeId,
+                      onSuccess: () {
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
                   ),
                 ],
               ),

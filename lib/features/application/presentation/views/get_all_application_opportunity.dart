@@ -24,7 +24,7 @@ class GetAllApplicationOpportunity extends StatelessWidget {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: PrimaryColor,
+      backgroundColor: white,
       centerTitle: true,
       title: Text(
         'Vonture',
@@ -35,7 +35,7 @@ class GetAllApplicationOpportunity extends StatelessWidget {
       leading: IconButton(
         icon: const Icon(
           Icons.arrow_back,
-          color: kLogoColor,
+          color: PrimaryColor,
         ),
         onPressed: () {
           final opportunitycubit = BlocProvider.of<OpportunityCubit>(context);

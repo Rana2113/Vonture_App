@@ -16,7 +16,7 @@ class Skills extends StatelessWidget {
         Text('Skills & Interests',
             style: Styles.text24w700
                 .copyWith(fontSize: 26, fontWeight: FontWeight.w600)),
-        verticalSpacing(10),
+        verticalSpacing(30),
         ...skills.map((skills) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
               child: Row(

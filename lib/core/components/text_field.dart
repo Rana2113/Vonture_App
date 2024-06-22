@@ -16,6 +16,7 @@ class AppTextField extends StatelessWidget {
     this.firstDate,
     this.lastDate,
     this.label,
+    this.maxLines = 1,
   });
   final String hinttext;
   final TextInputType type;
@@ -27,11 +28,14 @@ class AppTextField extends StatelessWidget {
   final DateTime? firstDate;
   final DateTime? lastDate;
   final Widget? label;
+  final int? maxLines;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
       child: TextFormField(
+        maxLines: maxLines,
+        // maxLines: 3,
         validator: (value) {
           return validator(value);
         },
@@ -42,13 +46,16 @@ class AppTextField extends StatelessWidget {
           label: label,
           hintText: hinttext,
           hintStyle: Styles.text14w500,
+          errorStyle: Styles.text14w400.copyWith(color: error, height: 0.5),
           border: buildOutlineInputBorder(
             kBorderColor2,
           ),
           focusedBorder: buildOutlineInputBorder(
             black,
           ),
-          errorBorder: buildOutlineInputBorder(PrimaryColor),
+          errorBorder: buildOutlineInputBorder(
+            PrimaryColor,
+          ),
           focusedErrorBorder: buildOutlineInputBorder(PrimaryColor),
           contentPadding: const EdgeInsets.all(12),
         ),

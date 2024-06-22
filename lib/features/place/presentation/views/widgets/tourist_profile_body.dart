@@ -50,19 +50,15 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
   void initState() {
     print(widget.status!);
     if (widget.status == "APPLIED") {
-
-        applicationProcessing = false;
-
+      applicationProcessing = false;
     } else {
       applicationProcessing = true;
     }
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -81,7 +77,8 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
                 style: Styles.text24w700.copyWith(fontSize: 26.sp)),
             verticalSpacing(20),
             Text(widget.bio,
-                style: Styles.text18w400.copyWith(color: PrimaryColor)),
+                style:
+                    Styles.text18w400.copyWith(color: PrimaryColor, height: 1)),
             const SizedBox(height: 16),
             _buildProfileDetail(
               icon: Icons.location_pin,
@@ -94,22 +91,12 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
             verticalSpacing(20),
             Skills(skills: widget.skills ?? []),
             verticalSpacing(20),
-            const Text(
-              'Reviews',
-              style: TextStyle(
-                color: Color(0xFF0C161C),
-                fontSize: 22,
-                fontFamily: 'Plus Jakarta Sans',
-                fontWeight: FontWeight.w700,
-                height: 1.2,
-              ),
-            ),
+            Text('Reviews',
+                style: Styles.text24w700
+                    .copyWith(fontSize: 26, fontWeight: FontWeight.w600)),
             const SizedBox(height: 20),
             ...(widget.receivedReviews ?? [])
                 .map((review) => displayRating(review)),
-
-
-
             RatingBar.builder(
               initialRating: 0,
               minRating: 1,
@@ -160,23 +147,16 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
                   Button(
                     text: 'Accept',
                     onTap: () {
-                      context
-                          .read<PlaceCubit>()
-                          .acceptedApplication(
-                              widget.opportunityId, widget.touristid);
-
-
+                      context.read<PlaceCubit>().acceptedApplication(
+                          widget.opportunityId, widget.touristid);
                     },
                   ),
                   const Spacer(),
                   Button(
                     text: 'Reject',
                     onTap: () {
-                      context
-                          .read<PlaceCubit>()
-                          .rejectApplication(
-                              widget.opportunityId, widget.touristid)
-                         ;
+                      context.read<PlaceCubit>().rejectApplication(
+                          widget.opportunityId, widget.touristid);
                     },
                   ),
                 ],

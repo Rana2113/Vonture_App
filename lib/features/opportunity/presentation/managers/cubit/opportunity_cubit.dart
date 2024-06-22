@@ -1,11 +1,6 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/models/opportunity_model/opportunity_model.dart';
 import 'package:vonture_grad/features/opportunity/data/opportunity_repo_implementation.dart';
-
-import '../../../../application/presentation/managers/cubit/application_cubit.dart';
 
 part 'opportunity_state.dart';
 
@@ -25,8 +20,8 @@ class OpportunityCubit extends Cubit<OpportunityState> {
     print("HomeCubit: Home result: $response");
 
     response.fold(
-          (failure) => emit(OpportunityError(message: failure.toString())),
-          (opportunityList) {
+      (failure) => emit(OpportunityError(message: failure.toString())),
+      (opportunityList) {
         print("HomeCubit: Home successful - User: $opportunityList");
 
         emit(OpportunitySuccessState(opportunityList: opportunityList));
@@ -39,13 +34,12 @@ class OpportunityCubit extends Cubit<OpportunityState> {
     print("HomeCubit: Search called");
 
     final response =
-    await opportunityRepoImplementation.searchOpportunity(query);
+        await opportunityRepoImplementation.searchOpportunity(query);
     print("HomesearchCubit: Search result: $response");
 
     response.fold(
-          (failure) =>
-          emit(OpportunitySearchError(message: failure.toString())),
-          (opportunities) {
+      (failure) => emit(OpportunitySearchError(message: failure.toString())),
+      (opportunities) {
         print("HomeCubit: Search successful - User: $opportunities");
 
         emit(OpportunitySearchSuccess(opportunities: opportunities));
@@ -53,25 +47,22 @@ class OpportunityCubit extends Cubit<OpportunityState> {
     );
   }
 
-
   Future<void> getSpecifiOpportunity(int id) async {
     emit(GetSpecifiOpportunityLoading());
     print("getspecifi: getspecific called");
     final response =
-    await opportunityRepoImplementation.getSpecifiOpportunity(id);
+        await opportunityRepoImplementation.getSpecifiOpportunity(id);
     print("getspecifi: getspecific result: $response");
 
     response.fold(
-            (failure) =>
+        (failure) =>
             emit(GetSpecifiOpportunityError(message: failure.toString())),
-            (detailsopportunity) {
-          print(
-              "getspecifi: getspecific successful - User: $detailsopportunity");
+        (detailsopportunity) {
+      print("getspecifi: getspecific successful - User: $detailsopportunity");
 
-          emit(
-              GetSpecifiOpportunitySuccess(
-                  detailsopportunity: detailsopportunity));
-        });
+      emit(
+          GetSpecifiOpportunitySuccess(detailsopportunity: detailsopportunity));
+    });
   }
 
   Future<void> applyOpportunity(int id) async {
@@ -83,13 +74,12 @@ class OpportunityCubit extends Cubit<OpportunityState> {
     print("apply: apply result: $response");
 
     response.fold(
-            (failure) =>
-            emit(ApplyOpportunityError(message: failure.toString())),
-            (applyopportunity) {
-          print("apply: apply successful - User: $applyopportunity");
+        (failure) => emit(ApplyOpportunityError(message: failure.toString())),
+        (applyopportunity) {
+      print("apply: apply successful - User: $applyopportunity");
 
-          emit(ApplyOpportunitySuccess(applyopportunity: applyopportunity));
-        });
+      emit(ApplyOpportunitySuccess(applyopportunity: applyopportunity));
+    });
   }
 
   Future<void> closeOpportunity(int id) async {
@@ -98,13 +88,12 @@ class OpportunityCubit extends Cubit<OpportunityState> {
     final response = await opportunityRepoImplementation.closeopportunity(id);
     print("PlaceCubit: Close opportunity result: $response");
     response.fold(
-          (failure) {
+      (failure) {
         print(
-            "PlaceCubit: Close opportunity failed - Error: ${failure
-                .toString()}");
+            "PlaceCubit: Close opportunity failed - Error: ${failure.toString()}");
         emit(CloseOpportunityError(message: failure.toString()));
       },
-          (closeopportunity) async {
+      (closeopportunity) async {
         emit(CloseOpportunity(closeOpportunity: closeopportunity));
         print(
             "PlaceCubit: Close opportunity successful - Message: $closeopportunity");

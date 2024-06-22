@@ -6,7 +6,7 @@ class PlaceModel {
   String? city;
   String? country;
   String? phoneNumber;
-  int? rating;
+  dynamic rating;
   String? status;
   String? type;
   String? createdAt;

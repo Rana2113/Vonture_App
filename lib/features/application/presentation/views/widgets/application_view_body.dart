@@ -14,7 +14,6 @@ class ApplicationViewBody extends StatefulWidget {
 }
 
 class _ApplicationViewBodyState extends State<ApplicationViewBody> {
-
   @override
   void initState() {
     super.initState();
@@ -25,82 +24,87 @@ class _ApplicationViewBodyState extends State<ApplicationViewBody> {
   Widget build(BuildContext context) {
     return BlocConsumer<ApplicationCubit, ApplicationState>(
         builder: (context, state) {
-          if (state is ApplicationLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: PrimaryColor,
-              ),
-            );
-          } else if (state is ApplicationSuccess) {
-            if (state.applications.isEmpty) {
-              return const Center(
-                child: Text('No opportunities found'),
-              );
-            } else {
-              return ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                shrinkWrap: true,
-                itemCount: state.applications.length,
-                itemBuilder: (context, index) {
-                  final application = state.applications[index];
-                  Widget? additionalWidget;
+      if (state is ApplicationLoading) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: PrimaryColor,
+          ),
+        );
+      } else if (state is ApplicationSuccess) {
+        if (state.applications.isEmpty) {
+          return const Center(
+            child: Text('No opportunities found'),
+          );
+        } else {
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            shrinkWrap: true,
+            itemCount: state.applications.length,
+            itemBuilder: (context, index) {
+              final application = state.applications[index];
+              Widget? additionalWidget;
 
-                  if (application.status == 'PENDING') {
-                    additionalWidget = ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kPrimaryColor,
-                      ),
-                      onPressed: () {
-                        ApplicationCubit.get(context)
-                            .getPayment(application.opportunity!.id!);
-                      },
-                      child: const Text(
-                        'Pay',
-                        style: TextStyle(
-                          color: Color(0xff8C6B59),
-                        ),
-                      ),
-                    );
-                  }
-
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) =>
-                          OpportunityDetails(opportunityId: state.applications[index].opportunity!.id!,isApllication: true,)));
-                    },
-                    child: ApplicationCard(
-                      title: application.opportunity?.title ?? ' ',
-                      dateRange: '${application.opportunity?.from ?? ' '}'
-                          ' - ${application.opportunity?.to ?? ' '}',
-                      status: application.status ?? '',
-                      imageUrl: 'assets/shelter.jpg',
-                      additionalWidget: additionalWidget,
+              if (application.status == 'PENDING') {
+                additionalWidget = ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: PrimaryColor,
+                  ),
+                  onPressed: () {
+                    ApplicationCubit.get(context)
+                        .getPayment(application.opportunity!.id!);
+                  },
+                  child: const Text(
+                    'Pay',
+                    style: TextStyle(
+                      color: white,
                     ),
-                  );
+                  ),
+                );
+              }
+
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => OpportunityDetails(
+                                opportunityId:
+                                    state.applications[index].opportunity!.id!,
+                                isApllication: true,
+                              )));
                 },
+                child: ApplicationCard(
+                  title: application.opportunity?.title ?? ' ',
+                  dateRange: '${application.opportunity?.from ?? ' '}'
+                      ' - ${application.opportunity?.to ?? ' '}',
+                  status: application.status ?? '',
+                  imageUrl: 'assets/shelter.jpg',
+                  additionalWidget: additionalWidget,
+                ),
               );
-            }
-          } else if (state is ApplicationError) {
-            return Center(
-              child: Text(state.message),
-            );
-          } else {
-            return const Center(
-              child: Text('Payment loading'),
-            );
-          }
-        },
-        listener: (BuildContext context, ApplicationState state) async {
-          if (state is PaymentLoading) {
-            print("Loading");
-          } else if (state is PaymentSuccess) {
-            print(state.url);
-            !await launchUrl(Uri.parse(state.url));
-            ApplicationCubit.get(context).getMyApplications();
-          } else if (state is PaymentError) {
-            print(state.message);
-          }
-        });
+            },
+          );
+        }
+      } else if (state is ApplicationError) {
+        return Center(
+          child: Text(state.message),
+        );
+      } else {
+        return const Center(
+          child: Text('Payment loading'),
+        );
+      }
+    }, listener: (BuildContext context, ApplicationState state) async {
+      if (state is PaymentLoading) {
+        print("Loading");
+      } else if (state is PaymentSuccess) {
+        print(state.url);
+        !await launchUrl(Uri.parse(state.url));
+        ApplicationCubit.get(context).getMyApplications();
+      } else if (state is PaymentError) {
+        print(state.message);
+      }
+    });
   }
 }
 

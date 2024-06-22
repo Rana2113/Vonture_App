@@ -28,31 +28,26 @@ class AppBarwithReturn extends StatelessWidget implements PreferredSizeWidget {
   final int placeId;
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(0),
-        bottomRight: Radius.circular(0),
+    return AppBar(
+      centerTitle: true,
+      title: Text(
+        'Vonture',
+        style: Styles.textlogo.copyWith(fontSize: 45.sp, color: PrimaryColor),
       ),
-      child: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Vonture',
-          style: Styles.textlogo.copyWith(fontSize: 45.sp, color: PrimaryColor),
+      scrolledUnderElevation: 0,
+      backgroundColor: Colors.white,
+      leading: IconButton(
+        icon: const Icon(
+          Icons.arrow_back,
+          color: PrimaryColor,
         ),
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: PrimaryColor,
-          ),
-          onPressed: () {
-            final placeCubit = BlocProvider.of<PlaceCubit>(context);
-            placeCubit.getallplaceopportunity(placeId).then((_) {
-              Navigator.pop(context);
-            });
-            Navigator.of(context).pop();
-          },
-        ),
+        onPressed: () {
+          final placeCubit = BlocProvider.of<PlaceCubit>(context);
+          placeCubit.getallplaceopportunity(placeId).then((_) {
+            Navigator.pop(context);
+          });
+          Navigator.of(context).pop();
+        },
       ),
     );
   }

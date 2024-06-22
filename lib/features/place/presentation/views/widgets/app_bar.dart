@@ -10,6 +10,7 @@ AppBar buildAppBar(BuildContext context) {
       'Vonture',
       style: Styles.textlogo.copyWith(fontSize: 45.sp, color: PrimaryColor),
     ),
+    scrolledUnderElevation: 0,
     backgroundColor: white,
     shadowColor: white,
   );

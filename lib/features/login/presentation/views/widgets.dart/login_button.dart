@@ -19,8 +19,15 @@ class LoginButton extends StatelessWidget {
         } else if (state is LoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.message),
-              backgroundColor: kButtonColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              content: Text(
+                state.message,
+                style: Styles.text16w500.copyWith(color: white),
+              ),
+              duration: const Duration(seconds: 5),
+              backgroundColor: PrimaryColor,
             ),
           );
         }

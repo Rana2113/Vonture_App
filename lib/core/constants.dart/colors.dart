@@ -8,6 +8,7 @@ const TextColor = Color(0xFF1E1E1E);
 const white = Color(0xffFCFCFC);
 const black = Color(0xff000000);
 const textblue = Color(0xFF49779B);
+const error = Color.fromARGB(255, 172, 45, 36);
 
 const kPrimaryColor = Color(0xffFFFBF8);
 const kButtonColor = Color(0xffF5C499);

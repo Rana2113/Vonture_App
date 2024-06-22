@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,14 +42,18 @@ class OpportunityCard extends StatelessWidget {
           child: Row(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.asset(
-                  image,
-                  height: 120.h,
-                  width: 90.w,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: CachedNetworkImage(
+                    imageUrl: image,
+                    height: 120.h,
+                    width: 90.w,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  )),
               horizontalSpacing(10),
               Expanded(
                 child: Column(
@@ -58,8 +63,9 @@ class OpportunityCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(title,
+                              overflow: TextOverflow.ellipsis,
                               style: Styles.text16w400
-                                  .copyWith(color: PrimaryColor)),
+                                  .copyWith(color: PrimaryColor, height: 1.5)),
                         ),
                         RatingBarIndicator(
                           rating: rating,

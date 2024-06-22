@@ -65,8 +65,7 @@ class PlaceCubit extends Cubit<PlaceState> {
     print(token);
     print(image);
     String fileName = image.split('/').last;
-    const url =
-        'http://192.168.1.30:8000/users/profile_img'; // Replace with your server URL
+    const url = 'http://192.168.1.5:8000/users/profile_img';
     final formData = FormData.fromMap({
       'profile_img': await MultipartFile.fromFile(image, filename: fileName),
     });
@@ -153,7 +152,7 @@ class PlaceCubit extends Cubit<PlaceState> {
     emit(SubscriptionLoading());
     try {
       var response =
-          await Dio().get("http://192.168.1.30:8000/plans/1/subscribe",
+          await Dio().get("http://192.168.1.5:8000/plans/1/subscribe",
               options: Options(headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer $token',

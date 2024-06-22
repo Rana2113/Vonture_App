@@ -47,10 +47,10 @@ class _PlaceViewBodyState extends State<PlaceViewBody> {
               String country = '${place.country ?? ''}, ${place.city ?? ''}';
               String rating = place.rating?.toString() ?? 'No rating';
               String placeState = place.status!;
-              String imageUrl =
-                  (place.placeMedia != null && place.placeMedia!.isNotEmpty)
-                      ? place.placeMedia!.first
-                      : 'default_image_url';
+              String imageUrl = place.placeMedia!.isEmpty
+                  ? 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'
+                  : place.placeMedia!.first;
+
               return PlaceCard(
                 title: title,
                 country: country,

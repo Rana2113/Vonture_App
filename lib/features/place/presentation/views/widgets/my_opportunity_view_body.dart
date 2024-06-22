@@ -40,25 +40,29 @@ class _MyOpportunityViewBodyState extends State<MyOpportunityViewBody> {
             itemBuilder: (context, index) {
               final opportunity = state.opportunity[index];
               return MyOpportunityCard(
-                  title: opportunity.title ?? 'No title',
-                  description: opportunity.description ?? 'No description',
-                  from: opportunity.from ?? 'No from',
-                  to: opportunity.to ?? 'No to',
-                  id: opportunity.id!,
-                  status: opportunity.status!,
-                  onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyOpportunityDetails(
-                            opportunityId: opportunity.id!,
-                            placeId: widget.placeId,
-                          ),
-                        ),
-                      ).then((value) {
-                        if (value == true) {
-                          _fetchOpportunity();
-                        }
-                      }));
+                title: opportunity.title ?? 'No title',
+                description: opportunity.place!.city ?? 'No description',
+                from: opportunity.from ?? 'No from',
+                to: opportunity.to ?? 'No to',
+                id: opportunity.id!,
+                status: opportunity.status!,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyOpportunityDetails(
+                      opportunityId: opportunity.id!,
+                      placeId: widget.placeId,
+                    ),
+                  ),
+                ).then((value) {
+                  if (value == true) {
+                    _fetchOpportunity();
+                  }
+                }),
+                image: opportunity.place!.placeMedia!.isEmpty
+                    ? 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'
+                    : opportunity.place!.placeMedia!.first,
+              );
             },
           );
         } else if (state is GetAllPlaceOpportunityErrorState) {

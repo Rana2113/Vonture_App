@@ -87,6 +87,10 @@ class _HomeNavBarWidgetState extends State<HomeNavBarWidget> {
           Icons.person,
           color: PrimaryColor,
         ),
+        onPressed: (context) {
+          _controller.jumpToTab(2);
+          context?.read<PlaceCubit>().getUserData();
+        },
         activeColorPrimary: PrimaryColor.withOpacity(0.3),
       ),
     ];

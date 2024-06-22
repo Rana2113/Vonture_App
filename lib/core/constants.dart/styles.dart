@@ -55,7 +55,7 @@ abstract class Styles {
     fontFamily: 'Roboto',
     fontWeight: FontWeight.w500,
     height: 0,
-    decoration: TextDecoration.underline,
+    // decoration: TextDecoration.underline,
   );
   static const text14w500 = TextStyle(
     color: BorderColor,

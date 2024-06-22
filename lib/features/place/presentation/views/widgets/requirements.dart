@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 
 class MultiSelectDropdown extends StatefulWidget {
   final String hinttext;
@@ -33,7 +35,7 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,54 +48,62 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('Success'),
-                    content:
-                  Container(
-                    padding: const EdgeInsets.all(16.0),
+                    backgroundColor: white,
+                    contentTextStyle: TextStyle(color: PrimaryColor),
+                    iconColor: PrimaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    content: Container(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SingleChildScrollView(
+                        child: Stack(
+                          children: [
+                            StatefulBuilder(builder: (context, set) {
+                              return Column(children: [
+                                ...widget.items.map((item) {
+                                  final isSelected =
+                                      _selectedItems.contains(item);
+                                  return CheckboxListTile(
+                                    checkColor: white,
+                                    fillColor:
+                                        MaterialStateProperty.resolveWith<
+                                            Color>((Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return PrimaryColor;
+                                      }
 
-                    child: SingleChildScrollView(
-                      child: Stack(
-                        children: [
-                          StatefulBuilder(
-                            builder: (context,set) {
-                              return Column(
-                                  children:[
-                                    ...widget.items.map((item) {
-                                      final isSelected = _selectedItems.contains(item);
-                                      return CheckboxListTile(
-                                        value: isSelected,
-                                        title: Text(item),
-                                        onChanged: (bool? checked) {
-                                          set(() {
-                                            isSelected==true;
-                                          });
-                                          print(isSelected);
-                                          setState(() {
-                                            if (checked == true) {
-
-                                              _selectedItems.add(item);
-                                            } else {
-                                              _selectedItems.remove(item);
-                                            }
-                                            widget.onChanged!(_selectedItems);
-                                          });
-                                        },
-                                      );
-                                    }).toList(),
-
-                                  ]
-                              );
-                            }
-                          ),
-
-                        ],
+                                      return white;
+                                    }),
+                                    value: isSelected,
+                                    title: Text(item),
+                                    onChanged: (bool? checked) {
+                                      set(() {
+                                        isSelected == true;
+                                      });
+                                      print(isSelected);
+                                      setState(() {
+                                        if (checked == true) {
+                                          _selectedItems.add(item);
+                                        } else {
+                                          _selectedItems.remove(item);
+                                        }
+                                        widget.onChanged!(_selectedItems);
+                                      });
+                                    },
+                                  );
+                                }).toList(),
+                              ]);
+                            }),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                     actions: [
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
+                          Navigator.of(context).pop();
                         },
                         child: Text('OK'),
                       ),
@@ -105,11 +115,12 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
             child: InputDecorator(
               decoration: InputDecoration(
                 hintText: widget.hinttext,
-                filled: true,
-                fillColor: Colors.grey[200],
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
+                    borderSide: BorderSide(
+                      color: BorderColor,
+                      width: 2.w,
+                    ),
+                    borderRadius: BorderRadius.circular(5)),
               ),
               isEmpty: _selectedItems.isEmpty,
               child: Wrap(
@@ -118,7 +129,8 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                 children: _selectedItems
                     .map((item) => Chip(
                           label: Text(item),
-                          deleteIcon: const Icon(Icons.close, size: 18),
+                          deleteIcon: const Icon(Icons.close,
+                              size: 18, color: PrimaryColor),
                           onDeleted: () {
                             setState(() {
                               _selectedItems.remove(item);
@@ -130,7 +142,6 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
               ),
             ),
           ),
-
         ],
       ),
     );

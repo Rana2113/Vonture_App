@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class ApiService {
-  final String _baseUrl = 'http://192.168.1.30:8000';
+  final String _baseUrl = 'http://192.168.1.5:8000';
   final Dio _dio;
 
   ApiService(this._dio);
@@ -75,10 +75,7 @@ class ApiService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $jwt',
     };
-    var response = await _dio.get(
-      '$_baseUrl$endPoint',
-      data: data
-    );
+    var response = await _dio.get('$_baseUrl$endPoint', data: data);
 
     print("ApiService:  response received : ${response}");
 

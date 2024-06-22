@@ -49,14 +49,18 @@ class PlaceCard extends StatelessWidget {
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.error,
+                    color: PrimaryColor,
+                  ),
                 )),
             verticalSpacing(16),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
                 title,
-                style: Styles.text18w400.copyWith(color: PrimaryColor),
+                style: Styles.text18w400
+                    .copyWith(color: PrimaryColor, height: 0.5),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -77,7 +81,7 @@ class PlaceCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text('Rating: $rating',
                   style: Styles.text16w400
-                      .copyWith(color: PrimaryColor, height: 1.5)),
+                      .copyWith(color: PrimaryColor, height: 1.2)),
             ),
             verticalSpacing(16),
             if (state != 'PENDING')

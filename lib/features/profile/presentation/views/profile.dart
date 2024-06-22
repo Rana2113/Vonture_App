@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/utils/service_locator.dart';
 import 'package:vonture_grad/features/place/presentation/manager/cubit/place_cubit.dart';
+import 'package:vonture_grad/features/place/presentation/views/widgets/app_bar.dart';
+import 'package:vonture_grad/features/place/presentation/views/widgets/my_details_opportunity.dart';
 
 import '../../../../core/components/spacing.dart';
-import '../../../../core/constants.dart/api_constants.dart';
 import '../../../../core/constants.dart/colors.dart';
 import '../../../../core/constants.dart/styles.dart';
 import '../../../place/data/models/profile _model/profile_model.dart';
 import '../../../place/data/place_repo_implementation.dart';
-import '../../../place/presentation/views/add_opportunity_view.dart';
-import '../../../place/presentation/views/widgets/profile_image.dart';
 import '../../../place/presentation/views/widgets/skills.dart';
 
 class ProfileView extends StatefulWidget {
@@ -44,39 +45,47 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    final userRoleBox = Hive.box(kRoleBoxString);
+    String? role = userRoleBox.get(kRoleBoxString);
     return SafeArea(
       child: Scaffold(
+        appBar: buildAppBar(context),
         body: BlocProvider(
           create: (context) =>
               PlaceCubit(getIt<PlaceRepoImplementation>())..getUserData(),
           child: BlocConsumer<PlaceCubit, PlaceState>(
-              listener: (context, state) async{
-                if(state is SubscriptionSuccess){
-                  print("////////////////");
-                  print(state.url);
-                  !await launchUrl(Uri.parse(state.url));
-                }
-              },
-              builder: (context, state) {
-                if (state is GetOtherProfileSuccess) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        verticalSpacing(10),
-                        Stack(
+              listener: (context, state) async {
+            if (state is SubscriptionLoading) {
+              print("Loading");
+            } else if (state is SubscriptionSuccess) {
+              print(state.url);
+              !await launchUrl(Uri.parse(state.url));
+              PlaceCubit.get(context).getUserData();
+            } else if (state is SubscriptionError) {
+              print(state.message);
+            }
+          }, builder: (context, state) {
+            if (state is GetOtherProfileSuccess) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      verticalSpacing(10),
+                      Center(
+                        child: Stack(
                           children: [
                             Container(
-                              width: 140.w,
-                              height: 140.h,
+                              width: 140,
+                              height: 140,
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
                                 image: DecorationImage(
                                   image: _image == null
                                       ? state.application.profileImg != null
-                                          ? NetworkImage(state
-                                              .application.profileImg
-                                              .toString())
+                                          ? NetworkImage(
+                                              state.application.profileImg!)
                                           : const AssetImage(
                                               'assets/avatar.png')
                                       : FileImage(_image!),
@@ -88,69 +97,118 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                             ),
                             Positioned(
-                                bottom: -5,
-                                right: -5,
+                                bottom: -1,
+                                right: 3,
                                 child: IconButton(
                                     onPressed: () {
                                       _openImagePicker();
                                     },
                                     icon: const Icon(
-                                      Icons.camera,
+                                      Icons.camera_alt_outlined,
                                       size: 35,
-                                      color: Colors.blue,
+                                      color: PrimaryColor,
                                     )))
                           ],
                         ),
-                        verticalSpacing(16),
-                        Text(state.application.firstName.toString(),
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 30)),
-                        verticalSpacing(20),
-                        Text(state.application.bio.toString(),
-                            style: TextStyle(color: Colors.black)),
-                        const SizedBox(height: 16),
-                        _buildProfileDetail(
-                          icon: Icons.location_pin,
-                          text: state.application.nationality!,
-                        ),
-                        _buildProfileDetail(
-                          icon: Icons.date_range_outlined,
-                          text:
-                              '${state.application.gender}, Age ${state.application.age}',
-                        ),
-                        verticalSpacing(20),
-                        Skills(skills: state.application.skills ?? []),
-                        verticalSpacing(20),
-                        const Text(
-                          'Reviews',
-                          style: TextStyle(
-                            color: Color(0xFF0C161C),
-                            fontSize: 22,
-                            fontFamily: 'Plus Jakarta Sans',
-                            fontWeight: FontWeight.w700,
-                            height: 1.2,
+                      ),
+                      verticalSpacing(16),
+                      Text(
+                          '${state.application.firstName!} ${state.application.lastName!}',
+                          style: Styles.text24w700.copyWith(fontSize: 26.sp)),
+                      verticalSpacing(24),
+                      Text(state.application.bio.toString(),
+                          style: Styles.text18w400
+                              .copyWith(color: PrimaryColor, height: 1)),
+                      const SizedBox(height: 16),
+                      _buildProfileDetail(
+                        icon: Icons.mail,
+                        text: '${state.application.email}',
+                      ),
+                      _buildProfileDetail(
+                        icon: Icons.location_pin,
+                        text: state.application.nationality!,
+                      ),
+                      _buildProfileDetail(
+                        icon: Icons.date_range_outlined,
+                        text:
+                            '${state.application.gender}, Age ${state.application.age}',
+                      ),
+                      // _buildProfileDetail(
+                      //   icon: Icons.mail,
+                      //   text: '${state.application.email}',
+                      // ),
+                      if (role == 'TOURIST')
+                        Column(
+                          children: [
+                            verticalSpacing(40),
+                            Skills(skills: state.application.skills ?? []),
+                          ],
+                        )
+                      else
+                        Container(),
+                      verticalSpacing(40),
+                      Text('Reviews',
+                          style: Styles.text24w700.copyWith(
+                              fontSize: 26, fontWeight: FontWeight.w600)),
+                      verticalSpacing(30),
+                      ...(state.application.receivedReviews ?? [])
+                          .map((review) => displayRating(review)),
+                      verticalSpacing(20),
+                      if (role == 'TOURIST')
+                        Row(
+                          children: [
+                            Button(
+                              text: 'Upload',
+                              onTap: () {
+                                PlaceCubit.get(context)
+                                    .uploadProfile(_image!.path, context);
+                              },
+                            ),
+                            Spacer(
+                              flex: 1,
+                            ),
+                            Button(
+                              text: 'Subscription',
+                              onTap: () {
+                                PlaceCubit.get(context)
+                                    .getSubscription()
+                                    .then((val) async {
+                                  print("this is $val");
+                                  await launchUrl(Uri.parse(val));
+                                });
+                              },
+                            )
+                          ],
+                        )
+                      else
+                        Center(
+                          child: Button(
+                            text: 'Upload',
+                            onTap: () {
+                              PlaceCubit.get(context)
+                                  .uploadProfile(_image!.path, context);
+                            },
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        ...(state.application.receivedReviews ?? [])
-                            .map((review) => displayRating(review)),
-                      ],
-                    ),
-                  );
-                } else if (state is GetOtherProfileLoading||state is SubscriptionLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is GetOtherProfileError) {
-                  return const Center(
-                    child: Text("there is error"),
-                  );
-                } else {
-                  return Text("data");
-                }
-              }),
+                    ],
+                  ),
+                ),
+              );
+            } else if (state is GetOtherProfileLoading ||
+                state is SubscriptionLoading) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: PrimaryColor,
+                ),
+              );
+            } else if (state is GetOtherProfileError) {
+              return const Center(
+                child: Text("there is error"),
+              );
+            } else {
+              return Center(child: Text("Payment loading"));
+            }
+          }),
         ),
       ),
     );
@@ -160,11 +218,12 @@ class _ProfileViewState extends State<ProfileView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        verticalSpacing(10),
         Text(
-          '${review.givenBy?.firstName ?? ''}, ${review.givenBy?.lastName ?? ''}',
+          '${review.givenBy?.firstName ?? ''} ${review.givenBy?.lastName ?? ''}',
           style: Styles.text18w400.copyWith(color: PrimaryColor),
         ),
-        verticalSpacing(4),
+        verticalSpacing(10),
         RatingBarIndicator(
           rating: review.rating ?? 0,
           itemBuilder: (context, index) => const Icon(
@@ -181,58 +240,55 @@ class _ProfileViewState extends State<ProfileView> {
           style: Styles.text18w400.copyWith(color: PrimaryColor),
         ),
         verticalSpacing(5),
-        Divider(
-          color: PrimaryColor,
-          thickness: 0.5.sp,
-          height: 2.h,
-        ),
+        // Divider(
+        //   color: PrimaryColor,
+        //   thickness: 0.5.sp,
+        //   height: 2.h,
+        // ),
         verticalSpacing(20),
-        Center(
-          child: SizedBox(
-            width: 250,
-            child: ElevatedButton(
-                onPressed: () {
-                  PlaceCubit.get(context).uploadProfile(_image!.path, context);
-                },
-                style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Colors.blue)),
-                child: const Center(
-                  child: Text(
-                    "Upload",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
-                  ),
-                )),
-          ),
-        ),
-        Center(
-          child: SizedBox(
-            width: 250,
-            child: ElevatedButton(
-                onPressed: () {
-                  PlaceCubit.get(context).getSubscription().then((val)async{
-
-                    print("this is $val");
-                    await launchUrl(Uri.parse(val));
-
-                  });
-                },
-                style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Colors.blue)),
-                child: const Center(
-                  child: Text(
-                    "Subscription",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
-                  ),
-                )),
-          ),
-        ),
-
+        // Center(
+        //   child: SizedBox(
+        //     width: 250,
+        //     child: ElevatedButton(
+        //         onPressed: () {
+        //           PlaceCubit.get(context).uploadProfile(_image!.path, context);
+        //         },
+        //         style: ButtonStyle(
+        //             backgroundColor: WidgetStateProperty.all(Colors.blue)),
+        //         child: const Center(
+        //           child: Text(
+        //             "Upload",
+        //             style: TextStyle(
+        //                 color: Colors.white,
+        //                 fontSize: 18,
+        //                 fontWeight: FontWeight.w500),
+        //           ),
+        //         )),
+        //   ),
+        // ),
+        // Center(
+        //   child: SizedBox(
+        //     width: 250,
+        //     child: ElevatedButton(
+        //         onPressed: () {
+        //           PlaceCubit.get(context).getSubscription().then((val) async {
+        //             print("this is $val");
+        //             await launchUrl(Uri.parse(val));
+        //           });
+        //         },
+        //         style: ButtonStyle(
+        //             backgroundColor: WidgetStateProperty.all(Colors.blue)),
+        //         child: const Center(
+        //           child: Text(
+        //             "Subscription",
+        //             style: TextStyle(
+        //                 color: Colors.white,
+        //                 fontSize: 18,
+        //                 fontWeight: FontWeight.w500),
+        //           ),
+        //         )),
+        //   ),
+        // ),
       ],
     );
   }
@@ -272,3 +328,85 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 }
+// Row(
+//                         children: [
+//                           Button(
+//                               text: 'See Applications',
+//                               onTap: () {
+//                                 Navigator.push(
+//                                     context,
+//                                     MaterialPageRoute(
+//                                         builder: (context) =>
+//                                             GetAllApplicationOpportunity(
+//                                               opportunityId: opportunity.id!,
+//                                             )));
+//                               }),
+//                           const Spacer(
+//                             flex: 1,
+//                           ),
+//                           if (opportunity.status == 'CLOSED')
+//                             Center(
+//                               child: SizedBox(
+//                                 width: 170,
+//                                 child: ElevatedButton(
+//                                   onPressed: () {},
+//                                   style: ElevatedButton.styleFrom(
+//                                       backgroundColor: white,
+//                                       side: const BorderSide(
+//                                         color: PrimaryColor,
+//                                         width: 1,
+//                                       )),
+//                                   child: Icon(
+//                                     Icons.lock,
+//                                     color: PrimaryColor,
+//                                     size: 30.sp,
+//                                   ),
+//                                 ),
+//                               ),
+//                             )
+//                           else
+//                             Button(
+//                               onTap: () {
+//                                 BlocProvider.of<OpportunityCubit>(context)
+//                                     .closeOpportunity(widget.opportunityId);
+//                               },
+//                               text: 'Close',
+//                             ),
+//                         ],
+//                       ),
+
+
+
+
+
+
+
+
+//  Row(
+//                                   children: [
+//                                     Button(
+//                                       text: 'Upload',
+//                                        onTap: () {
+//                               PlaceCubit.get(context)
+//                                   .getSubscription()
+//                                   .then((val) async {
+//                                 print("this is $val");
+//                                 await launchUrl(Uri.parse(val));
+//                               });
+//                             },
+//                                     ),
+//                                     const Spacer(
+//                                       flex: 1,
+//                                     ),
+//                                    Button(
+//                                       text: 'subuscription',
+//                                       onTap: () 
+//                                     {
+//                               PlaceCubit.get(context)
+//                                   .uploadProfile(_image!.path, context);
+                            
+//                                       },
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ],

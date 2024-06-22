@@ -18,8 +18,8 @@ class MeetYourHost extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Meet your host', style: Styles.text24w700),
-        verticalSpacing(15),
+        const Center(child: Text('Meet your host', style: Styles.text24w700)),
+        verticalSpacing(30),
         Align(
           child: Column(
             children: [

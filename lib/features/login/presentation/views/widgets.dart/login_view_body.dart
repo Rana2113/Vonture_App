@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
 import 'package:vonture_grad/core/components/text_field.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/constants.dart/styles.dart';
 import 'package:vonture_grad/core/utils/service_locator.dart';
 import 'package:vonture_grad/features/login/data/login_repo_implementation.dart';
@@ -39,9 +40,9 @@ class LoginViewBody extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         verticalSpacing(24),
-                        const SizedBox(
-                          width: 206,
-                          height: 37,
+                        SizedBox(
+                          width: 206.w,
+                          height: 37.h,
                           child: Text(
                             'Great to see you again!',
                             textAlign: TextAlign.center,
@@ -91,7 +92,7 @@ class LoginViewBody extends StatelessWidget {
                                       state.isPasswordVisible
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: Colors.black,
+                              color: PrimaryColor,
                             ),
                           ),
                           type: TextInputType.visiblePassword,
