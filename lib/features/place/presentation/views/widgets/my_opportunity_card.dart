@@ -60,7 +60,7 @@ class MyOpportunityCard extends StatelessWidget {
                 child: Text(
                   title,
                   style: Styles.text18w400
-                      .copyWith(color: PrimaryColor, height: 0.5),
+                      .copyWith(color: PrimaryColor, height: 1),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

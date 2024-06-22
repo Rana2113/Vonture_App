@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/error/failures.dart';
 import 'package:vonture_grad/features/place/data/models/applications/app_model.dart';
 import 'package:vonture_grad/features/place/data/models/offers/offers.dart';
@@ -313,6 +314,10 @@ class PlaceCubit extends Cubit<PlaceState> {
           ..hideCurrentSnackBar()
           ..showSnackBar(
             SnackBar(
+              backgroundColor: error,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
               content: Text(failure.errorMessages),
               duration: const Duration(seconds: 3),
             ),

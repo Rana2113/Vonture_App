@@ -56,7 +56,7 @@ class _TouristProfileState extends State<TouristProfile> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                backgroundColor: PrimaryColor,
+                backgroundColor: error,
                 content: Text(state.message),
                 duration: const Duration(seconds: 5),
               ),
@@ -86,7 +86,7 @@ class _TouristProfileState extends State<TouristProfile> {
               return TouristProfileBody(
                 bio: tourist.bio!,
                 name: '${tourist.firstName} ${tourist.lastName}',
-                gender: tourist.gender!.toLowerCase(),
+                gender: tourist.gender!,
                 birthdate: tourist.age!,
                 skills: tourist.skills?.cast<String>() ?? [],
                 natinonality: tourist.nationality ?? '',

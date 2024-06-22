@@ -28,7 +28,7 @@ class SignUpButton extends StatelessWidget {
                 style: Styles.text16w500.copyWith(color: white),
               ),
               duration: const Duration(seconds: 5),
-              backgroundColor: PrimaryColor,
+              backgroundColor: error,
             ),
           );
         }
@@ -56,7 +56,7 @@ class SignUpButton extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 12.w, vertical: 12.h),
-                      child: Text('Login',
+                      child: Text('Sign Up',
                           style: Styles.text16w600.copyWith(color: white)),
                     ),
                   ),

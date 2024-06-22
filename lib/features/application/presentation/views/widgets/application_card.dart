@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vonture_grad/core/components/spacing.dart';
@@ -27,7 +28,7 @@ class ApplicationCard extends StatelessWidget {
       children: [
         verticalSpacing(16),
         Container(
-          height: additionalWidget != null ? 210.h : 140.h,
+          height: additionalWidget != null ? 280.h : 200.h,
           decoration: BoxDecoration(
             color: white,
             borderRadius: BorderRadius.circular(12),
@@ -70,14 +71,19 @@ class ApplicationCard extends StatelessWidget {
                   ),
                 ),
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    imageUrl,
-                    width: 130.w,
-                    height: 150.sp,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(8),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      height: 110.h,
+                      width: 150.h,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.error,
+                        color: PrimaryColor,
+                      ),
+                    )),
               ],
             ),
           ),

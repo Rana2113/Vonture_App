@@ -126,12 +126,12 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                       OpportunityOffers(
                         offers: state.detailsopportunity.offers ?? [],
                       ),
-                      verticalSpacing(20),
+                      verticalSpacing(40),
                       OpportunityRequirements(
                         requirements:
                             state.detailsopportunity.requirements ?? [],
                       ),
-                      verticalSpacing(20),
+                      verticalSpacing(30),
                       OpportunityLocation(
                         country: state.detailsopportunity.place?.country ?? '',
                         city: state.detailsopportunity.place?.city ?? ' ',

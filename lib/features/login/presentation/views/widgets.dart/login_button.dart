@@ -27,7 +27,7 @@ class LoginButton extends StatelessWidget {
                 style: Styles.text16w500.copyWith(color: white),
               ),
               duration: const Duration(seconds: 5),
-              backgroundColor: PrimaryColor,
+              backgroundColor: error,
             ),
           );
         }

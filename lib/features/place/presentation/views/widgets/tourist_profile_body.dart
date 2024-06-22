@@ -75,11 +75,11 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
             verticalSpacing(16),
             Text(widget.name,
                 style: Styles.text24w700.copyWith(fontSize: 26.sp)),
-            verticalSpacing(20),
+            verticalSpacing(29),
             Text(widget.bio,
                 style:
                     Styles.text18w400.copyWith(color: PrimaryColor, height: 1)),
-            const SizedBox(height: 16),
+            verticalSpacing(26),
             _buildProfileDetail(
               icon: Icons.location_pin,
               text: widget.natinonality,
@@ -88,12 +88,9 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
               icon: Icons.date_range_outlined,
               text: '${widget.gender}, Age ${widget.birthdate}',
             ),
-            verticalSpacing(20),
+            verticalSpacing(55),
             Skills(skills: widget.skills ?? []),
-            verticalSpacing(20),
-            Text('Reviews',
-                style: Styles.text24w700
-                    .copyWith(fontSize: 26, fontWeight: FontWeight.w600)),
+            verticalSpacing(55),
             const SizedBox(height: 20),
             ...(widget.receivedReviews ?? [])
                 .map((review) => displayRating(review)),
@@ -176,6 +173,9 @@ class _TouristProfileBodyState extends State<TouristProfileBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text('Reviews',
+            style: Styles.text24w700
+                .copyWith(fontSize: 26, fontWeight: FontWeight.w600)),
         Text(
           '${review.givenBy?.firstName ?? ''}, ${review.givenBy?.lastName ?? ''}',
           style: Styles.text18w400.copyWith(color: PrimaryColor),

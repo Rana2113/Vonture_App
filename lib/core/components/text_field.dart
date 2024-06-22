@@ -4,20 +4,21 @@ import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/core/constants.dart/styles.dart';
 
 class AppTextField extends StatelessWidget {
-  const AppTextField({
-    super.key,
-    required this.hinttext,
-    this.suffixIcon,
-    this.controller,
-    required this.validator,
-    this.onFieldSubmitted,
-    required this.type,
-    this.isPassword = false,
-    this.firstDate,
-    this.lastDate,
-    this.label,
-    this.maxLines = 1,
-  });
+  const AppTextField(
+      {super.key,
+      required this.hinttext,
+      this.suffixIcon,
+      this.controller,
+      required this.validator,
+      this.onFieldSubmitted,
+      required this.type,
+      this.isPassword = false,
+      this.firstDate,
+      this.lastDate,
+      this.label,
+      this.maxLines = 1,
+      this.height = 0.5,
+      this.size = 14});
   final String hinttext;
   final TextInputType type;
   final Widget? suffixIcon;
@@ -29,6 +30,8 @@ class AppTextField extends StatelessWidget {
   final DateTime? lastDate;
   final Widget? label;
   final int? maxLines;
+  final double? height;
+  final double? size;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,6 +39,7 @@ class AppTextField extends StatelessWidget {
       child: TextFormField(
         maxLines: maxLines,
         // maxLines: 3,
+
         validator: (value) {
           return validator(value);
         },
@@ -46,7 +50,13 @@ class AppTextField extends StatelessWidget {
           label: label,
           hintText: hinttext,
           hintStyle: Styles.text14w500,
-          errorStyle: Styles.text14w400.copyWith(color: error, height: 0.5),
+          errorStyle: TextStyle(
+            color: error,
+            fontSize: size,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w500,
+            height: height,
+          ),
           border: buildOutlineInputBorder(
             kBorderColor2,
           ),

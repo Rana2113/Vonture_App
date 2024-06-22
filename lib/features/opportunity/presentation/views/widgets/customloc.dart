@@ -30,8 +30,9 @@ class CustomListTile extends StatelessWidget {
         ),
       ),
       title: Text(title,
-          style: Styles.text16w500.copyWith(decoration: TextDecoration.none)),
-      subtitle: Text(subTitle, style: Styles.text14w400),
+          style: Styles.text16w500
+              .copyWith(decoration: TextDecoration.none, height: 1.2)),
+      subtitle: Text(subTitle, style: Styles.text14w400.copyWith(height: 1.5)),
     );
   }
 }

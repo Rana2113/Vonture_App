@@ -227,20 +227,45 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
   }
 
   void _createOpportunity(PlaceCubit placeCubit) {
-    if (formKey.currentState!.validate()) {
-      placeCubit.createOpportunity(
-        widget.placeId,
-        title: titleController.text,
-        description: descriptionController.text,
-        from: availableControllerFrom.text,
-        to: availableControllerTo.text,
-        requirements: selectedRequirementIds.whereType<int>().toList(),
-        offers: selectedOfferIds.whereType<int>().toList(),
-      );
+    if (formKey.currentState!.validate() &&
+        selectedRequirementIds.isNotEmpty &&
+        selectedOfferIds.isNotEmpty) {
+      {
+        placeCubit.createOpportunity(
+          widget.placeId,
+          title: titleController.text,
+          description: descriptionController.text,
+          from: availableControllerFrom.text,
+          to: availableControllerTo.text,
+          requirements: selectedRequirementIds.whereType<int>().toList(),
+          offers: selectedOfferIds.whereType<int>().toList(),
+        );
+      }
+    } else {
+      if (selectedRequirementIds.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            content: Text('Please select at least one requirement & offers'),
+            backgroundColor: error,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            content: Text('Please select at least one offer'),
+            backgroundColor: error,
+          ),
+        );
+      }
     }
   }
 }
-
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
@@ -404,12 +429,6 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
 //     );
 //   }
 // }
-
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';

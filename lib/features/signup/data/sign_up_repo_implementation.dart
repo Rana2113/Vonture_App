@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:vonture_grad/core/constants.dart/api_constants.dart';
 import 'package:vonture_grad/core/error/failures.dart';
 import 'package:vonture_grad/core/models/user_model.dart';
@@ -37,7 +38,7 @@ class SignUpRepoImplementation implements SignUpRepo {
         "bio": bio,
         "birthdate": birthdate,
         "gender": gender,
-        "skills":skills,
+        "skills": skills,
         "role": role,
       });
       print("SignUprepo: API call successful - Response: $response");
@@ -53,13 +54,8 @@ class SignUpRepoImplementation implements SignUpRepo {
 
       return Right(UserModel.fromJson(response["user"]));
     } catch (e) {
-      print("SignUpRepo: API call failed - Error: $e");
-
       if (e is DioException) {
-        final statusCode = e.response?.statusCode;
-        final responseData = e.response?.data;
-        print("statuscode: $statusCode - response: $responseData ");
-
+        print("SignUprepo: API call failed - Error: $e");
         return Left(ServerFailure.fromDioException(e));
       } else {
         return Left(ServerFailure(
@@ -83,8 +79,7 @@ class SignUpRepoImplementation implements SignUpRepo {
           .map((requirement) => Requirements.fromJson(requirement))
           .toList();
 
-      print(
-          "Requirements: API call successful - Requirements: $skillsList");
+      print("Requirements: API call successful - Requirements: $skillsList");
 
       return Right(skillsList);
     } on DioException catch (e) {
@@ -98,7 +93,4 @@ class SignUpRepoImplementation implements SignUpRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
-
-
-
 }

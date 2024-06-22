@@ -23,18 +23,23 @@ class OpportunityDescription extends StatelessWidget {
       children: [
         verticalSpacing(20),
         Text(title,
+            style: Styles.text24w700
+                .copyWith(color: PrimaryColor, fontSize: 30.sp, height: 1.5)),
+        verticalSpacing(20),
+        Text(description,
             style: Styles.text24w700.copyWith(
-              color: PrimaryColor,
-              fontSize: 30.sp,
-            )),
+                color: PrimaryColor,
+                fontSize: 24.sp,
+                height: 1.2,
+                fontWeight: FontWeight.w500)),
         verticalSpacing(20),
         Text('$from to $to',
             style: Styles.text18w400.copyWith(color: PrimaryColor, height: 2)),
-        verticalSpacing(12),
-        Text(
-          description,
-          style: Styles.text18w400.copyWith(color: PrimaryColor, height: 1.3),
-        ),
+        // verticalSpacing(12),
+        // Text(
+        //   description,
+        //   style: Styles.text18w400.copyWith(color: PrimaryColor, height: 1.3),
+        // ),
       ],
     );
   }

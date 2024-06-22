@@ -77,7 +77,7 @@ class LoginViewBody extends StatelessWidget {
                           controller: passwordController,
                           validator: (String value) {
                             if (value.isEmpty) {
-                              return 'Please enter your password';
+                              return 'Password is required';
                             }
                             return null;
                           },

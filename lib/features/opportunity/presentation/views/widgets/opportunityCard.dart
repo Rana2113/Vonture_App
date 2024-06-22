@@ -65,7 +65,7 @@ class OpportunityCard extends StatelessWidget {
                           child: Text(title,
                               overflow: TextOverflow.ellipsis,
                               style: Styles.text16w400
-                                  .copyWith(color: PrimaryColor, height: 1.5)),
+                                  .copyWith(color: PrimaryColor, height: 2)),
                         ),
                         RatingBarIndicator(
                           rating: rating,
