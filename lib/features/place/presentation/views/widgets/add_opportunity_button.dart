@@ -25,7 +25,7 @@ class AddOpportunityButton extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Opportunity added successfully'),
-              backgroundColor: kButtonColor,
+              backgroundColor: PrimaryColor,
             ),
           );
 
@@ -36,7 +36,7 @@ class AddOpportunityButton extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: kButtonColor,
+              backgroundColor: PrimaryColor,
             ),
           );
         }

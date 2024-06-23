@@ -58,7 +58,7 @@ class AppTextField extends StatelessWidget {
             height: height,
           ),
           border: buildOutlineInputBorder(
-            kBorderColor2,
+            BorderColor,
           ),
           focusedBorder: buildOutlineInputBorder(
             black,

@@ -38,7 +38,7 @@ class _SearchOpportunityState extends State<SearchOpportunity> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
                   borderSide: const BorderSide(
-                    color: kBorderColor2,
+                    color: BorderColor,
                   ),
                 ),
                 focusedBorder: const OutlineInputBorder(

@@ -20,7 +20,7 @@ class AddPlaceButton extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Place added successfully'),
-              backgroundColor: kButtonColor,
+              backgroundColor: PrimaryColor,
             ),
           );
           Navigator.of(context).pop();
@@ -30,7 +30,7 @@ class AddPlaceButton extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: kButtonColor,
+              backgroundColor: error,
             ),
           );
         }

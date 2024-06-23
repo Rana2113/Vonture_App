@@ -359,7 +359,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                content: Text('Select your skills'),
+                                content: const Text('Select your skills'),
                               ),
                             );
                           }
