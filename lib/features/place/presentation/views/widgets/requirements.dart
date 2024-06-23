@@ -128,9 +128,14 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                 runSpacing: 6.0,
                 children: _selectedItems
                     .map((item) => Chip(
-                          label: Text(item),
-                          deleteIcon: const Icon(Icons.close,
-                              size: 18, color: PrimaryColor),
+                          shadowColor: PrimaryColor,
+                          color: const WidgetStatePropertyAll(PrimaryColor),
+                          label: Text(
+                            item,
+                            style: const TextStyle(color: white),
+                          ),
+                          deleteIcon:
+                              const Icon(Icons.close, size: 18, color: white),
                           onDeleted: () {
                             setState(() {
                               _selectedItems.remove(item);
