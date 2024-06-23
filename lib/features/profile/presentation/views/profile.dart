@@ -1,6 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -164,7 +165,7 @@ class _ProfileViewState extends State<ProfileView> {
                                     .uploadProfile(_image!.path, context);
                               },
                             ),
-                            Spacer(
+                            const Spacer(
                               flex: 1,
                             ),
                             Button(
@@ -206,7 +207,11 @@ class _ProfileViewState extends State<ProfileView> {
                 child: Text("there is error"),
               );
             } else {
-              return Center(child: Text("Payment loading"));
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: PrimaryColor,
+                ),
+              );
             }
           }),
         ),
@@ -240,55 +245,7 @@ class _ProfileViewState extends State<ProfileView> {
           style: Styles.text18w400.copyWith(color: PrimaryColor),
         ),
         verticalSpacing(5),
-        // Divider(
-        //   color: PrimaryColor,
-        //   thickness: 0.5.sp,
-        //   height: 2.h,
-        // ),
         verticalSpacing(20),
-        // Center(
-        //   child: SizedBox(
-        //     width: 250,
-        //     child: ElevatedButton(
-        //         onPressed: () {
-        //           PlaceCubit.get(context).uploadProfile(_image!.path, context);
-        //         },
-        //         style: ButtonStyle(
-        //             backgroundColor: WidgetStateProperty.all(Colors.blue)),
-        //         child: const Center(
-        //           child: Text(
-        //             "Upload",
-        //             style: TextStyle(
-        //                 color: Colors.white,
-        //                 fontSize: 18,
-        //                 fontWeight: FontWeight.w500),
-        //           ),
-        //         )),
-        //   ),
-        // ),
-        // Center(
-        //   child: SizedBox(
-        //     width: 250,
-        //     child: ElevatedButton(
-        //         onPressed: () {
-        //           PlaceCubit.get(context).getSubscription().then((val) async {
-        //             print("this is $val");
-        //             await launchUrl(Uri.parse(val));
-        //           });
-        //         },
-        //         style: ButtonStyle(
-        //             backgroundColor: WidgetStateProperty.all(Colors.blue)),
-        //         child: const Center(
-        //           child: Text(
-        //             "Subscription",
-        //             style: TextStyle(
-        //                 color: Colors.white,
-        //                 fontSize: 18,
-        //                 fontWeight: FontWeight.w500),
-        //           ),
-        //         )),
-        //   ),
-        // ),
       ],
     );
   }
@@ -328,85 +285,3 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 }
-// Row(
-//                         children: [
-//                           Button(
-//                               text: 'See Applications',
-//                               onTap: () {
-//                                 Navigator.push(
-//                                     context,
-//                                     MaterialPageRoute(
-//                                         builder: (context) =>
-//                                             GetAllApplicationOpportunity(
-//                                               opportunityId: opportunity.id!,
-//                                             )));
-//                               }),
-//                           const Spacer(
-//                             flex: 1,
-//                           ),
-//                           if (opportunity.status == 'CLOSED')
-//                             Center(
-//                               child: SizedBox(
-//                                 width: 170,
-//                                 child: ElevatedButton(
-//                                   onPressed: () {},
-//                                   style: ElevatedButton.styleFrom(
-//                                       backgroundColor: white,
-//                                       side: const BorderSide(
-//                                         color: PrimaryColor,
-//                                         width: 1,
-//                                       )),
-//                                   child: Icon(
-//                                     Icons.lock,
-//                                     color: PrimaryColor,
-//                                     size: 30.sp,
-//                                   ),
-//                                 ),
-//                               ),
-//                             )
-//                           else
-//                             Button(
-//                               onTap: () {
-//                                 BlocProvider.of<OpportunityCubit>(context)
-//                                     .closeOpportunity(widget.opportunityId);
-//                               },
-//                               text: 'Close',
-//                             ),
-//                         ],
-//                       ),
-
-
-
-
-
-
-
-
-//  Row(
-//                                   children: [
-//                                     Button(
-//                                       text: 'Upload',
-//                                        onTap: () {
-//                               PlaceCubit.get(context)
-//                                   .getSubscription()
-//                                   .then((val) async {
-//                                 print("this is $val");
-//                                 await launchUrl(Uri.parse(val));
-//                               });
-//                             },
-//                                     ),
-//                                     const Spacer(
-//                                       flex: 1,
-//                                     ),
-//                                    Button(
-//                                       text: 'subuscription',
-//                                       onTap: () 
-//                                     {
-//                               PlaceCubit.get(context)
-//                                   .uploadProfile(_image!.path, context);
-                            
-//                                       },
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ],

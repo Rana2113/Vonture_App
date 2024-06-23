@@ -93,7 +93,9 @@ class _ApplicationViewBodyState extends State<ApplicationViewBody> {
         );
       } else {
         return const Center(
-          child: Text('Payment loading'),
+          child: CircularProgressIndicator(
+            color: PrimaryColor,
+          ),
         );
       }
     }, listener: (BuildContext context, ApplicationState state) async {

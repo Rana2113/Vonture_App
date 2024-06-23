@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -81,8 +83,9 @@ class PlaceCubit extends Cubit<PlaceState> {
       print("/////////////////");
       print(response.data["message"]);
       if (response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Image uploaded successfully")));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: PrimaryColor,
+            content: Text("Image uploaded successfully")));
       }
     } catch (e) {
       print('Error uploading image: $e');

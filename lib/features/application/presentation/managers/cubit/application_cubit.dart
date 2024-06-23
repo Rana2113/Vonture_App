@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vonture_grad/core/constants.dart/colors.dart';
 import 'package:vonture_grad/features/application/data/models/application_model/application_model.dart';
 import 'package:vonture_grad/features/application/data/models/application_model/tourists_model.dart';
 import 'package:vonture_grad/features/application/data/repositories/application_repo_implementation.dart';
@@ -49,6 +50,7 @@ class ApplicationCubit extends Cubit<ApplicationState> {
         ..hideCurrentSnackBar()
         ..showSnackBar(
           const SnackBar(
+            backgroundColor: PrimaryColor,
             content: Text('Deleted successfully!'),
             duration: Duration(seconds: 2),
           ),

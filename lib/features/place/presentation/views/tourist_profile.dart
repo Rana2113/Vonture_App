@@ -65,7 +65,7 @@ class _TouristProfileState extends State<TouristProfile> {
                 .read<PlaceCubit>()
                 .getotherprofile(widget.touristid, widget.opportunityId);
           } else if (state is GetOtherProfileError) {
-            Center(
+            const Center(
               child: CircularProgressIndicator(
                 color: PrimaryColor,
               ),
@@ -96,7 +96,7 @@ class _TouristProfileState extends State<TouristProfile> {
                 status: tourist.status,
               );
             } else if (state is GetOtherProfileError) {
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: PrimaryColor,
                 ),

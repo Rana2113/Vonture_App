@@ -1,5 +1,6 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,8 +26,7 @@ import '../../../place/presentation/views/widgets/my_details_opportunity.dart';
 
 class OpportunityDetails extends StatefulWidget {
   OpportunityDetails(
-      {Key? key, required this.opportunityId, this.isApllication})
-      : super(key: key);
+      {super.key, required this.opportunityId, this.isApllication});
 
   final int opportunityId;
   bool? isApllication;
@@ -143,10 +143,6 @@ class _OpportunityDetailsState extends State<OpportunityDetails> {
                         image: state.detailsopportunity.place!.placeMedia ?? [],
                       ),
                       verticalSpacing(10),
-                      // const Divider(
-                      //   color: PrimaryColor,
-                      //   thickness: 0.5,
-                      // ),
                       verticalSpacing(10),
                       MeetYourHost(
                         fname: state.detailsopportunity.host?.firstName ?? '',

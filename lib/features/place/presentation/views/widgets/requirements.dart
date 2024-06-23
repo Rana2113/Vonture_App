@@ -49,7 +49,7 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     backgroundColor: white,
-                    contentTextStyle: TextStyle(color: PrimaryColor),
+                    contentTextStyle: const TextStyle(color: PrimaryColor),
                     iconColor: PrimaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -105,7 +105,7 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('OK'),
+                        child: const Text('OK'),
                       ),
                     ],
                   );

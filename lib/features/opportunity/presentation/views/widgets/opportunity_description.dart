@@ -35,11 +35,6 @@ class OpportunityDescription extends StatelessWidget {
         verticalSpacing(20),
         Text('$from to $to',
             style: Styles.text18w400.copyWith(color: PrimaryColor, height: 2)),
-        // verticalSpacing(12),
-        // Text(
-        //   description,
-        //   style: Styles.text18w400.copyWith(color: PrimaryColor, height: 1.3),
-        // ),
       ],
     );
   }

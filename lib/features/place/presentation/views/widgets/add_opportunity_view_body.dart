@@ -248,7 +248,8 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            content: Text('Please select at least one requirement & offers'),
+            content:
+                const Text('Please select at least one requirement & offers'),
             backgroundColor: error,
           ),
         );
@@ -258,7 +259,7 @@ class _AddOpportunityViewBodyState extends State<AddOpportunityViewBody> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            content: Text('Please select at least one offer'),
+            content: const Text('Please select at least one offer'),
             backgroundColor: error,
           ),
         );
